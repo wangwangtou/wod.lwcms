@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B9DBAA06-FA72-4CF6-89A3-32F48A925AEA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>wod.lwcms</RootNamespace>
+    <AssemblyName>wod.lwcms.core</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LitJSON">
+      <HintPath>..\resource\dll\LitJSON.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="commands\commandPool.cs" />
+    <Compile Include="commands\commandsParameter.cs" />
+    <Compile Include="commands\command.cs" />
+    <Compile Include="common.cs" />
+    <Compile Include="dataaccess\CategoryDataAccess.cs" />
+    <Compile Include="dataaccess\CommonDataAccess.cs" />
+    <Compile Include="dataaccess\DataAccessContext.cs" />
+    <Compile Include="dataaccess\pagerHelper.cs" />
+    <Compile Include="dataaccess\WODDbParameter.cs" />
+    <Compile Include="ioc.cs" />
+    <Compile Include="management\ajaxResult.cs" />
+    <Compile Include="management\commonHandle.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="management\optionsConvert.cs" />
+    <Compile Include="management\pagebase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="objectPool.cs" />
+    <Compile Include="web\pageData.cs" />
+    <Compile Include="web\pageParameter.cs" />
+    <Compile Include="web\pageTransfer.cs" />
+    <Compile Include="web\tempControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="wodEnvironment.cs" />
+    <Compile Include="dataaccess\SiteDataAccess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="web\page.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="addin\" />
+    <Folder Include="persistence\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\wod.lwcms.models\wod.lwcms.csproj">
+      <Project>{91F5B55D-E9F7-435F-9874-7BE5409494CF}</Project>
+      <Name>wod.lwcms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

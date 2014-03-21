@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="common">
+    <commands>
+      <assCommand id="ws">
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getSite</methodName>
+      </assCommand>
+      <assCommand id="allCats">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+      <assCommand id="pageTransferName">
+        <typeName>wod.lwcms.web.pageTransfer, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getCommonTransfer</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="index" type="dataCommand">
+    <commands>
+      <assCommand id="ws">
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getSite</methodName>
+      </assCommand>
+      <assCommand id="allCats">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+      <assCommand id="pageTransferName">
+        <typeName>wod.lwcms.web.pageTransfer, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getIndexTransfer</methodName>
+      </assCommand>
+      <sqlCommand id="totalCount" paramenterPrefix=":" excuteType="scalar">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select count(1) from wod_lw_article 
+    ]]>
+        </sql>
+      </sqlCommand>
+      <assCommand id="startRowIndex">
+        <typeName>wod.lwcms.dataaccess.pagerHelper, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getStartRowIndex</methodName>
+      </assCommand>
+      <assCommand id="endRowIndex">
+        <typeName>wod.lwcms.dataaccess.pagerHelper, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getEndRowIndex</methodName>
+      </assCommand>
+      <sqlCommand id="pagedDr" paramenterPrefix=":" excuteType="datareader">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
+    order by art_CreateOn desc
+    ]]>
+        </sql>
+      </sqlCommand>
+      <assCommand id="articleList">
+        <typeName>wod.lwcms.dataaccess.ICommonDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>GetPagedArticle</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="category">
+    <commands>
+      <assCommand id="ws">
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getSite</methodName>
+      </assCommand>
+      <assCommand id="allCats">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+      <assCommand id="cat">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getCurCategory</methodName>
+      </assCommand>
+      <assCommand id="pageTransferName">
+        <typeName>wod.lwcms.web.pageTransfer, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getCategoryTransfer</methodName>
+      </assCommand>
+      <sqlCommand id="totalCount" paramenterPrefix=":" excuteType="scalar">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select count(1) from wod_lw_article 
+    where cat_Path= :requestName
+    ]]>
+        </sql>
+      </sqlCommand>
+      <assCommand id="startRowIndex">
+        <typeName>wod.lwcms.dataaccess.pagerHelper, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getStartRowIndex</methodName>
+      </assCommand>
+      <assCommand id="endRowIndex">
+        <typeName>wod.lwcms.dataaccess.pagerHelper, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getEndRowIndex</methodName>
+      </assCommand>
+      <sqlCommand id="pagedDr" paramenterPrefix=":" excuteType="datareader">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
+    where cat_Path = :categoryPath order by art_CreateOn
+    ]]>
+        </sql>
+      </sqlCommand>
+      <assCommand id="articleList">
+        <typeName>wod.lwcms.dataaccess.ICommonDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>GetPagedArticle</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="article">
+    <commands>
+      <assCommand id="ws">
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getSite</methodName>
+      </assCommand>
+      <assCommand id="allCats">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+      <assCommand id="cat">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getCurCategory</methodName>
+      </assCommand>
+      <sqlCommand id="singleDr" paramenterPrefix=":" excuteType="datareader">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select ID,art_Name,art_Code,art_PreContent,art_Content,art_Page,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
+    where cat_Path = :categoryPath and art_Code = :articleName
+    ]]>
+        </sql>
+      </sqlCommand>
+      <assCommand id="art">
+        <typeName>wod.lwcms.dataaccess.ICommonDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>GetSingleArticle</methodName>
+      </assCommand>
+      <assCommand id="pageTransferName">
+        <typeName>wod.lwcms.web.pageTransfer, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getArticleTransfer</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+</commands>

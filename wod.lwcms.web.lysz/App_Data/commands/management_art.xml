@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="management_artadd">
+    <commands>
+      <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+Insert Into wod_lw_article(ID, art_Name, art_Code, art_Content, art_PreContent, cat_Path, art_Description, art_Keywords, 
+                art_Page, art_CreateOn, art_ViewCount, art_Creater)
+Values(:newGUID, :name, :code, :content, :preContent, :cat, :description, :keywords, 
+                :page, :w_nowstring, 0, :curUser)
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_artupdate">
+    <commands>
+      <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+Update wod_lw_article
+set art_Name=:name, 
+art_Code=:code,
+art_Content=:content, 
+art_PreContent=:preContent, 
+cat_Path=:cat, 
+art_Description=:description, 
+art_Keywords=:keywords, 
+art_Page=:page
+Where ID = :artid
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_artload">
+    <commands>
+      <assCommand id="allCats">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+      <sqlCommand id="singleDr" paramenterPrefix=":" excuteType="datareader">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select ID,art_Name,art_Code,art_PreContent,art_Content,art_Page,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
+    where ID = :artid
+    ]]>
+        </sql>
+      </sqlCommand>
+      <assCommand id="art">
+        <typeName>wod.lwcms.dataaccess.ICommonDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>GetSingleArticle</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_artdelete">
+    <commands>
+      <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+delete from wod_lw_article where ID = :artid
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_artlist">
+      <commands>
+        <assCommand id="allCats">
+          <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+          <methodName>getAllCategories</methodName>
+        </assCommand>
+        <sqlCommand id="totalCount" paramenterPrefix=":" excuteType="scalar">
+          <!--excuteType:datareader,excute,scalar-->
+          <sql>
+            <![CDATA[
+    select count(1) from wod_lw_article 
+    where cat_Path like :catPath+'/%' or cat_Path = :catPath
+    ]]>
+          </sql>
+        </sqlCommand>
+        <assCommand id="startRowIndex">
+          <typeName>wod.lwcms.dataaccess.pagerHelper, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+          <methodName>getStartRowIndex</methodName>
+        </assCommand>
+        <assCommand id="endRowIndex">
+          <typeName>wod.lwcms.dataaccess.pagerHelper, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+          <methodName>getEndRowIndex</methodName>
+        </assCommand>
+        <sqlCommand id="pagedDr" paramenterPrefix=":" excuteType="datareader">
+          <!--excuteType:datareader,excute,scalar-->
+          <sql>
+            <![CDATA[
+    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
+    where cat_Path like :catPath+'/%' or cat_Path = :catPath order by art_CreateOn
+    ]]>
+          </sql>
+        </sqlCommand>
+        <assCommand id="articleList">
+          <typeName>wod.lwcms.dataaccess.ICommonDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+          <methodName>GetPagedArticle</methodName>
+        </assCommand>
+      </commands>
+  </multiCommand>
+</commands>

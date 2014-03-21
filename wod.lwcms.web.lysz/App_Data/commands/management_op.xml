@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="op_category">
+    <commands>
+      <assCommand id="cates">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+      <assCommand id="result">
+        <typeName>wod.lwcms.management.optionsConvert, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>convertCategory</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+</commands>

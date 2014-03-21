@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<categories>
+  <category>
+    <name>xvy小站</name>
+    <code>default</code>
+    <fullpath>/default</fullpath>
+    <description></description>
+    <keywords></keywords>
+    <page>category</page>
+    <contentpage>content</contentpage>
+    <subCategories>
+    </subCategories>
+  </category>
+  <category>
+    <name>我的菜谱~.~</name>
+    <code>cookbook</code>
+    <fullpath>/cookbook</fullpath>
+    <description></description>
+    <keywords></keywords>
+    <page>category</page>
+    <contentpage>content</contentpage>
+    <subCategories>
+    </subCategories>
+  </category>
+</categories>

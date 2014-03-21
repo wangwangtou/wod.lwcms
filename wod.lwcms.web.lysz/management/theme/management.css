@@ -1,0 +1,57 @@
+﻿/* lwcms standard */
+body{background-color:#efd;min-width:1020px;}
+h1{padding:9px 9px;}
+h2{padding:7px 7px;}
+h3{padding:4px 4px;}
+p{padding:3px 3px;font-size:14px;}
+p.std-p{text-indent:26px;}
+
+.cl{clear:both;}
+
+/* lwcms management layout */
+.l-top{padding:7px 5px;border:1px solid #489;background-color:#489;}
+.l-middle{padding:7px 5px;background-color:#489;border-top:1px solid #303;}
+.l-content{clear:both;}
+
+.o-logo{font-size:16px;line-height:16px;}
+.o-copyright{font-size:12px;color:#303;padding-left:30px;vertical-align:text-bottom;}
+
+.f-menu{vertical-align:baseline;line-height:18px;}
+.f-menu li{float:left;position:relative;}
+.f-menu a{padding:2px 5px;border-right:1px solid #000;}
+.f-menu li:hover,.f-menu li_hover{background-color:#ef9;}
+a.f-menu_a_last{border-right:0px solid;}
+.f-submenu{position:absolute;left:0px;top:18px;display:none;z-index:100;background-color:#355;width:160px;}
+.f-submenu li,.f-submenu_li{float:none;padding:3px 7px;}
+.f-submenu a{border-right:0px solid #000;}
+.f-menu li:hover .f-submenu,.f-menu li_hover .f-submenu{display:block;}
+.f-submenu li a{color:#fff;}
+.f-submenu li:hover a{color:#000;}
+
+/* index */
+.g-index{width:820px;}
+.f-qlink{float:left;width:198px;margin:4px;height:40px;text-align:center;border:1px solid #8cc;}
+.f-qlink a{line-height:40px;}
+
+/* artadd */
+.g-left{width:340px;float:left;}
+.g-center{width:670px;float:left;}
+
+.f-form{margin:0 auto;}
+.f-form-c2{width:320px;}
+.f-form .fr{width:320px;padding:5px 0;clear:both;}
+.f-form .fr .fr-label{width:100px;float:left;text-align:right;}
+.f-form .fr .fr-input{width:200px;float:left;}
+
+.f-form .fr .fr-input input,.f-form .fr .fr-input select{width:100%;}
+.f-form .fr .fr-input textarea{width:100%;height:60px;}
+.f-sdoc textarea{width:100%;height:400px;}
+
+/* art list */
+.g-left-thin{width:200px;}
+.f-list{width:100%;}
+.f-list-item{padding:10px;border:1px solid #8cc;background:#dff;border-top:0px;}
+.f-list-item.alt{background:#abb;}
+.f-list-item:hover{background:#a0bbbb;}
+.f-cmd{text-align:right;padding:3px 5px 0 0;}
+.f-cmd a{padding:0 5px;}

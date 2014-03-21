@@ -1,0 +1,52 @@
+﻿/* nec-reset.css */
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;font-weight:normal;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+i,cite,em,var,address,dfn{font-style:normal;}
+[hidefocus],summary{outline:0;}
+li{list-style:none;}
+h1,h2,h3,h4,h5,h6,small{font-size:100%;}
+sup,sub{font-size:83%;}
+pre,code,kbd,samp{font-family:inherit;}
+q:before,q:after{content:none;}
+textarea{overflow:auto;resize:none;}
+label,summary{cursor:default;}
+a,button{cursor:pointer;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
+del,ins,u,s,a,a:hover{text-decoration:none;}
+body,textarea,input,button,select,keygen,legend{font:12px/1.14 arial,\5b8b\4f53;color:#333;outline:0;}
+body{background:#fff;}
+a,a:hover{color:#333;}
+/******************************************************/
+.w-1100{margin:auto;background-color:#efefef;}
+.w-1100 .l-top,.w-1100 .l-middle,.w-1100 .l-content,.w-1100 .l-footer{width:1100px;}
+.l-top,.l-middle,.l-content,.l-footer{margin:auto;padding:auto;background-color:#f6f6f6;}
+.l-top-wrap{}
+.l-top{}
+.l-middle-wrap{}
+.l-middle{height:30px;}
+.l-content-wrap{}
+.l-content{}
+.l-footer-wrap{}
+.l-footer{}
+/* wod menu */
+.f-menu{vertical-align:baseline;line-height:18px;}
+.f-menu li{float:left;position:relative;}
+.f-menu a{padding:2px 5px;border-right:1px solid #000;}
+.f-menu li:hover,.f-menu li_hover{background-color:#ef9;}
+a.f-menu_a_last{border-right:0px solid;}
+.f-submenu{position:absolute;left:0px;top:18px;display:none;z-index:100;background-color:#355;width:160px;}
+.f-submenu li,.f-submenu_li{float:none;padding:3px 7px;}
+.f-submenu a{border-right:0px solid #000;}
+.f-menu li:hover .f-submenu,.f-menu li_hover .f-submenu{display:block;}
+.f-submenu li a{color:#fff;}
+.f-submenu li:hover a{color:#000;}
+/* wod footer */
+.f-footer{height:40px;text-align:center;padding:20px 0;background-color:#aaa;color:#333;margin:0 70px;}
+/* wod bottomnav */
+.f-bottomnav{text-align:center;padding:10px 0;}
+.f-bottomnav li{display:inline;}
+.f-bottomnav a{padding:0 30px;border-left:1px solid #333;}
+a.f-bottomnav_a_last{border-right:1px solid #333;}
