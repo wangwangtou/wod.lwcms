@@ -34,7 +34,7 @@
         <!--excuteType:datareader,excute,scalar-->
         <sql>
           <![CDATA[
-    select count(1) from wod_lw_article 
+    select count(1) from wod_lw_article where art_State = "pub"
     ]]>
         </sql>
       </sqlCommand>
@@ -50,7 +50,8 @@
         <!--excuteType:datareader,excute,scalar-->
         <sql>
           <![CDATA[
-    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
+    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,art_Content,art_Page,art_SiteImage,art_ExtendData,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater,art_State from wod_lw_article 
+    where  art_State = "pub"
     order by art_CreateOn desc
     ]]>
         </sql>
@@ -84,7 +85,7 @@
         <sql>
           <![CDATA[
     select count(1) from wod_lw_article 
-    where cat_Path= :requestName
+    where cat_Path= :requestName and art_State = "pub"
     ]]>
         </sql>
       </sqlCommand>
@@ -100,8 +101,8 @@
         <!--excuteType:datareader,excute,scalar-->
         <sql>
           <![CDATA[
-    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
-    where cat_Path = :categoryPath order by art_CreateOn
+    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,art_Content,art_Page,art_SiteImage,art_ExtendData,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater,art_State from wod_lw_article 
+    where cat_Path = :categoryPath and art_State = "pub" order by art_CreateOn
     ]]>
         </sql>
       </sqlCommand>
@@ -129,8 +130,8 @@
         <!--excuteType:datareader,excute,scalar-->
         <sql>
           <![CDATA[
-    select ID,art_Name,art_Code,art_PreContent,art_Content,art_Page,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater from wod_lw_article 
-    where cat_Path = :categoryPath and art_Code = :articleName
+    select ID,art_Name,art_Code,art_PreContent,art_Content,art_SiteImage,art_ExtendData,art_Page,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater,art_State from wod_lw_article 
+    where cat_Path = :categoryPath and art_Code = :articleName and art_State = "pub"
     ]]>
         </sql>
       </sqlCommand>

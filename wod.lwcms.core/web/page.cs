@@ -24,6 +24,7 @@ namespace wod.lwcms.web
 
             _ioc.Regist(typeof(ISiteService), typeof(SiteService));
             _ioc.Regist(typeof(ICategoryService), typeof(CategoryService));
+            _ioc.Regist(typeof(IAuthenticationService), typeof(AuthenticationService));
 
             _ioc.Regist(typeof(ISiteDataAccess), typeof(SiteDataAccess));
             _ioc.Regist(typeof(ICategoryDataAccess), typeof(CategoryDataAccess));

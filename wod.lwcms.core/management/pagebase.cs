@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Web.UI;
 
 namespace wod.lwcms.management
 {
@@ -48,7 +49,7 @@ namespace wod.lwcms.management
             if (!string.IsNullOrEmpty(loadCmd))
             {
                 objectPool po = _ioc.GetService<objectPool>();
-                InitPo(po, Request.Form, ServerParams);
+                InitPo(po, Request.QueryString, ServerParams);
                 commands.commandsParameter cp = new commands.commandsParameter(_ioc, po);
                 cp.AddObject("cp", cp);
                 var cmd = commands.commandPool.getCommand("management_"+loadCmd);
@@ -94,7 +95,7 @@ namespace wod.lwcms.management
         {
             foreach (string key in formData.AllKeys)
             {
-                po.setOjbect(key, formData[key]);
+                po.setOjbect(key, GetCorrectTypeObj(formData, key));
             }
             foreach (var key in serverParams.Keys)
             {
@@ -109,11 +110,56 @@ namespace wod.lwcms.management
         {
         }
 
+        private object GetCorrectTypeObj(System.Collections.Specialized.NameValueCollection items, string item)
+        {
+            if (itemTypes.ContainsKey(item))
+            {
+                return Convert.ChangeType(items[item], itemTypes[item]);
+            }
+            else
+            {
+                return items[item];
+            }
+        }
+
+        protected readonly Dictionary<string, Type> itemTypes = new Dictionary<string, Type>()
+        {
+            {"pageIndex",typeof(int)}
+        };
+
         public override void Dispose()
         {
             base.Dispose();
             if (PD != null)
                 PD.Dispose();
+        }
+    }
+
+
+
+    public class tempControl : UserControl
+    {
+        public static string ResourceUrl(string path)
+        {
+            return System.Web.VirtualPathUtility.GetDirectory("~/") + path;
+        }
+
+        public objectPool PD
+        {
+            get { return (Page as pagebase).PD; }
+        }
+    }
+
+    public class tempMaster : MasterPage
+    {
+        public static string ResourceUrl(string path)
+        {
+            return System.Web.VirtualPathUtility.GetDirectory("~/") + path;
+        }
+
+        public objectPool PD
+        {
+            get { return (Page as pagebase).PD; }
         }
     }
 }

@@ -24,8 +24,18 @@ namespace wod.lwcms.management
             foreach (var item in cates)
             {
                 option.Add(new option(item.name, item.fullpath));
+                AddSubCategory(option, item,1);
             }
             return option;
+        }
+
+        private void AddSubCategory(List<option> option, models.category cate, int level)
+        {
+            foreach (var item in cate.subCategory)
+            {
+                option.Add(new option("".PadLeft(2*level,'-') + " " + item.name, item.fullpath));
+                AddSubCategory(option, item, level + 1);
+            }
         }
     }
 }

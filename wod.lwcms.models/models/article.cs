@@ -48,5 +48,9 @@ namespace wod.lwcms.models
         public long viewCount { get; set; }
 
         public string creater { get; set; }
+
+        public string state { get; set; }
+
+        public string extendData { get; set; }
     }
 }

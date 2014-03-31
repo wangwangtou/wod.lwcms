@@ -48,7 +48,9 @@
     <Compile Include="models\ISeoObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="models\wodsite.cs" />
+    <Compile Include="services\AuthenticationService.cs" />
     <Compile Include="services\CategoryService.cs" />
+    <Compile Include="services\IAuthenticationService.cs" />
     <Compile Include="services\ICategoryService.cs" />
     <Compile Include="services\ISiteService.cs" />
     <Compile Include="services\SiteService.cs" />

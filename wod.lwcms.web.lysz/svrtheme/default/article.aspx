@@ -2,7 +2,7 @@
 <asp:Content runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="maincontent">
-<div>
+<div class="bg-main pd-20">
     <h1><%=PD.art.name %></h1>
     <span><%=PD.art.createOn.ToString("yyyy-MM-dd HH:mm:ss") %></span>
     <div><%=PD.art.content %></div>

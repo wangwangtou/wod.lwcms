@@ -8,6 +8,8 @@ namespace wod.lwcms.dataaccess
     {
         public int getStartRowIndex(int totalCount,int pageIndex, int pageSize,commands.commandsParameter cp)
         {
+            pageIndex = pageIndex - 1;
+
             if (pageIndex < 0)
                 pageIndex = 0;
             if (pageIndex * pageSize > totalCount)

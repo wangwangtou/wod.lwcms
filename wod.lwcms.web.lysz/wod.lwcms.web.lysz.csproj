@@ -57,11 +57,18 @@
     <Content Include="App_Data\commands\management_op.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\commands\management_auth.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\lwcms.mdb" />
-    <Content Include="App_Data\site.xml" />
+    <Content Include="App_Data\site.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\_category.xml" />
     <Content Include="App_Data\_site.xml" />
     <Content Include="index.aspx" />
+    <Content Include="management\artforms\cookbook.htm" />
+    <Content Include="management\artforms\dataform-sample.htm" />
     <Content Include="management\editor\demo.aspx" />
     <Content Include="management\editor\kindeditor.js" />
     <Content Include="management\editor\lang\ar.js" />
@@ -259,6 +266,8 @@
     <Content Include="management\artlist.aspx" />
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="management\scripts\jquery.json-2.4.min.js" />
+    <Content Include="management\shared\pager.ascx" />
     <Content Include="scripts\jquery-1.4.1.min.js" />
     <Content Include="management\scripts\management.framework.js" />
     <Content Include="management\theme\management.css" />
@@ -266,14 +275,10 @@
     <Content Include="svrtheme\default\index.aspx" />
     <Content Include="svrtheme\default\category.aspx" />
     <Content Include="svrtheme\default\article.aspx" />
+    <Content Include="svrtheme\shared\pager.ascx" />
     <Content Include="theme\default\style.css" />
+    <Content Include="theme\images\small.png" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,56 +9,56 @@
     <script type="text/javascript" src="<%=ResourceUrl("scripts/jquery-1.4.1.min.js") %>"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>
-<body class="w-1100">
-    <div class="l-top-wrap">
-        <div class="l-top">
-            <h1 class="o-logo"><%=PD.ws.siteName%></h1>
-            <span class="o-copyright">
-            </span>
+<body class="w-auto bg-bg">
+    <div class="g-header">
+        <div class="bg-f4">
+            <h1 class="bg-h1"><img align="center" src="<%=ResourceUrl("theme/images/small.png")%>" /><%=PD.ws.siteName%></h1>
+            <p class="bg-f3">逃避问题，问题增加一倍；面对问题，问题减少一半。</p>
+        </div>
+        <div class="nav bg-f2 link-main h4">
+            <% List<siteNavi> mainNav = PD.ws.navis["main"]; 
+                for (int i = 0; i < mainNav.Count; i++)
+                {
+                    siteNavi nav = mainNav[i];
+                    %><a <%=i==mainNav.Count-1 ? "class=\"f-menu_a_last\" " : "" %>href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
+                    if (nav.subNavis.Count > 0)
+                    { %>
+                    <p class="subs">
+                    <span class="subsplit">|</span>
+                    <% for(int j = 0;j < nav.subNavis.Count;j++)
+                        {
+                            siteNavi snav = nav.subNavis[j];
+                            %><a <%=j==nav.subNavis.Count-1 ? "class=\"f-menu_a_last\" " : "" %>href="<%=snav.naviUrl %>" title="<%=snav.title %>" target="<%=snav.target %>"><%=snav.name %></a><%
+                        }                                                                                                           
+                    %>
+                    <span class="subsplit">|</span></p><%                                                                                                          
+                    }
+                    if (i != mainNav.Count - 1)
+                    {%>
+                    <span class="split">|</span>
+                <%}
+                }  %>
         </div>
     </div>
-    <div class="l-middle-wrap">
-        <div class="l-middle">
-            <ul class="f-menu">
-                <% List<siteNavi> mainNav = PD.ws.navis["main"]; 
-                   for (int i = 0; i < mainNav.Count; i++)
-                   {
-                       siteNavi nav = mainNav[i];
-                       %><li><a <%=i==mainNav.Count-1 ? "class=\"f-menu_a_last\" " : "" %>href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
-                       if (nav.subNavis.Count > 0)
-                       { %>
-                        <ul class="f-submenu">
-                        <% for(int j = 0;j < nav.subNavis.Count;j++)
-                           {
-                               siteNavi snav = nav.subNavis[j];
-                               %><li><a <%=j==nav.subNavis.Count-1 ? "class=\"f-menu_a_last\" " : "" %>href="<%=snav.naviUrl %>" title="<%=snav.title %>" target="<%=snav.target %>"><%=snav.name %></a></li><%
-                           }                                                                                                           
-                        %>
-                        </ul><%                                                                                                          
-                        } %></li>
-                    <%
-                    }  %>
-            </ul>
-        </div>
-    </div>
-    <div class="l-content-wrap">
-        <div class="l-content">
-            <asp:ContentPlaceHolder ID="maincontent" runat="server">
+    <div class="bg-main">
+        <asp:ContentPlaceHolder ID="maincontent" runat="server">
         
-            </asp:ContentPlaceHolder>
-        </div>
+        </asp:ContentPlaceHolder>
     </div>
-    <div class="l-footer-wrap">
-        <div class="l-footer">
-            <p class="f-footer"><%=PD.ws.copyright%></p>
-            <ul class="f-bottomnav"><% 
+    <div class="bg-f3 pd-v20">
+        <div class="nav-bottom">
+            <% 
             List<siteNavi> bNav = PD.ws.navis["bottom"];
             for (int i = 0; i < bNav.Count; i++)
             {
                 siteNavi nav = bNav[i];
-                %><li><a <%=i==bNav.Count-1 ? "class=\"f-bottomnav_a_last\" " : "" %>href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
-            }%></ul>
+                %><a <%=i==bNav.Count-1 ? "class=\"f-bottomnav_a_last\" " : "" %>href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
+                if (i != mainNav.Count - 1)
+                {%>
+                    <span class="split">|</span><%}
+            }%>
         </div>
+        <p class="m-copyright bg-f2"><%=PD.ws.copyright%></p>
     </div>
 </body>
 </html>

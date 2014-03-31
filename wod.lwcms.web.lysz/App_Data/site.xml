@@ -1,31 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <sites>
   <site key="default">
-    <siteName>welcome to xvy</siteName>
+    <siteName>朝向美好</siteName>
     <siteUrl>http://www.xvycn.com/</siteUrl>
-    <description>xvy小站,兰影书斋,economics学习</description>
+    <description>
+      <![CDATA[我是一名程序员，盼望着美好的未来。会一些糊口小菜、编程，刚刚开始学习经济学。如果您有需要帮助的，可以联系我，<a>我的能力范围</a>。
+    ]]>
+    </description>
     <keywords>xvy小站,兰影书斋,economics学习</keywords>
     <copyright>
       <![CDATA[© Copyright 2014-2015   wangwangtou@qq.com版权所有<br>本站点为个人网站，转载请注明出处。]]>
     </copyright>
     <title>Xvy 朝向美好</title>
     <navis key="main">
-      <navi name="xvy小站" target="_self" title="xvy小站">/index.aspx
-        <subNavis>
-          <navi name="我的菜谱" target="_self" title="我的菜谱">/index.aspx?path=/cookbook</navi>
-        </subNavis>
+      <navi name="主页" target="_self" title="主页">/index.aspx
+        <subNavis></subNavis>
       </navi>
-      <navi name="兰影书斋" target="_self" title="兰影书斋">http://lysz.xvycn.com/index.aspx
-        <subNavis>
-          <navi name="摄影园地" target="_self" title="摄影园地">http://lysz.xvycn.com/index.aspx?path=/photo</navi>
-          <navi name="书法展示" target="_self" title="书法展示">http://lysz.xvycn.com/index.aspx?path=/lettering</navi>
-          <navi name="我的文本" target="_self" title="我的文本">http://lysz.xvycn.com/index.aspx?path=/article</navi>
-          <navi name="其他作品" target="_self" title="其他作品">http://lysz.xvycn.com/index.aspx?path=/other</navi>
-          <navi name="关于" target="_self" title="关于">http://lysz.xvycn.com/index.aspx?path=/about.html</navi>
-        </subNavis>
-      </navi>
-      <navi name="学习日志" target="_self" title="学习日志">http://mer.xvycn.com/index.aspx
-      </navi>
+      <navi name="我的菜单" target="_self" title="我的菜单">/index.aspx?path=/default/cookbook</navi>
+        
+      <navi name="学习日志" target="_self" title="学习日志">/index.aspx?path=/mer</navi>
     </navis>
     <navis key="top">
     </navis>
@@ -33,3 +26,12 @@
     </navis>
   </site>
 </sites>
+      <!--<navi name="兰影书斋" target="_self" title="兰影书斋">http://lysz.xvycn.com/index.aspx
+        <subNavis>
+          <navi name="摄影园地" target="_self" title="摄影园地">http://lysz.xvycn.com/index.aspx?path=/photo</navi>
+          <navi name="书法展示" target="_self" title="书法展示">http://lysz.xvycn.com/index.aspx?path=/lettering</navi>
+          <navi name="我的文本" target="_self" title="我的文本">http://lysz.xvycn.com/index.aspx?path=/article</navi>
+          <navi name="其他作品" target="_self" title="其他作品">http://lysz.xvycn.com/index.aspx?path=/other</navi>
+          <navi name="关于" target="_self" title="关于">http://lysz.xvycn.com/index.aspx?path=/about.html</navi>
+        </subNavis>
+      </navi>-->

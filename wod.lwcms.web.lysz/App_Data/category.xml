@@ -9,12 +9,23 @@
     <page>category</page>
     <contentpage>content</contentpage>
     <subCategories>
+      <category>
+        <name>我的菜单~.~</name>
+        <code>cookbook</code>
+        <fullpath>/default/cookbook</fullpath>
+        <description></description>
+        <keywords></keywords>
+        <page>category</page>
+        <contentpage>content</contentpage>
+        <subCategories>
+        </subCategories>
+      </category>
     </subCategories>
   </category>
   <category>
-    <name>我的菜谱~.~</name>
-    <code>cookbook</code>
-    <fullpath>/cookbook</fullpath>
+    <name>学习日志</name>
+    <code>mer</code>
+    <fullpath>/mer</fullpath>
     <description></description>
     <keywords></keywords>
     <page>category</page>

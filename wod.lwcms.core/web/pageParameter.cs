@@ -50,9 +50,26 @@ namespace wod.lwcms.web
             op.setOjbect("requestName", p.requestName);
             foreach (string item in request.QueryString.Keys)
             {
-                op.setOjbect(item, request.QueryString[item]);
+                op.setOjbect(item, getObj(request.QueryString, item));
             }
             return p;
         }
+
+        private static object getObj(System.Collections.Specialized.NameValueCollection nameValueCollection, string item)
+        {
+            if (queryStringTypes.ContainsKey(item))
+            {
+                return Convert.ChangeType(nameValueCollection[item], queryStringTypes[item]);
+            }
+            else
+            {
+                return nameValueCollection[item];
+            }
+        }
+
+        private static readonly Dictionary<string, Type> queryStringTypes = new Dictionary<string, Type>()
+        {
+            {"pageIndex",typeof(int)}
+        };
     }
 }

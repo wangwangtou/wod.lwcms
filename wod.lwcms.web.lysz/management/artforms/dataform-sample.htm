@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <!--表单容器，从Form开始 data-form="form"-->
+    <div data-form="form">
+        <!-- 表单内容，任意一个带name属性的input,textares,select name的值为数据的属性名，最后得到的值为 
+                data.name = value -->
+        <input type="text" name="name" value="" />
+        <input type="password" name="password" value="" />
+        <!-- 表单内的一对多 列表容器data-form="list"，容器内必须包含 row容器，list-name的值为数据的属性名，该属性为Array对象 ，最后得到的值为
+                data.records = [rowdata1 rowdata2] -->
+        <table border="0" cellpadding="0" cellspacing="0" data-form="list" list-name="records">
+            <tr>
+                <td>
+                名称
+                </td>
+                <td>
+                花费
+                </td>
+            </tr>
+            <!-- 表单内列表容器的数据行容器data-form="row"，容器内的内容同form容器，也可包含子列表、子表单，
+                    该容器内的数据将作为list数组中的一项 rowdata -->
+            <tr data-form="row">
+                <td>
+                    <!-- name 必须包含父级属性的属性名 -->
+                    <input type="text" name="records.name" value="" />
+                </td>
+                <td>
+                    <input type="text" name="records.cost" value="" />
+                </td>
+                <td>
+                    <!-- 子列表容器 list-name 同 input.name-->
+                    <div data-form="list" list-name="records.selects">
+                        <div data-form="row">
+                            <input type="text" name="records.selects.name" value="" />
+                        </div>
+                        <div data-form="row">
+                            <input type="text" name="records.selects.name" value="" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr data-form="row">
+                <td>
+                    <input type="text" name="records.name" value="" />
+                </td>
+                <td>
+                    <input type="text" name="records.cost" value="" />
+                </td>
+                <td>
+                    <!-- 表单内的子表单容器data-form="subform"，容器内的内容同form容器，也可包含子列表、子表单，
+                    该容器内的数据将作为一个对象，体现在父级对象的一个属性中  subform-name 同 input.name
+                     -->
+                    <div data-form="subform" subform-name="records.address">
+                        <input type="text" name="records.address.x" value="" />
+                        <input type="text" name="records.address.y" value="" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!--该表单最后得到的数据结构如下
+{
+    name : "",
+    password : "",
+    records : [
+        {
+            name : "",
+            cost : "",
+            selects : [
+                { name : "" },
+                { name : "" }
+            ]
+        },
+        {
+            name : "",
+            cost : "",
+            address : {
+                x : "" ,
+                y : "" 
+            }
+        },
+    ]
+}
+容器及属性之间的包含关系：
+form
+    input,textarea,select
+    subform
+        input,textarea,select
+        subform 
+        list
+    list
+        row
+            input,textarea,select
+            subform 
+            list 
+1、list下只能包含row；
+2、list subform 和 input,textarea,select一样，都作为父级的属性，只是处理相对复杂的属性。
+-->
+</body>
+</html>

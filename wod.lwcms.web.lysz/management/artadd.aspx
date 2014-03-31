@@ -2,7 +2,9 @@
 MasterPageFile="~/management/managepage.master"%>
 <script runat="server" type="text/C#">
     public override string loadCmd { get { return string.IsNullOrEmpty(Request.QueryString["id"]) ? "" : "artload"; } set { } }
-    public override string ajaxCmd { get { return string.IsNullOrEmpty(Request.QueryString["id"]) ? "artadd" : "artupdate"; } set { } }
+    public override string ajaxCmd { get { 
+        return string.IsNullOrEmpty(Request.QueryString["id"]) ? "artadd" : "artupdate"; 
+    } set { } }
 
     protected override void PreLoadCommand()
     {
@@ -34,10 +36,11 @@ MasterPageFile="~/management/managepage.master"%>
   if (art != null)
   {%>
     <script type="text/javascript">var artData = <%=wod.lwcms.common.ToJson(art) %>;
-    artData.cat = artData.category.fullpath;</script>
+    /*artData.cat = artData.category.fullpath;
+    artData.image = $.toJSON(artData.image);*/</script>
     <script type="text/javascript">
         $(function () {
-            $("body").loadFormData(artData);
+            $("body").setFormData(artData);
         });
     </script>
 <% }%>
@@ -47,7 +50,13 @@ MasterPageFile="~/management/managepage.master"%>
                 schema: _$wod_form.artSch
                 , submit: { selector: "#fsubmit"
                     , event: "click"
-                    , settings: { url: "artadd.aspx?id=<%=Request.QueryString["id"] %>", callback : function(){ alert("保存成功");} }
+                    , posts: { url: "artadd.aspx?id=<%=Request.QueryString["id"] %>", callback : function(){ alert("保存成功");} }
+                    , validate : function(data,errorCallback){
+                        errorCallback("name","不能为空");
+                        return true;
+                    }
+                    , preSubmit : function(){
+                    }
                 }
             });
             $("#fcancel").click(function () {
@@ -76,7 +85,7 @@ MasterPageFile="~/management/managepage.master"%>
         </div>
         <div class="fr">
                 <div class="fr-label"><label for="input5">分类：</label></div>
-                <div class="fr-input"><input type="text" name="cat" value="" id="input5" /></div>
+                <div class="fr-input"><input type="text" name="category" value="" id="input5" /></div>
             </div>
             <div class="fr">
                 <div class="fr-label"><label for="input7">关键字：</label></div>
@@ -89,6 +98,10 @@ MasterPageFile="~/management/managepage.master"%>
         <div class="fr ">
                 <div class="fr-label"><label for="input9">关联图片：</label></div>
                 <div class="fr-input"><input type="text" name="image" value="" id="input9" /></div>
+        </div>
+        <div class="fr ">
+                <div class="fr-label"><label for="input10">扩展属性：</label></div>
+                <div class="fr-input"><input type="text" name="extendData" value="" id="input10" /></div>
         </div>
     </fieldset>
 </div>

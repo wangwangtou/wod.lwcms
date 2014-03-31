@@ -1,7 +1,13 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" 
 MasterPageFile="~/management/managepage.master"%>
+<%@ Register Src="~/management/shared/pager.ascx" TagName="pager" TagPrefix="s" %>
+
 <script runat="server" type="text/C#">
-    public override string ajaxCmd { get { return "artdelete"; } set { } }
+    public override string ajaxCmd { get { 
+        return Request.QueryString["act"] == "pub" ? "artpublish" 
+            : (Request.QueryString["act"] == "unpub" ? "artunpublish" 
+                :"artdelete"); 
+    } set { } }
 
     protected override void PreLoadCommand()
     {
@@ -18,11 +24,23 @@ MasterPageFile="~/management/managepage.master"%>
     <script type="text/javascript">
         function _delete(id) {
             if (confirm("确定要删除该内容？")) {
-                $.ajax({ url: "artlist.aspx", data: { artid: id }, type: "post", success: function (data) {
+                $.ajax({ url: "artlist.aspx?act=delete", data: { artid: id }, type: "post", success: function (data) {
                     location.reload();
                 }, error: function () { alert("删除失败！"); location.reload(); }
                 });
             }
+        }
+        function _publish(id) {
+            $.ajax({ url: "artlist.aspx?act=pub", data: { artid: id }, type: "post", success: function (data) {
+                location.reload();
+            }, error: function () { alert("发布成功！"); location.reload(); }
+            });
+        }
+        function _unpublish(id) {
+            $.ajax({ url: "artlist.aspx?act=unpub", data: { artid: id }, type: "post", success: function (data) {
+                location.reload();
+            }, error: function () { alert("取消发布成功！"); location.reload(); }
+            });
         }
     </script>
 </asp:Content>
@@ -35,7 +53,13 @@ MasterPageFile="~/management/managepage.master"%>
 <li><a href="artlist.aspx">全部</a></li>
 <%foreach (category c in allCats)
   {
-%><li><a href="artlist.aspx?path=<%=c.fullpath %>"><%=c.name %></a></li><%      
+%><li><a href="artlist.aspx?path=<%=c.fullpath %>"><%=c.name %></a><%   
+      if (c.subCategory.Count > 0)
+      {%><ul><% foreach (category cc in c.subCategory)
+                {
+                 %><li><a href="artlist.aspx?path=<%=cc.fullpath %>">--<%=cc.name%></a></li><%    
+                } %></ul><% 
+      }       %></li><%                                                        
   } %>
 </ul>
 </fieldset>
@@ -49,10 +73,10 @@ MasterPageFile="~/management/managepage.master"%>
   {
 %><li>
 <div class="f-list-item<%=(alt=!alt)?"":" alt"%>"><%=a.name %>
-    <div class="f-cmd"><a href="artadd.aspx?id=<%=a.id %>">编辑</a><a href="javascript:_delete('<%=a.id %>');">删除</a></div>
+    <div class="f-cmd"><%=a.state == "pub" ? "<a href=\"javascript:_unpublish('" + a.id + "');\">取消发布</a>" : "<a href=\"javascript:_publish('" + a.id + "');\">发布</a>"%><a href="artadd.aspx?id=<%=a.id %>">编辑</a><a href="javascript:_delete('<%=a.id %>');">删除</a></div>
 </div></li><%      
   } %>
 </ul>
-<p class="c-pg"></p>
+<s:pager runat="server" />
 </div>
 </asp:Content>
