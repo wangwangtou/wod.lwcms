@@ -60,15 +60,26 @@
     <Content Include="App_Data\commands\management_auth.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\lwcms.mdb" />
-    <Content Include="App_Data\site.xml">
+    <Content Include="App_Data\commands\otherextend.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\_category.xml" />
-    <Content Include="App_Data\_site.xml" />
+    <Content Include="App_Data\commands\authentication.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\commands\management_base.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\lwcms.mdb" />
+    <None Include="App_Data\site.xml.bak">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App_Data\category.xml.bak" />
     <Content Include="index.aspx" />
-    <Content Include="management\artforms\cookbook.htm" />
-    <Content Include="management\artforms\dataform-sample.htm" />
+    <Content Include="management\artforms\cookbook.html" />
+    <Content Include="management\artforms\dataform-sample.html" />
+    <Content Include="management\artforms\window.html" />
+    <Content Include="management\artforms\catform.html" />
+    <Content Include="management\artforms\naviform.html" />
     <Content Include="management\editor\demo.aspx" />
     <Content Include="management\editor\kindeditor.js" />
     <Content Include="management\editor\lang\ar.js" />
@@ -267,18 +278,30 @@
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="management\scripts\jquery.json-2.4.min.js" />
+    <Content Include="management\scripts\management.form.base.js" />
     <Content Include="management\shared\pager.ascx" />
+    <Content Include="management\base.aspx" />
     <Content Include="scripts\jquery-1.4.1.min.js" />
     <Content Include="management\scripts\management.framework.js" />
     <Content Include="management\theme\management.css" />
     <Content Include="management\theme\nec-reset.css" />
+    <Content Include="scripts\lwcms-client.js" />
+    <Content Include="scripts\mer-graph.js" />
+    <Content Include="svrtheme\default\authentication\login.aspx" />
+    <Content Include="svrtheme\default\authentication\regist.aspx" />
+    <Content Include="svrtheme\default\cmtpart.htm" />
+    <Content Include="svrtheme\default\getcomment.aspx" />
     <Content Include="svrtheme\default\index.aspx" />
     <Content Include="svrtheme\default\category.aspx" />
     <Content Include="svrtheme\default\article.aspx" />
+    <Content Include="svrtheme\default\getpuzzle.aspx" />
     <Content Include="svrtheme\shared\pager.ascx" />
     <Content Include="theme\default\style.css" />
     <Content Include="theme\images\small.png" />
     <Content Include="Web.config" />
+    <Content Include="App_Data\site.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -315,6 +338,7 @@
   <ItemGroup>
     <Content Include="management\common.ashx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

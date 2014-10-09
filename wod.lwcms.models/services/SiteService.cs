@@ -26,5 +26,11 @@ namespace wod.lwcms.services
         {
             throw new NotImplementedException();
         }
+
+
+        public void updateSite(models.wodsite site)
+        {
+            _da.SaveSite(_siteKey, site);
+        }
     }
 }

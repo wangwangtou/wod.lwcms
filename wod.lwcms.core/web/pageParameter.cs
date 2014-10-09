@@ -5,8 +5,17 @@ using System.Web;
 
 namespace wod.lwcms.web
 {
+
     public class pageParameter
     {
+        private static void AddLwParameters(objectPool op,HttpRequest request)
+        {
+            op.setOjbect("lw_actData", wodEnvironment.GetActDataString(request));
+            op.setOjbect("lw_newid", wodEnvironment.GetNewId());
+            op.setOjbect("lw_now", wodEnvironment.GetNowString());
+            op.setOjbect("lw_user", wodEnvironment.GetUser());
+        }
+
         public pageType pageType { get; private set; }
 
         public string pageCommandId { get; private set; }
@@ -51,6 +60,14 @@ namespace wod.lwcms.web
             foreach (string item in request.QueryString.Keys)
             {
                 op.setOjbect(item, getObj(request.QueryString, item));
+            }
+            AddLwParameters(op,request);
+            if (p.pageType == pageType.common)
+            {
+                foreach (string item in request.Form.Keys)
+                {
+                    op.setOjbect(item, getObj(request.Form, item));
+                }
             }
             return p;
         }

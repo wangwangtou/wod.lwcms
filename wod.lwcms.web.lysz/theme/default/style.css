@@ -27,11 +27,17 @@ h3,.h3{font-size:18px;line-height:26px;}
 h4,.h4{font-size:16px;line-height:26px;}
 p{text-indent:28px;font-size:14px;line-height:16px;padding:4px;}
 
+.m-doc ul{}
+.m-doc ol{padding-left:10px;list-style-type:decimal;}
+.m-doc ol li{text-indent:28px;list-style-type:decimal;list-style-position:inside;font-size:14px;line-height:16px;}
+
 .pd-v20{padding:20px 0;}
 .pd-v15{padding:15px 0;}
+.pd-v10{padding:10px 0;}
 .pd-v5{padding:5px 0;}
 .pd-20{padding:20px;}
 .pd-15{padding:15px;}
+.pd-10{padding:10px;}
 .pd-5{padding:5px;}
 
 /* 网站色调 */
@@ -64,6 +70,10 @@ p{text-indent:28px;font-size:14px;line-height:16px;padding:4px;}
 .module { vertical-align:top;text-align:left;}
 .header { background:transparent url(small2.png) no-repeat right top;margin-top:0px;margin-right:0px;}
 .m-copyright{text-align:center;padding:20px 0;margin:0 70px;}
+.m-form,.m-form input,.m-form textarea{font-size:16px;line-height:20px;}
+.m-form input[type=text]{width:300px;}
+.m-form input[type=submit]{width:120px;}
+.m-form textarea{width:300px;height:80px;}
 
 @media screen and (min-width:1280px) {
   .nav { position: fixed; width: 190px; top: 0px; left: 0px; bottom: 0px; }
@@ -71,6 +81,7 @@ p{text-indent:28px;font-size:14px;line-height:16px;padding:4px;}
   .nav span { display:none; }
   body { padding-left: 210px; }
 }
+
 /******************************************************/
 
 /* nec pager -----------------------------------------------------*/

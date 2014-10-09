@@ -11,5 +11,7 @@ namespace wod.lwcms.dataaccess
     {
         List<models.article> GetPagedArticle(DbDataReader pagedDr, int startRowIndex, int endRowIndex, List<models.category> allCats);
         models.article GetSingleArticle(DbDataReader singleDr, List<models.category> allCats);
+       
+        List<models.comment> GetPagedComment(DbDataReader pagedDr, int startRowIndex, int endRowIndex);
     }
 }

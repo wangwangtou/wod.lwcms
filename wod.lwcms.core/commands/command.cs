@@ -6,10 +6,42 @@ namespace wod.lwcms.commands
 {
     public abstract class command
     {
+        public command()
+        {
+            attributes = TypeHelper.CanStringTypeWriteableProperty(this.GetType(), typeof(command));
+        }
+
         public string id { get; set; }
         public string type { get; set; }
 
-        public abstract void excute(commandsParameter cp);
+        public BoolExpress filterExpress { get; set; }
+
+        public virtual bool canExcute(commandsParameter cp)
+        {
+            return filterExpress == null || filterExpress.GetExpressResult(cp);
+        }
+        public virtual void excute(commandsParameter cp)
+        {
+            if (canExcute(cp))
+            {
+                excuteNoCheck(cp);
+            }
+        }
+
+        protected abstract void excuteNoCheck(commandsParameter cp);
+
+        private readonly Dictionary<string,System.Reflection.PropertyInfo> attributes;
+
+        public virtual void parseProperty(System.Xml.XmlNode node)
+        {
+            foreach (System.Xml.XmlAttribute item in node.Attributes)
+            {
+                if (attributes.ContainsKey(item.Name))
+                {
+                    attributes[item.Name].SetValue(this, item.Value, null);
+                }
+            }
+        }
     }
 
     public class assCommand : command
@@ -17,7 +49,7 @@ namespace wod.lwcms.commands
         public string typeName { get; set; }
         public string methodName { get; set; }
 
-        public override void excute(commandsParameter cp)
+        protected override void excuteNoCheck(commandsParameter cp)
         {
             Type type = Type.GetType(typeName);
             var obj = cp.GetObject(type);
@@ -39,13 +71,15 @@ namespace wod.lwcms.commands
     public class sqlCommand : command
     {
         public string sql { get; set; }
+
+        private string sqlExc { get; set; }
         public string paramenterPrefix { get; set; }
 
         public string excuteType { get; set; }
         public bool useTransaction { get; set; }
         public bool isCommit { get; set; }
 
-        public override void excute(commandsParameter cp)
+        protected override void excuteNoCheck(commandsParameter cp)
         {
             var dataAcc = cp.GetObject("dataaccess",typeof(wod.lwcms.dataaccess.DataAccessContext)) as wod.lwcms.dataaccess.DataAccessContext;
             dynamicSQL(cp);
@@ -58,7 +92,7 @@ namespace wod.lwcms.commands
             {
                 dataAcc.BeginTransaction();
             }
-            excute(dataAcc, sql, parameters, cp);
+            excute(dataAcc, sqlExc, parameters, cp);
             if (isCommit)
             {
                 dataAcc.Commit();
@@ -70,7 +104,7 @@ namespace wod.lwcms.commands
             System.Text.RegularExpressions.Regex replaceReg = new System.Text.RegularExpressions.Regex(
                 string.Format(@"[^{0}{0}](?<p>{0}\w+)", "#"));
 
-            sql = replaceReg.Replace(sql, new System.Text.RegularExpressions.MatchEvaluator((m) =>
+            sqlExc = replaceReg.Replace(sql, new System.Text.RegularExpressions.MatchEvaluator((m) =>
             {
                 var paraName = m.Groups["p"].Value.Substring(1);
                return m.Value.Replace("#"+paraName,
@@ -160,7 +194,7 @@ namespace wod.lwcms.commands
     {
         public List<command> commands { get; set; }
 
-        public override void excute(commandsParameter cp)
+        protected override void excuteNoCheck(commandsParameter cp)
         {
             foreach (var item in commands)
             {
@@ -171,7 +205,7 @@ namespace wod.lwcms.commands
 
     public class emptyCommand : command
     {
-        public override void excute(commandsParameter cp)
+        protected override void excuteNoCheck(commandsParameter cp)
         {
         }
     }

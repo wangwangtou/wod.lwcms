@@ -4,7 +4,56 @@ _$wod_form.ajaxValidResponse = function (data) {
     if (!data.status) { alert(data.message); }
     return data.status;
 };
-
+htmlEncode = function (txt) {
+    return $("<div/>").text(txt).html().replace(/"/g, '&quot;');
+};
+(function ($) {
+//    var wodHook = {
+//        get: function (ele) {
+//            if ($(ele).is('[wod]')) {
+//                return $(ele).data("_hookval");
+//            }
+//            else {
+//                return ele.value;
+//            }
+//        }
+//        , set: function (ele, val) {
+//            if ($(ele).is('[wod]')) {
+//                $(ele).data("_hookval", val);
+//                ele.value = $.toJSON(val);
+//            }
+//            else {
+//                ele.value = val;
+//            }
+//            return true;
+//        }
+//    };
+//    $.valHooks.text = $.valHooks.hidden = wodHook;
+    var _hookval = "_hookval";
+    $.fn.wval = function () {
+        if(arguments.length == 0){
+            if(this.is('[wod]')) {
+                return this.data(_hookval);
+            }
+            else{
+                return this.val();
+            }
+        }
+        else{
+            var val = arguments[0];
+            this.each(function () {
+                if($(this).is('[wod]')){
+                    $(this).data(_hookval,val);
+                    $(this).val($.toJSON(val));
+                }
+                else{
+                    $(this).val(val);
+                }
+            });
+            return this;
+        }
+    };
+})($);
 /* controls wodtext woddrop */
 (function ($, K) {
     function _wodtext(setting) {
@@ -40,7 +89,7 @@ _$wod_form.ajaxValidResponse = function (data) {
             var sel = $("<select></select>");
             sel.addClass("woddrop");
             $input.after(sel);
-            $input.attr("type","hidden").hide();
+            $input.hide();
             preHandlerArr.push(function(){ $input.val(sel.val()); });
             $.each(options,function(i,item){
                 sel.append($("<option></option>").text(item.name).val(item.value));
@@ -75,7 +124,7 @@ _$wod_form.ajaxValidResponse = function (data) {
         };
         setting = $.extend(_def, setting);
         var preHandlerArr = setting.formHandler.preSubmitHandler;
-        var editor1 = K.create(this.selector, {
+        var editorSetting ={
             cssPath: 'editor/plugins/code/prettify.css',
             uploadJson: 'editor/upload_json.ashx',
             fileManagerJson: 'editor/file_manager_json.ashx',
@@ -86,7 +135,16 @@ _$wod_form.ajaxValidResponse = function (data) {
                     self.sync();
                 });
             }
-        });
+        };
+        if(setting.type == "simple"){
+            editorSetting.items = [
+                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', '|',
+                'italic', 'underline', 'strikethrough', 'lineheight',
+                'link', 'unlink', '|', 'about'];
+            editorSetting.minWidth = "200px";
+            editorSetting.resizeType=0;
+        }
+        var editor1 = K.create(this.selector, editorSetting);
     }
     $.fn.extend({ wodrichtext: _wodrichtext });
 
@@ -113,12 +171,12 @@ _$wod_form.ajaxValidResponse = function (data) {
         function _updateInput(){
             var data = {};
             for (var i in inputs) {
-                data[+i+"Img"] = inputs[i].val();
+                data[i+"Img"] = inputs[i].val();
             }
-            _input.val($.toJSON(data));
+            _input.wval(data);
         }
         var editorDom = $("<div class=\"f-form-mimg\"></div>");
-        var oldData = _input.val() ? $.evalJSON(_input.val()) : {};
+        var oldData = _input.wval() || {};//更新为直接获取到的json值
         for (var i = 0,length = imageTypes.length; i < length; i++) {
             var imgSetting =  setting[imageTypes[i]];
             if(imgSetting&&imgSetting.canset){
@@ -146,10 +204,44 @@ _$wod_form.ajaxValidResponse = function (data) {
                 editorDom.append("<div class=\"f-form-mimg-label\"><label for=\""+iptID+"\">"+imgSetting.description+"</label></div><div class=\"f-form-mimg-input\"></div>").find(".f-form-mimg-input:last").append(inputs[imageTypes[i]]);
             }
         }
-        _input.attr("type","hidden").hide();
+        _input.hide();
         _input.after(editorDom);
     }
     $.fn.extend({ wodsiteImage: _wodsiteImage });
+
+    function _wodextenddata(setting){
+        var _input = this;
+        var __win;
+        var validate;
+        if(setting.formName){
+            var data = $.evalJSON(this.val());
+            this.focus(function(){
+                $.ui.loadTmp(setting.formName,function($content){
+                    $content.setFormData(data);
+                    $.ui.window($content, {
+                        title: title,
+                        info: "填写表单信息",
+                        closeCallback: function () {
+                            if (__win) __win.remove();
+                            //callback(undefined);
+                        },
+                        okCallback: function () {
+                            var data = $content.getFormData();
+                            if (!validate || validate(data, errorCallback)) {
+                                //callback(data);
+                                _input.val($.toJSON(data));
+                                if (__win) __win.remove();
+                            }
+                        },
+                        loadCallback: function (win) {
+                            __win = win;
+                        }
+                    });
+                });
+            });
+        }
+    }
+    $.fn.extend({ wodextenddata: _wodextenddata });
 })($, KindEditor);
 
 (function (w) {
@@ -170,6 +262,7 @@ _$wod_form.ajaxValidResponse = function (data) {
         , preContent: {display:"内容预览",type:"wodtext",setting:{}}
         , page: {display:"版式",type:"wodtext",setting:{}}
         , image: {display:"相关图片",type:"wodsiteImage",setting:{small:{canset:true},normal:{canset:true},big:{canset:true}}}
+        , extendData :{display:"扩展数据",type:"wodextenddata",setting:{}}
     };
     _$wod_form.artSch = artSch;
     
@@ -215,14 +308,14 @@ _$wod_form.ajaxValidResponse = function (data) {
                     subformdata[pn] = val;
                 }
             } else {
-                data[pn] = val;
+                data[pn] = $dom.is("[str]") ? $.toJSON(val) : val;
             }
         }
         frm.find("input,textarea,select").each(function () {
             if (this.name) {
                 var nameparse = this.name.split(".");
                 var pn = nameparse.pop();
-                var val = $(this).val();
+                var val = $(this).wval();
                 _updateData($(this), nameparse, pn, val);
             }
         });
@@ -233,7 +326,7 @@ _$wod_form.ajaxValidResponse = function (data) {
     }
     function _setFormData(data) {
         for (var name in data) {
-            this.find("[name='"+name+"']").val(data[name]);
+            this.find("[name='"+name+"']").wval(data[name]);
         }
     }
 
@@ -255,31 +348,31 @@ _$wod_form.ajaxValidResponse = function (data) {
             _fpanel.find("[name='"+sn+"']")[s.type](s.setting);
         }
         var submitSet = setting.submit;
-        $(submitSet.selector).bind(submitSet.event,function(){
-            formHandler.preSubmit();
-            var _def = {
-                url : "wodform.ashx?path=/submit"
-                , callback : function(){}
-                , command : "common_form_cmd"
-            };
-            var posts = $.extend(_def, submitSet.posts);
+        if(submitSet){
+            $(submitSet.selector).bind(submitSet.event,function(){
+                formHandler.preSubmit();
+                if(submitSet.posts){
+                    var _def = {
+                        url : "wodform.ashx?path=/submit"
+                        , callback : function(){}
+                        , command : "common_form_cmd"
+                    };
+                    var posts = $.extend(_def, submitSet.posts);
 
-            var data = _getFormData(_fpanel);
-            var errorCallback = function(){};
-            var validate = submitSet.validate;
-            if (!validate || validate(data, errorCallback)){
-                $.ajax({ type:"post" ,url : posts.url , data : data, dataType : "json", error: _$wod_form.ajaxError, success : function(data,statusText){if(_$wod_form.ajaxValidResponse(data)){ posts.callback(data.result); } } });
-            }
-        });
-    }
-
-    function _setFormData(data) {
-        for (var name in data) {
-            this.find("[name='"+name+"']").val(data[name]);
+                    var data = _getFormData(_fpanel);
+                    var errorCallback = function(){};
+                    var validate = submitSet.validate;
+                    var ajOp = { type:"post" ,url : posts.url , data : data, dataType : "json", error: _$wod_form.ajaxError, success : function(data,statusText){if(_$wod_form.ajaxValidResponse(data)){ posts.callback(data.result); } } };
+                    if (!validate || validate(data, errorCallback)){
+                        $.ajax(ajOp);
+                    }
+                }
+            });
         }
     }
     $.fn.extend({
         wodForm:_wodForm,
-        setFormData:_setFormData
+        setFormData:_setFormData,
+        getFormData:function(){return _getFormData(this); }
     });
 })(window,_$wod_form,$);

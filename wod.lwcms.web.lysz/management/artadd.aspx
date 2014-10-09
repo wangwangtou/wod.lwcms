@@ -36,6 +36,7 @@ MasterPageFile="~/management/managepage.master"%>
   if (art != null)
   {%>
     <script type="text/javascript">var artData = <%=wod.lwcms.common.ToJson(art) %>;
+    _$wod_form.artSch.extendData.setting.formName = '<%=art.extendForm %>';
     /*artData.cat = artData.category.fullpath;
     artData.image = $.toJSON(artData.image);*/</script>
     <script type="text/javascript">
@@ -97,7 +98,7 @@ MasterPageFile="~/management/managepage.master"%>
         </div>
         <div class="fr ">
                 <div class="fr-label"><label for="input9">关联图片：</label></div>
-                <div class="fr-input"><input type="text" name="image" value="" id="input9" /></div>
+                <div class="fr-input"><input type="text" wod str name="image" value="" id="input9" /></div>
         </div>
         <div class="fr ">
                 <div class="fr-label"><label for="input10">扩展属性：</label></div>

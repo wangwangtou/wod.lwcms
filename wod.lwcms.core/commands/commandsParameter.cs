@@ -19,7 +19,7 @@ namespace wod.lwcms.commands
             var obj = op.getObject(name);
             if (obj == null)
             {
-                obj = (ioc.GetInstance(name) ?? ioc.GetService(type));
+                obj = (ioc.GetInstance(name) ?? ioc.GetService(type, GetConstructorParameter));
                 op.setOjbect(name, obj);
             }
             return obj;
@@ -27,7 +27,22 @@ namespace wod.lwcms.commands
 
         internal object GetObject(Type type)
         {
-            return ioc.GetService(type);
+            return ioc.GetService(type, GetConstructorParameter);
+        }
+
+        public bool GetConstructorParameter(string name, Type type, out object obj)
+        {
+            bool has = op.Pool.ContainsKey(name);
+            if (has)
+            {
+                obj = op.getObject(name);
+                return obj != null && type.IsAssignableFrom(obj.GetType());
+            }
+            else
+            {
+                obj = null;
+                return false;
+            }
         }
 
         internal void AddObject(string id, object data)

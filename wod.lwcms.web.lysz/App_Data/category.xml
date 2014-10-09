@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <categories>
   <category>
     <name>xvy小站</name>
@@ -8,7 +8,8 @@
     <keywords></keywords>
     <page>category</page>
     <contentpage>content</contentpage>
-    <subCategories>
+    <extendform></extendform>
+    <subcategories>
       <category>
         <name>我的菜单~.~</name>
         <code>cookbook</code>
@@ -17,20 +18,20 @@
         <keywords></keywords>
         <page>category</page>
         <contentpage>content</contentpage>
-        <subCategories>
-        </subCategories>
+        <extendform>cookbook</extendform>
+        <subcategories></subcategories>
       </category>
-    </subCategories>
+    </subcategories>
   </category>
   <category>
     <name>学习日志</name>
     <code>mer</code>
     <fullpath>/mer</fullpath>
-    <description></description>
-    <keywords></keywords>
+    <description>wangwangtou为了他的学习目标，记录他的学习过程。</description>
+    <keywords>经济学学习记录</keywords>
     <page>category</page>
     <contentpage>content</contentpage>
-    <subCategories>
-    </subCategories>
+    <extendform></extendform>
+    <subcategories></subcategories>
   </category>
 </categories>

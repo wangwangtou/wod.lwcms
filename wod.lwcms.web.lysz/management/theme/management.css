@@ -38,14 +38,34 @@ a.f-menu_a_last{border-right:0px solid;}
 .g-center{width:670px;float:left;}
 
 .f-form{margin:0 auto;}
+.f-form .fr{padding:5px 0;clear:both;}
+.f-form .fr .fr-label{width:30%;float:left;text-align:right;}
+.f-form .fr .fr-input{width:65%;float:left;}
+
 .f-form-c2{width:320px;}
-.f-form .fr{width:320px;padding:5px 0;clear:both;}
-.f-form .fr .fr-label{width:100px;float:left;text-align:right;}
-.f-form .fr .fr-input{width:200px;float:left;}
+.f-form-c2 .fr{width:320px;}
+.f-form-c2 .fr .fr-label{width:100px;}
+.f-form-c2 .fr .fr-input{width:200px;}
 
 .f-form .fr .fr-input input,.f-form .fr .fr-input select{width:100%;}
 .f-form .fr .fr-input textarea{width:100%;height:60px;}
 .f-sdoc textarea{width:100%;height:400px;}
+
+.f-tree-wrap{}
+.f-tree-wrap .tcmd{line-height:18px;height:18px;}
+.f-tree-wrap .tcmd a{padding:0px 2px;}
+.f-tree .tnode{position:relative;}
+.f-tree .tnode .tit,.f-tree .tnode .tncmd{line-height:18px;height:18px;}
+.f-tree .tnode.curr > .tit{color:#03f;}
+.f-tree .tnode:hover > .tit{color:#03f;}
+.f-tree{padding-left:8px;}
+.f-root{padding-left:0px;}
+.f-tree .tit{}
+.f-tree .tncmd{position:absolute;top:0;right:0;}
+.f-tree .tncmd a{padding:0px 2px;}
+
+.f-multitree{}
+.f-multitree .treename{color:#e32;}
 
 /* art list */
 .g-left-thin{width:200px;}
@@ -144,3 +164,24 @@ button.u-btn-sm{*height:24px;_line-height:19px;}
 .m-page-sr i{border:0;}
 .m-page-sr a:first-child,.m-page-sr a:last-child{border-radius:5px;}
 /* nec pager -----------------------------------------------------*/
+
+/* nec pop -----------------------------------------------------*/
+/* 操作型弹出浮层-默认居中 */
+.m-layer,.m-layer .lymask{top:0;left:0;width:100%;height:100%;}
+.m-layer{display:none;position:fixed;_position:absolute;z-index:999;}
+.m-layer .lymask{position:absolute;background:#000;opacity:0.6;filter:alpha(opacity=60);}
+.m-layer .lytable{table-layout:fixed;width:100%;height:100%;}
+.m-layer .lytd{width:100%;height:100%;vertical-align:middle;}
+.m-layer .lywrap{position:relative;margin:0 auto;border:5px solid #aaa;}
+.m-layer .lytt{position:relative;padding:10px;height:20px;margin:0 0 -1px;line-height:20px;border-bottom:1px solid #ddd;background:#fafafa;}
+.m-layer .lytt h2{float:left;font-size:16px;}
+.m-layer .lyclose{float:right;font-weight:bold;font-family:arial;font-size:24px;_font-size:16px;color:#ccc;text-shadow:0 1px #fff;cursor:pointer;}
+.m-layer .lyclose:hover{color:#aaa;}
+.m-layer .lyct{padding:20px;background:#fff;}
+.m-layer .lybt{height:30px;line-height:30px;padding:10px;margin:-1px 0 0;border-top:1px solid #ddd;background:#f7f7f7;}
+.m-layer .lyother{float:left;color:#999;}
+.m-layer .lybtns{float:right;}
+.m-layer .lybtns button{float:left;margin-left:10px;}
+/* 显示 */
+.m-layer-show{display:block;}
+/* nec pop -----------------------------------------------------*/

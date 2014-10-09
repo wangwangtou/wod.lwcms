@@ -52,7 +52,7 @@ namespace wod.lwcms.dataaccess
             art.code = dr.GetString(dr.GetOrdinal("art_Code"));
                 art.content = string.Format("{0}", dr.GetValue(dr.GetOrdinal("art_Content")));
                 art.page = string.Format("{0}", dr.GetValue(dr.GetOrdinal("art_Page")));
-            art.image = common.FromJson<JsonSiteImage>(Convert.ToString(dr.GetValue(dr.GetOrdinal("art_SiteImage"))));
+            art.image = common.FromJson<siteImage>(Convert.ToString(dr.GetValue(dr.GetOrdinal("art_SiteImage"))));
             art.extendData = Convert.ToString(dr.GetValue(dr.GetOrdinal("art_ExtendData")));
 
             //art_CreateOn,art_ViewCount,art_Creater
@@ -70,594 +70,563 @@ namespace wod.lwcms.dataaccess
 
         private models.category GetCate(string path, List<models.category> allCats)
         {
-            return new JsonCategory(cateService.getCurCategory(allCats,path));
+            models.category cate = cateService.getCurCategory(allCats, path);
+            return cate ;//== null ? null : new JsonCategory(cate);
         }
 
-        private class JsonSiteImage : models.siteImage, LitJson.IJsonWrapper
-        {
-            public JsonSiteImage()
-            {
-            }
-            void LitJson.IJsonWrapper.ToJson(LitJson.JsonWriter writer)
-            {
-                models.siteImage img = new siteImage();
-
-                img.bigImg = base.bigImg;
-                img.normalImg = base.normalImg;
-                img.smallImg = base.smallImg;
-                new LitJson.JsonData(common.ToJson(img)).ToJson(writer);
-            }
-
-            string LitJson.IJsonWrapper.ToJson()
-            {
-                models.siteImage img = new siteImage();
-                img.bigImg = base.bigImg;
-                img.normalImg = base.normalImg;
-                img.smallImg = base.smallImg;
-                return new LitJson.JsonData(common.ToJson(img)).ToJson();
-            }
-
-            #region MyRegion
-
-
-            bool LitJson.IJsonWrapper.GetBoolean()
-            {
-                throw new NotImplementedException();
-            }
-
-            double LitJson.IJsonWrapper.GetDouble()
-            {
-                throw new NotImplementedException();
-            }
-
-            int LitJson.IJsonWrapper.GetInt()
-            {
-                throw new NotImplementedException();
-            }
-
-            LitJson.JsonType LitJson.IJsonWrapper.GetJsonType()
-            {
-                throw new NotImplementedException();
-            }
-
-            long LitJson.IJsonWrapper.GetLong()
-            {
-                throw new NotImplementedException();
-            }
-
-            string LitJson.IJsonWrapper.GetString()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool LitJson.IJsonWrapper.IsArray
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsBoolean
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsDouble
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsInt
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsLong
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsObject
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsString
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            void LitJson.IJsonWrapper.SetBoolean(bool val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetDouble(double val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetInt(int val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetJsonType(LitJson.JsonType type)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetLong(long val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetString(string val)
-            {
-                throw new NotImplementedException();
-            }
-
-            int System.Collections.IList.Add(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IList.Clear()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IList.Contains(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            int System.Collections.IList.IndexOf(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IList.Insert(int index, object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IList.IsFixedSize
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool System.Collections.IList.IsReadOnly
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            void System.Collections.IList.Remove(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IList.RemoveAt(int index)
-            {
-                throw new NotImplementedException();
-            }
-
-            object System.Collections.IList.this[int index]
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            void System.Collections.ICollection.CopyTo(Array array, int index)
-            {
-                throw new NotImplementedException();
-            }
-
-            int System.Collections.ICollection.Count
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool System.Collections.ICollection.IsSynchronized
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            object System.Collections.ICollection.SyncRoot
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            System.Collections.IDictionaryEnumerator System.Collections.Specialized.IOrderedDictionary.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.Specialized.IOrderedDictionary.Insert(int index, object key, object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.Specialized.IOrderedDictionary.RemoveAt(int index)
-            {
-                throw new NotImplementedException();
-            }
-
-            object System.Collections.Specialized.IOrderedDictionary.this[int index]
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            void System.Collections.IDictionary.Add(object key, object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IDictionary.Clear()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IDictionary.Contains(object key)
-            {
-                throw new NotImplementedException();
-            }
-
-            System.Collections.IDictionaryEnumerator System.Collections.IDictionary.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IDictionary.IsFixedSize
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool System.Collections.IDictionary.IsReadOnly
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            System.Collections.ICollection System.Collections.IDictionary.Keys
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            void System.Collections.IDictionary.Remove(object key)
-            {
-                throw new NotImplementedException();
-            }
-
-            System.Collections.ICollection System.Collections.IDictionary.Values
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            object System.Collections.IDictionary.this[object key]
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-            #endregion
-        }
-
-        private class JsonCategory : models.category,LitJson.IJsonWrapper
-        {
-            public JsonCategory(models.category cate)
-                : base()
-            {
-                base.id = cate.id;
-                base.name = cate.name;
-                base.code = cate.code;
-                base.level = cate.level;
-                base.fullpath = cate.fullpath;
-                base.parent = cate.parent;
-                base.image = cate.image;
-                base.description = cate.description;
-                base.subCategory.AddRange(cate.subCategory);
-                base.keywords = cate.keywords;
-                base.content = cate.content;
-                base.page = cate.page;
-                base.contentpage = cate.contentpage;
-            }
-
-            void LitJson.IJsonWrapper.ToJson(LitJson.JsonWriter writer)
-            {
-                new LitJson.JsonData(base.fullpath).ToJson(writer);
-            }
-
-            string LitJson.IJsonWrapper.ToJson()
-            {
-                return new LitJson.JsonData(base.fullpath).ToJson();
-            }
-
-            #region MyRegion
-            
-
-            bool LitJson.IJsonWrapper.GetBoolean()
-            {
-                throw new NotImplementedException();
-            }
-
-            double LitJson.IJsonWrapper.GetDouble()
-            {
-                throw new NotImplementedException();
-            }
-
-            int LitJson.IJsonWrapper.GetInt()
-            {
-                throw new NotImplementedException();
-            }
-
-            LitJson.JsonType LitJson.IJsonWrapper.GetJsonType()
-            {
-                throw new NotImplementedException();
-            }
-
-            long LitJson.IJsonWrapper.GetLong()
-            {
-                throw new NotImplementedException();
-            }
-
-            string LitJson.IJsonWrapper.GetString()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool LitJson.IJsonWrapper.IsArray
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsBoolean
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsDouble
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsInt
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsLong
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsObject
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool LitJson.IJsonWrapper.IsString
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            void LitJson.IJsonWrapper.SetBoolean(bool val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetDouble(double val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetInt(int val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetJsonType(LitJson.JsonType type)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetLong(long val)
-            {
-                throw new NotImplementedException();
-            }
-
-            void LitJson.IJsonWrapper.SetString(string val)
-            {
-                throw new NotImplementedException();
-            }
-
-            int System.Collections.IList.Add(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IList.Clear()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IList.Contains(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            int System.Collections.IList.IndexOf(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IList.Insert(int index, object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IList.IsFixedSize
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool System.Collections.IList.IsReadOnly
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            void System.Collections.IList.Remove(object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IList.RemoveAt(int index)
-            {
-                throw new NotImplementedException();
-            }
-
-            object System.Collections.IList.this[int index]
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            void System.Collections.ICollection.CopyTo(Array array, int index)
-            {
-                throw new NotImplementedException();
-            }
-
-            int System.Collections.ICollection.Count
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool System.Collections.ICollection.IsSynchronized
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            object System.Collections.ICollection.SyncRoot
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            System.Collections.IDictionaryEnumerator System.Collections.Specialized.IOrderedDictionary.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.Specialized.IOrderedDictionary.Insert(int index, object key, object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.Specialized.IOrderedDictionary.RemoveAt(int index)
-            {
-                throw new NotImplementedException();
-            }
-
-            object System.Collections.Specialized.IOrderedDictionary.this[int index]
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-
-            void System.Collections.IDictionary.Add(object key, object value)
-            {
-                throw new NotImplementedException();
-            }
-
-            void System.Collections.IDictionary.Clear()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IDictionary.Contains(object key)
-            {
-                throw new NotImplementedException();
-            }
-
-            System.Collections.IDictionaryEnumerator System.Collections.IDictionary.GetEnumerator()
-            {
-                throw new NotImplementedException();
-            }
-
-            bool System.Collections.IDictionary.IsFixedSize
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            bool System.Collections.IDictionary.IsReadOnly
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            System.Collections.ICollection System.Collections.IDictionary.Keys
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            void System.Collections.IDictionary.Remove(object key)
-            {
-                throw new NotImplementedException();
-            }
-
-            System.Collections.ICollection System.Collections.IDictionary.Values
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            object System.Collections.IDictionary.this[object key]
-            {
-                get
-                {
-                    throw new NotImplementedException();
-                }
-                set
-                {
-                    throw new NotImplementedException();
-                }
-            }
-            #endregion
-        }
+        //private class JsonSiteImage : models.siteImage, LitJson.IJsonWrapper
+        //{
+        //    public JsonSiteImage()
+        //    {
+        //    }
+        //    void LitJson.IJsonWrapper.ToJson(LitJson.JsonWriter writer)
+        //    {
+        //        models.siteImage img = new siteImage();
+
+        //        img.bigImg = base.bigImg;
+        //        img.normalImg = base.normalImg;
+        //        img.smallImg = base.smallImg;
+        //        new LitJson.JsonData(common.ToJson(img)).ToJson(writer);
+        //    }
+
+        //    string LitJson.IJsonWrapper.ToJson()
+        //    {
+        //        models.siteImage img = new siteImage();
+        //        img.bigImg = base.bigImg;
+        //        img.normalImg = base.normalImg;
+        //        img.smallImg = base.smallImg;
+        //        return new LitJson.JsonData(common.ToJson(img)).ToJson();
+        //    }
+
+        //    #region MyRegion
+
+
+        //    bool LitJson.IJsonWrapper.GetBoolean()
+        //    {
+        //        return default(bool);
+        //    }
+
+        //    double LitJson.IJsonWrapper.GetDouble()
+        //    {
+        //        return default(double);
+        //    }
+
+        //    int LitJson.IJsonWrapper.GetInt()
+        //    {
+        //        return default(int);
+        //    }
+
+        //    LitJson.JsonType LitJson.IJsonWrapper.GetJsonType()
+        //    {
+        //        return LitJson.JsonType.Object;
+        //    }
+
+        //    long LitJson.IJsonWrapper.GetLong()
+        //    {
+        //        return default(long);
+        //    }
+
+        //    string LitJson.IJsonWrapper.GetString()
+        //    {
+        //        return default(string);
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsArray
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsBoolean
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsDouble
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsInt
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsLong
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsObject
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsString
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetBoolean(bool val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetDouble(double val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetInt(int val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetJsonType(LitJson.JsonType type)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetLong(long val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetString(string val)
+        //    {
+        //    }
+
+        //    int System.Collections.IList.Add(object value)
+        //    {
+        //        return 0;
+        //    }
+
+        //    void System.Collections.IList.Clear()
+        //    {
+        //    }
+
+        //    bool System.Collections.IList.Contains(object value)
+        //    {
+        //        return false;
+        //    }
+
+        //    int System.Collections.IList.IndexOf(object value)
+        //    {
+        //        return 0;
+        //    }
+
+        //    void System.Collections.IList.Insert(int index, object value)
+        //    {
+        //    }
+
+        //    bool System.Collections.IList.IsFixedSize
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool System.Collections.IList.IsReadOnly
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    void System.Collections.IList.Remove(object value)
+        //    {
+        //    }
+
+        //    void System.Collections.IList.RemoveAt(int index)
+        //    {
+        //    }
+
+        //    object System.Collections.IList.this[int index]
+        //    {
+        //        get
+        //        {
+        //            return null;
+        //        }
+        //        set
+        //        {
+        //        }
+        //    }
+
+        //    void System.Collections.ICollection.CopyTo(Array array, int index)
+        //    {
+        //    }
+
+        //    int System.Collections.ICollection.Count
+        //    {
+        //        get
+        //        {
+        //            return 0;
+        //        }
+        //    }
+
+        //    bool System.Collections.ICollection.IsSynchronized
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    object System.Collections.ICollection.SyncRoot
+        //    {
+        //        get { return null; }
+        //    }
+
+        //    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        //    {
+        //        return null;
+        //    }
+
+        //    System.Collections.IDictionaryEnumerator System.Collections.Specialized.IOrderedDictionary.GetEnumerator()
+        //    {
+        //        return null;
+        //    }
+
+        //    void System.Collections.Specialized.IOrderedDictionary.Insert(int index, object key, object value)
+        //    {
+        //    }
+
+        //    void System.Collections.Specialized.IOrderedDictionary.RemoveAt(int index)
+        //    {
+        //    }
+
+        //    object System.Collections.Specialized.IOrderedDictionary.this[int index]
+        //    {
+        //        get
+        //        {
+        //            return null;
+        //        }
+        //        set
+        //        {
+        //        }
+        //    }
+
+        //    void System.Collections.IDictionary.Add(object key, object value)
+        //    {
+        //    }
+
+        //    void System.Collections.IDictionary.Clear()
+        //    {
+        //    }
+
+        //    bool System.Collections.IDictionary.Contains(object key)
+        //    {
+        //        return false;
+        //    }
+
+        //    System.Collections.IDictionaryEnumerator System.Collections.IDictionary.GetEnumerator()
+        //    {
+        //        return null;
+        //    }
+
+        //    bool System.Collections.IDictionary.IsFixedSize
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool System.Collections.IDictionary.IsReadOnly
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    System.Collections.ICollection System.Collections.IDictionary.Keys
+        //    {
+        //        get { return null; }
+        //    }
+
+        //    void System.Collections.IDictionary.Remove(object key)
+        //    {
+        //    }
+
+        //    System.Collections.ICollection System.Collections.IDictionary.Values
+        //    {
+        //        get { return null; }
+        //    }
+
+        //    object System.Collections.IDictionary.this[object key]
+        //    {
+        //        get
+        //        {
+        //            return null;
+        //        }
+        //        set
+        //        {
+        //        }
+        //    }
+        //    #endregion
+        //}
+
+        //private class JsonCategory : models.category,LitJson.IJsonWrapper
+        //{
+        //    public JsonCategory(models.category cate)
+        //        : base()
+        //    {
+        //        base.id = cate.id;
+        //        base.name = cate.name;
+        //        base.code = cate.code;
+        //        base.level = cate.level;
+        //        base.fullpath = cate.fullpath;
+        //        base.parent = cate.parent;
+        //        base.image = cate.image;
+        //        base.description = cate.description;
+        //        base.subCategory.AddRange(cate.subCategory);
+        //        base.keywords = cate.keywords;
+        //        base.content = cate.content;
+        //        base.page = cate.page;
+        //        base.contentpage = cate.contentpage;
+        //    }
+
+        //    void LitJson.IJsonWrapper.ToJson(LitJson.JsonWriter writer)
+        //    {
+        //        new LitJson.JsonData(base.fullpath).ToJson(writer);
+        //    }
+
+        //    string LitJson.IJsonWrapper.ToJson()
+        //    {
+        //        return new LitJson.JsonData(base.fullpath).ToJson();
+        //    }
+
+        //    #region MyRegion
+
+
+        //    bool LitJson.IJsonWrapper.GetBoolean()
+        //    {
+        //        return default(bool);
+        //    }
+
+        //    double LitJson.IJsonWrapper.GetDouble()
+        //    {
+        //        return default(double);
+        //    }
+
+        //    int LitJson.IJsonWrapper.GetInt()
+        //    {
+        //        return default(int);
+        //    }
+
+        //    LitJson.JsonType LitJson.IJsonWrapper.GetJsonType()
+        //    {
+        //        return LitJson.JsonType.Object;
+        //    }
+
+        //    long LitJson.IJsonWrapper.GetLong()
+        //    {
+        //        return default(long);
+        //    }
+
+        //    string LitJson.IJsonWrapper.GetString()
+        //    {
+        //        return default(string);
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsArray
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsBoolean
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsDouble
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsInt
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsLong
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsObject
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool LitJson.IJsonWrapper.IsString
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetBoolean(bool val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetDouble(double val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetInt(int val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetJsonType(LitJson.JsonType type)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetLong(long val)
+        //    {
+        //    }
+
+        //    void LitJson.IJsonWrapper.SetString(string val)
+        //    {
+        //    }
+
+        //    int System.Collections.IList.Add(object value)
+        //    {
+        //        return 0;
+        //    }
+
+        //    void System.Collections.IList.Clear()
+        //    {
+        //    }
+
+        //    bool System.Collections.IList.Contains(object value)
+        //    {
+        //        return false;
+        //    }
+
+        //    int System.Collections.IList.IndexOf(object value)
+        //    {
+        //        return 0;
+        //    }
+
+        //    void System.Collections.IList.Insert(int index, object value)
+        //    {
+        //    }
+
+        //    bool System.Collections.IList.IsFixedSize
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool System.Collections.IList.IsReadOnly
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    void System.Collections.IList.Remove(object value)
+        //    {
+        //    }
+
+        //    void System.Collections.IList.RemoveAt(int index)
+        //    {
+        //    }
+
+        //    object System.Collections.IList.this[int index]
+        //    {
+        //        get
+        //        {
+        //            return null;
+        //        }
+        //        set
+        //        {
+        //        }
+        //    }
+
+        //    void System.Collections.ICollection.CopyTo(Array array, int index)
+        //    {
+        //    }
+
+        //    int System.Collections.ICollection.Count
+        //    {
+        //        get
+        //        {
+        //            return 0;
+        //        }
+        //    }
+
+        //    bool System.Collections.ICollection.IsSynchronized
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    object System.Collections.ICollection.SyncRoot
+        //    {
+        //        get { return null; }
+        //    }
+
+        //    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        //    {
+        //        return null;
+        //    }
+
+        //    System.Collections.IDictionaryEnumerator System.Collections.Specialized.IOrderedDictionary.GetEnumerator()
+        //    {
+        //        return null;
+        //    }
+
+        //    void System.Collections.Specialized.IOrderedDictionary.Insert(int index, object key, object value)
+        //    {
+        //    }
+
+        //    void System.Collections.Specialized.IOrderedDictionary.RemoveAt(int index)
+        //    {
+        //    }
+
+        //    object System.Collections.Specialized.IOrderedDictionary.this[int index]
+        //    {
+        //        get
+        //        {
+        //            return null;
+        //        }
+        //        set
+        //        {
+        //        }
+        //    }
+
+        //    void System.Collections.IDictionary.Add(object key, object value)
+        //    {
+        //    }
+
+        //    void System.Collections.IDictionary.Clear()
+        //    {
+        //    }
+
+        //    bool System.Collections.IDictionary.Contains(object key)
+        //    {
+        //        return false;
+        //    }
+
+        //    System.Collections.IDictionaryEnumerator System.Collections.IDictionary.GetEnumerator()
+        //    {
+        //        return null;
+        //    }
+
+        //    bool System.Collections.IDictionary.IsFixedSize
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    bool System.Collections.IDictionary.IsReadOnly
+        //    {
+        //        get { return false; }
+        //    }
+
+        //    System.Collections.ICollection System.Collections.IDictionary.Keys
+        //    {
+        //        get { return null; }
+        //    }
+
+        //    void System.Collections.IDictionary.Remove(object key)
+        //    {
+        //    }
+
+        //    System.Collections.ICollection System.Collections.IDictionary.Values
+        //    {
+        //        get { return null; }
+        //    }
+
+        //    object System.Collections.IDictionary.this[object key]
+        //    {
+        //        get
+        //        {
+        //            return null;
+        //        }
+        //        set
+        //        {
+        //        }
+        //    }
+        //    #endregion
+        //}
 
         public models.article GetSingleArticle(DbDataReader singleDr,List<models.category> allCats)
         {
@@ -672,6 +641,47 @@ namespace wod.lwcms.dataaccess
                     return new models.article();
                 }
             }
+        }
+
+
+        public List<comment> GetPagedComment(DbDataReader pagedDr, int startRowIndex, int endRowIndex)
+        {
+            List<models.comment> dataLst = new List<models.comment>();
+            using (pagedDr)
+            {
+                int s = 1;
+                bool noData = false;
+                while (s < startRowIndex)
+                {
+                    if (!pagedDr.Read())
+                    {
+                        noData = true;
+                        break;
+                    }
+                    s++;
+                }
+                if (!noData)
+                {
+                    while (pagedDr.Read())
+                    {
+                        dataLst.Add(GetComment(pagedDr));
+                    }
+                }
+            }
+            return dataLst;
+        }
+
+        private comment GetComment(DbDataReader dr)
+        {
+            var art = new models.comment();
+            art.id = dr.GetString(dr.GetOrdinal("ID"));
+            art.userName = dr.GetString(dr.GetOrdinal("cmt_userName"));
+            art.userEmail = dr.GetString(dr.GetOrdinal("cmt_userEmail"));
+            art.userType = dr.GetString(dr.GetOrdinal("cmt_userType"));
+            art.commentAid = dr.GetString(dr.GetOrdinal("cmt_aid"));
+            art.commentTime = dr.GetDateTime(dr.GetOrdinal("cmt_Time"));
+            art.commentContent = dr.GetString(dr.GetOrdinal("cmt_Content"));
+            return art;
         }
     }
 }

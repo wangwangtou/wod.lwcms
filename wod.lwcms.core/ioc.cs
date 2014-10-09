@@ -29,6 +29,27 @@ namespace wod.lwcms
 
         public object GetService(Type serviceType)
         {
+            return GetService(serviceType, GetConstructorParameter);
+        }
+
+        public delegate bool ConstructorParameterProvider(string name,Type type,out object obj);
+
+        public bool GetConstructorParameter(string name,Type type,out object obj)
+        {
+            obj = GetInstance(name) ?? GetService(type);
+            return true;
+        }
+
+        /// <summary>
+        /// 为了满足 commandsParameter 来影响IOC，而增加了该方法
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        public object GetService(Type serviceType, ConstructorParameterProvider provider)
+        {
+            if (provider == null)
+                provider = GetConstructorParameter;
             Type type;
             if (!dicType.ContainsKey(serviceType))
                 type = serviceType;
@@ -42,7 +63,16 @@ namespace wod.lwcms
                 var pars = new object[obj.Length];
                 for (int i = 0; i < obj.Length; i++)
                 {
-                    pars[i] = GetInstance(obj[i].Name) ?? GetService(obj[i].ParameterType);
+                    object pobj;
+                    if (provider(obj[i].Name, obj[i].ParameterType, out pobj))
+                    {
+                    }
+                    else
+                    {
+                        pobj = GetInstance(obj[i].Name) ?? GetService(obj[i].ParameterType, provider);
+                        //GetConstructorParameter(obj[i].Name, obj[i].ParameterType, out pobj);
+                    }
+                    pars[i] = pobj;
                 }
                 return con.Invoke(pars);
             }

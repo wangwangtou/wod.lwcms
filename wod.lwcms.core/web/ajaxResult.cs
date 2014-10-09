@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace wod.lwcms.management
+namespace wod.lwcms.web
 {
     public class ajaxResult
     {

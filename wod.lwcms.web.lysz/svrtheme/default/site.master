@@ -3,10 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title><asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder><%=PD.seotitle%></title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <%=string.Format("<meta name=\"keywords\" content=\"{0}\"/>", PD.keywords)%>
     <%=string.Format("<meta name=\"description\" content=\"{0}\"/>", PD.description)%>
     <%=string.Format("<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\" />", ThemeResourceUrl("style.css"))%>
     <script type="text/javascript" src="<%=ResourceUrl("scripts/jquery-1.4.1.min.js") %>"></script>
+    <script type="text/javascript" src="<%=ResourceUrl("scripts/lwcms-client.js?v=0.1") %>"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>
 <body class="w-auto bg-bg">
@@ -60,5 +62,6 @@
         </div>
         <p class="m-copyright bg-f2"><%=PD.ws.copyright%></p>
     </div>
+    <script type="text/javascript" src="<%=ResourceUrl("scripts/mer-graph.js?v=0.1") %>"></script>
 </body>
 </html>

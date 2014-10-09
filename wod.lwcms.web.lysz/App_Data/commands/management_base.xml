@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="management_base">
+    <commands>
+      <assCommand id="ws">
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getSite</methodName>
+      </assCommand>
+      <assCommand id="allCats">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_baseupdate">
+    <commands>
+      <objectBuildCommand id="site">
+        <targetType>wod.lwcms.models.wodsite, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</targetType>
+      </objectBuildCommand>
+      <objectBuildCommand id="allCats">
+        <targetType>System.Collections.Generic.List`1[[wod.lwcms.models.category, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]</targetType>
+      </objectBuildCommand>
+      <assCommand id="siteUpdate">
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>updateSite</methodName>
+      </assCommand>
+      <assCommand id="catsUpdate">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>updateCategories</methodName>
+      </assCommand>
+    </commands>     
+  </multiCommand>
+</commands>

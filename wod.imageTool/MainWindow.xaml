@@ -1,0 +1,15 @@
+﻿<Window x:Class="wod.imageTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="276*" />
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" >
+            <Button Content="重置大小" Command="{Binding ResizeCommand}"/>
+        </ToolBar>
+        <Frame Grid.Row="1" x:Name="main" />
+    </Grid>
+</Window>

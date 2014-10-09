@@ -69,9 +69,21 @@ namespace wod.lwcms.commands
                     };
                     break;
                 default:
-                    cmd = new emptyCommand();
+                    try
+                    {
+                        var type = wodEnvironment.GetTypeByName("wod.lwcms.commands." + node.Name);
+                        cmd = common.GetInstance(type) as command;
+                        cmd.parseProperty(node);
+                    }
+                    catch (Exception)
+                    {
+                        cmd = new emptyCommand();
+                    }
                     break;
-            }
+            } 
+            XmlNode filterNode = node.SelectSingleNode("actfilter");
+            if (filterNode != null)
+                cmd.filterExpress = BoolExpress.CreateBoolExpress( filterNode.InnerText);
             cmd.id = node.Attributes["id"].Value;
             return cmd;
         }

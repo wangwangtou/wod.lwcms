@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web.UI;
+using wod.lwcms.web;
 
 namespace wod.lwcms.management
 {
@@ -52,7 +53,8 @@ namespace wod.lwcms.management
                 InitPo(po, Request.QueryString, ServerParams);
                 commands.commandsParameter cp = new commands.commandsParameter(_ioc, po);
                 cp.AddObject("cp", cp);
-                var cmd = commands.commandPool.getCommand("management_"+loadCmd);
+                cp.AddObject("context", Context);
+                var cmd = commands.commandPool.getCommand("management_" + loadCmd);
                 cmd.excute(cp);
                 PD = po;
             }
@@ -71,6 +73,7 @@ namespace wod.lwcms.management
             InitPo(po, Request.Form,ServerParams);
             commands.commandsParameter cp = new commands.commandsParameter(_ioc, po);
             cp.AddObject("cp", cp);
+            cp.AddObject("context", Context);
             var cmd = commands.commandPool.getCommand("management_" + ajaxCmd);
             ajaxResult result = new ajaxResult();
             try

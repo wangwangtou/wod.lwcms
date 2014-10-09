@@ -2,6 +2,28 @@
 <commands>
   <multiCommand id="management_artadd">
     <commands>
+      <sqlCommand id="codeCount" paramenterPrefix=":" excuteType="scalar">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select count(1) from wod_lw_article where art_Code = :code and cat_Path = :category
+    ]]>
+        </sql>
+      </sqlCommand>
+      <validCommand id="checkCodeParam">
+        <validation validType="IsEquals" valueName="codeCount" valueType="" errorMessage="有重复项" convertType="">
+          <validParameter>0</validParameter>
+        </validation>
+        <validation validType="IsStringLengthMatch" valueName="code" valueType="" errorMessage="不能为空" convertType="">
+          <validParameter>1</validParameter>
+          <validParameter>30</validParameter>
+        </validation>
+      </validCommand>
+      <assCommand id="code">
+        <actfilter>@checkCodeParam == false</actfilter>
+        <typeName>wod.lwcms.services.IGenerateService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>GenerateCode</methodName>
+      </assCommand>
       <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
         <!--excuteType:datareader,excute,scalar-->
         <sql>
@@ -17,6 +39,28 @@ Values(:newGUID, :name, :code, :content, :preContent,:image,:extendData, :catego
   </multiCommand>
   <multiCommand id="management_artupdate">
     <commands>
+      <sqlCommand id="codeCount" paramenterPrefix=":" excuteType="scalar">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select count(1) from wod_lw_article where art_Code = :code and cat_Path = :category and ID <> :artid
+    ]]>
+        </sql>
+      </sqlCommand>
+      <validCommand id="checkCodeParam">
+        <validation validType="IsEquals" valueName="codeCount" valueType="" errorMessage="有重复项" convertType="">
+          <validParameter>0</validParameter>
+        </validation>
+        <validation validType="IsStringLengthMatch" valueName="code" valueType="" errorMessage="不能为空" convertType="">
+          <validParameter>1</validParameter>
+          <validParameter>30</validParameter>
+        </validation>
+      </validCommand>
+      <assCommand id="code">
+        <actfilter>@checkCodeParam == false</actfilter>
+        <typeName>wod.lwcms.services.IGenerateService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>GenerateCode</methodName>
+      </assCommand>
       <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
         <!--excuteType:datareader,excute,scalar-->
         <sql>

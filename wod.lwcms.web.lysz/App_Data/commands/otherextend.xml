@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="addpuzzle">
+    <!--添加拼图-->
+    <commands>
+      <sqlCommand id="usercomment" paramenterPrefix=":" excuteType="excute">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    insert into wod_ot_puzzle (ID,puzzle_name,puzzle_data,username)
+    values (:lw_newid,:puzzle_name,:puzzle_data,:username)
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="getpuzzle">
+    <commands>
+      <assCommand id="pageTransferName">
+        <typeName>wod.lwcms.web.pageTransfer, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getCommonTransfer</methodName>
+      </assCommand>
+      <sqlCommand id="dr" paramenterPrefix=":" excuteType="datareader">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+    select ID,puzzle_name,puzzle_data,username from wod_ot_puzzle 
+    order by puzzle_name
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+</commands>

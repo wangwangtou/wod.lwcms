@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -43,15 +44,20 @@
     <Compile Include="dataaccess\ISiteDataAccess.cs" />
     <Compile Include="models\article.cs" />
     <Compile Include="models\category.cs" />
+    <Compile Include="models\comment.cs" />
     <Compile Include="models\siteImage.cs" />
     <Compile Include="models\indexData.cs" />
     <Compile Include="models\ISeoObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="models\wodsite.cs" />
+    <Compile Include="services\ArticleService.cs" />
     <Compile Include="services\AuthenticationService.cs" />
     <Compile Include="services\CategoryService.cs" />
+    <Compile Include="services\GenerateService.cs" />
+    <Compile Include="services\IArticleService.cs" />
     <Compile Include="services\IAuthenticationService.cs" />
     <Compile Include="services\ICategoryService.cs" />
+    <Compile Include="services\IGenerateService.cs" />
     <Compile Include="services\ISiteService.cs" />
     <Compile Include="services\SiteService.cs" />
   </ItemGroup>

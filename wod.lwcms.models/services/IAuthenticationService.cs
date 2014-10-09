@@ -8,8 +8,14 @@ namespace wod.lwcms.services
     {
         string HashPassword(string password);
 
-        void Login(string userName, string roles, bool isRemember);
+        void Login(string account, string roles, bool isRemember);
 
-        string TryLogin(int validuser,string userName, string roles, bool isRemember);
+        string TryLogin(int validuser, string account, string roles, bool isRemember);
+
+        void GenerateVerCode();
+
+        void ClearVerCode();
+
+        bool CheckVerCode(string vercode); 
     }
 }

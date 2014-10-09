@@ -10,20 +10,43 @@ namespace wod.lwcms.dataaccess
     {
         public models.wodsite GetSite(string _siteKey)
         {
-            string siteXml = wodEnvironment.GetDataPath("site.xml");
-            using (XmlReader xr = XmlReader.Create(siteXml))
+            XmlDocument siteDoc = GetSiteDoc();
+            XmlNode siteNode = GetSiteNode(siteDoc, _siteKey);
+            if (siteNode == null)
             {
-                XmlDocument siteDoc = new XmlDocument();
+                return null;
+            }
+            else
+            {
+                return ReadSiteFromNode(siteNode);
+            }
+        }
+
+        private string GetSiteXml()
+        {
+            string siteXml = wodEnvironment.GetDataPath("site.xml");
+            return siteXml;
+        }
+
+        private XmlDocument GetSiteDoc()
+        {
+            XmlDocument siteDoc = new XmlDocument();
+            using (XmlReader xr = XmlReader.Create(GetSiteXml()))
+            {
                 siteDoc.Load(xr);
-                var sites = siteDoc.SelectNodes("/sites/site");
-                foreach (XmlNode siteNode in sites)
+            }
+            return siteDoc;
+        }
+
+        private XmlNode GetSiteNode(XmlDocument siteDoc, string _siteKey)
+        {
+            var sites = siteDoc.SelectNodes("/sites/site");
+            foreach (XmlNode siteNode in sites)
+            {
+                var key = siteNode.Attributes["key"];
+                if (key != null && key.Value == _siteKey)
                 {
-                    var key = siteNode.Attributes["key"];
-                    if (key != null && key.Value == _siteKey)
-                    {
-                        return ReadSiteFromNode(siteNode);
-                    }
-                    
+                    return siteNode;
                 }
             }
             return null;
@@ -87,6 +110,83 @@ namespace wod.lwcms.dataaccess
         {
             var xmlAttr = node.Attributes[attrName];
             return xmlAttr == null ? "" : xmlAttr.Value;
+        }
+
+        public void SaveSite(string _siteKey, wodsite site)
+        {
+            XmlDocument siteDoc = GetSiteDoc();
+            XmlNode siteNode = GetSiteNode(siteDoc, _siteKey);
+            if (siteNode == null)
+            {
+                if (siteDoc.SelectSingleNode("/sites") == null)
+                {
+                    siteDoc.AppendChild(siteDoc.CreateElement("sites"));
+                }
+                siteNode = siteDoc.CreateElement("site");
+                (siteNode as XmlElement).SetAttribute("key", _siteKey);
+                siteDoc.SelectSingleNode("/sites").AppendChild(siteNode);
+            }
+            else
+            {
+            }
+            WriteSiteNode(siteNode, site, siteDoc);
+            siteDoc.Save(GetSiteXml());
+        }
+
+        private void WriteSiteNode(XmlNode siteNode, wodsite site, XmlDocument siteDoc)
+        {
+            siteNode.InnerXml = "<sitename></sitename><siteurl></siteurl><description></description><keywords></keywords><copyright></copyright><title></title>";
+            foreach (XmlNode node in siteNode.ChildNodes)
+            {
+                switch (node.Name.ToLower())
+                {
+                    case "sitename":
+                        node.InnerText = site.siteName;
+                        break;
+                    case "siteurl":
+                         node.InnerText = site.siteUrl;
+                        break;
+                    case "description":
+                        node.InnerText = site.description;
+                        break;
+                    case "keywords":
+                        node.InnerText = site.keywords;
+                        break;
+                    case "copyright":
+                        node.InnerText = site.copyright;
+                        break;
+                    case "title":
+                        node.InnerText = site.title;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            foreach (var key in site.navis.Keys)
+            {
+                var navisNode = siteDoc.CreateElement("navis");
+                navisNode.SetAttribute("key", key);
+                WriteNaviNode(site.navis[key], navisNode, siteDoc);
+            }
+        }
+
+        private void WriteNaviNode(List<siteNavi> navis, XmlNode navisNode, XmlDocument siteDoc)
+        {
+            foreach (var navi in navis)
+	        {
+                var node = siteDoc.CreateElement("navi");
+                node.SetAttribute("name", navi.name);
+                node.SetAttribute("target", navi.target);
+                node.SetAttribute("title", navi.title);
+                node.InnerText = navi.naviUrl;
+                if (navi.subNavis.Count > 0)
+                {
+                    var subNavisNode = siteDoc.CreateElement("subNavis");
+                    WriteNaviNode(navi.subNavis, subNavisNode, siteDoc);
+                    node.AppendChild(subNavisNode);
+                }
+                navisNode.AppendChild(node);
+            }
         }
     }
 }

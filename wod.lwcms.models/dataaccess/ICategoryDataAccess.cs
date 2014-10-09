@@ -8,5 +8,7 @@ namespace wod.lwcms.dataaccess
     public interface ICategoryDataAccess
     {
         List<category> GetAllCategories();
+
+        void SaveCategories(List<category> allCats);
     }
 }

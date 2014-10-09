@@ -16,7 +16,7 @@
     <div class="inline-block bg-f3 module pd-5 link-f1">
         <h3>炒小菜</h3>
         <p>基本的生活技能，虽说不是山珍海味，但是却吃不厌。湖北东北部清淡系！如果你想吃，可以Email我-.-。</p>
-        <p>看看我曾经超过的菜吧：《<a href="index.aspx?path=/default/cookbook">我的菜单</a>》。</p>
+        <p>看看我曾经炒过的菜吧：《<a href="index.aspx?path=/default/cookbook">我的菜单</a>》。</p>
     </div>
     <div class="inline-block bg-h2 module pd-5 link-main">
         <h3>经济学</h3>
@@ -33,7 +33,7 @@
   {
 %><li>
 <h3 class="pd-5"><a href="/index.aspx?path=<%=a.category.fullpath + "/" + a.code + ".html" %>"><%=a.name%></a></h3>
-<div class="pd-10"><%=a.content %></div>
+<div class="pd-10 m-doc"><%=a.content %></div>
 </li><%      
   } %>
 </ul>

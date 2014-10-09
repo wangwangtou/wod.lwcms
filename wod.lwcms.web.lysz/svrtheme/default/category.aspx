@@ -12,7 +12,7 @@
   {
 %><li>
 <h3 class="pd-5"><a href="/index.aspx?path=<%=a.category.fullpath + "/" + a.code + ".html" %>"><%=a.name%></a></h3>
-<div class="pd-10"><%=a.content %></div>
+<div class="pd-10 m-doc"><%=a.content %></div>
 </li><%      
   } %>
 </ul>

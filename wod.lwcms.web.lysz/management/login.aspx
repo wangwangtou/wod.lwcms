@@ -28,18 +28,18 @@
 </head>
 <body>
     <div data-form="form">
-        <label>登录名：<input type="text" name="userName" value="" /></label>
-        <label>密码：<input type="password" name="password" value="" /></label>
+        <label>登录名：<input type="text" name="account" value="xvycn" /></label>
+        <label>密码：<input type="password" name="password" value="a123456" /></label>
         <input type="button" value="登录" id="btnLogin">
     </div>
     <script type="text/javascript">
         $(function () {
             $("#btnLogin").click(
                 function () {
-                    var name = $("[name='userName']").val();
+                    var name = $("[name='account']").val();
                     var password = $("[name='password']").val();
-                    var data = { userName: name, password: password };
-                    if (data.userName && data.password) {
+                    var data = { account: name, password: password };
+                    if (data.account && data.password) {
                         $.post("login.aspx", data, function (result) {
                             if (result.status) {
                                 if (result.result) {
@@ -50,7 +50,7 @@
                                 }
                             }
                             else {
-                                alert(message);
+                                alert(result.message);
                             }
                         });
                     }

@@ -24,7 +24,9 @@ namespace wod.lwcms.web
 
             _ioc.Regist(typeof(ISiteService), typeof(SiteService));
             _ioc.Regist(typeof(ICategoryService), typeof(CategoryService));
+            _ioc.Regist(typeof(IArticleService), typeof(ArticleService));
             _ioc.Regist(typeof(IAuthenticationService), typeof(AuthenticationService));
+            _ioc.Regist(typeof(IGenerateService), typeof(GenerateService));
 
             _ioc.Regist(typeof(ISiteDataAccess), typeof(SiteDataAccess));
             _ioc.Regist(typeof(ICategoryDataAccess), typeof(CategoryDataAccess));
@@ -50,12 +52,35 @@ namespace wod.lwcms.web
 
             commands.commandsParameter cp = new commands.commandsParameter(_ioc, po);
             cp.AddObject("cp", cp);
+            cp.AddObject("context", Context);
             var cmd = commands.commandPool.getCommand(pParameter.pageCommandId);
             cmd.excute(cp);
 
             PD = new pageData(po) { pageType = pParameter.pageType };
             PDLoad();
-            Server.Transfer(string.Format("~/svrtheme/{0}/{1}.aspx", tempName, PD.pageTransferName));
+
+            if (!string.IsNullOrEmpty(PD.pageTransferName))
+            {
+                Server.Transfer(string.Format("~/svrtheme/{0}/{1}.aspx", tempName, PD.pageTransferName));
+            }
+            else
+            {
+                ajaxResult result = new ajaxResult();
+                try
+                {
+                    result.status = true;
+                    result.result = po.getObject("result");
+                }
+                catch (Exception ex)
+                {
+                    result.status = false;
+                    result.message = ex.Message;
+                }
+                Response.Clear();
+                Response.ContentType = "text/json";
+                Response.Write(common.ToJson(result));
+                Response.End();
+            }
         }
 
         protected virtual void PDLoad()
@@ -66,6 +91,15 @@ namespace wod.lwcms.web
     public class tempPage : Page
     {
         public pageData PD { get; set; }
+
+        public string EcHtml(string content)
+        {
+            return Server.HtmlEncode(content);
+        }
+        public string EcUrl(string content)
+        {
+            return Server.UrlEncode(content);
+        }
 
         protected override void OnInit(EventArgs e)
         {

@@ -8,6 +8,8 @@ namespace wod.lwcms.services
     {
         List<models.category> getAllCategories();
 
+        void updateCategories(List<models.category> allCats);
+
         models.category getCurCategory(List<models.category> allCats, string categoryPath);
     }
 }

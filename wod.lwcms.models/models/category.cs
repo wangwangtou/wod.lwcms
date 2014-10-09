@@ -32,6 +32,7 @@ namespace wod.lwcms.models
 
         public string page { get; set; }
         public string contentpage { get; set; }
+        public string extendform { get; set; }
 
         string ISeoObject.seotitle
         {

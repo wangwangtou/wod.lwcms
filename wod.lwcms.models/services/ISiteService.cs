@@ -8,6 +8,8 @@ namespace wod.lwcms.services
     {
         models.wodsite getSite();
 
+        void updateSite(models.wodsite site);
+
         models.indexData getIndexData();
     }
 }

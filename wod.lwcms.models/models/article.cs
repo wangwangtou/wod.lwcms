@@ -52,5 +52,7 @@ namespace wod.lwcms.models
         public string state { get; set; }
 
         public string extendData { get; set; }
+
+        public string extendForm { get { return category == null ? null : category.extendform; } }
     }
 }

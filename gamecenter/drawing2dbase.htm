@@ -1,0 +1,153 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title></title>
+  <style>
+    body, html { width:100%;height:100%;margin:0;padding:0;text-align:center;vertical-align:middle;}
+    .container {margin:auto auto;width:800px;height:600px;position:relative; }
+    canvas {margin:auto auto;width:800px;height:600px;position:absolute;top:0;left:0;}
+  </style>
+  <script src="drawing2d.js"></script>
+  <script src="drawing2devent.js"></script>
+  <script src="drawing2dframes.js"></script>
+  <script name="appload">
+    function appLoad() {
+      var canvas = document.getElementsByTagName("canvas")[0];
+      var drawing2d = new myDraw.Drawing2D(canvas);
+
+      //基本画布功能
+      drawing2d.draw({ type: 'point', x: 10, y: 20, color: "#000000" });
+      drawing2d.draw({ type: 'line', points: [{ x: 10, y: 20 }, { x: 100, y: 200 }, { x: 10, y: 400 }], color: "#ff0000" });
+      drawing2d.draw({ type: 'polygon', points: [{ x: 120, y: 20 }, { x: 120, y: 200 }, { x: 100, y: 200 }, { x: 100, y: 20 }, { x: 120, y: 20 }], fill: "#ff0000", stroke: "#ffff00", strokeWidth: 1 });
+      drawing2d.draw({ type: 'image', rect: { x: 100, y: 100, width: 100, height: 100 }, src: "http://www.baidu.com/img/bdlogo.gif" });
+      drawing2d.draw({ type: 'image', rect: { x: 200, y: 100, width: 300, height: 300 }, src: "http://www.baidu.com/img/bdlogo.gif" });
+
+      //画布响应功能
+      drawing2d.setTool(myDraw.tools.lineTool);
+
+      //动画
+      var setting1 = {
+        name: "bdlogo1",
+        auto: true, totalFrame: 1000 * 4, frames: [
+            {
+              obj: { type: 'image', rect: { x: 100, y: 100, width: 100, height: 100 }, src: "http://www.baidu.com/img/bdlogo.gif" },
+              steps: [{ start: 1000 * 0, end: 1000 * 1, changes: [{ attr: function (obj, val) { obj.rect.width = val; }, from: 100, to: 200 }] },
+                      { start: 1000 * 1, end: 1000 * 2, changes: [{ attr: function (obj, val) { obj.rect.height = val; }, from: 100, to: 200 }] },
+                      { start: 1000 * 2, end: 1000 * 3, changes: [{ attr: function (obj, val) { obj.rect.height = val; }, from: 200, to: 100 }] },
+                      { start: 1000 * 3, end: 1000 * 4, changes: [{ attr: function (obj, val) { obj.rect.width = val; }, from: 200, to: 100 }] }
+              ]
+            }
+        ]
+      };
+      var setting2 = {
+        name: "bdlogo2",
+        auto: true, totalFrame: 1000 * 4, frames: [
+            {
+              obj: { type: 'image', rect: { x: 200, y: 100, width: 100, height: 100 }, src: "http://www.baidu.com/img/bdlogo.gif" },
+              steps: [{ start: 1000 * 0, end: 1000 * 1, changes: [{ attr: function (obj, val) { obj.rect.x = val; }, from: 200, to: 300 }] },
+                      { start: 1000 * 1, end: 1000 * 2, changes: [{ attr: function (obj, val) { obj.rect.y = val; }, from: 100, to: 200 }] },
+                      { start: 1000 * 2, end: 1000 * 3, changes: [{ attr: function (obj, val) { obj.rect.y = val; }, from: 200, to: 100 }] },
+                      { start: 1000 * 3, end: 1000 * 4, changes: [{ attr: function (obj, val) { obj.rect.x = val; }, from: 300, to: 200 }] }
+              ]
+            }
+        ]
+      };
+      var setting3 = {
+        name: "bdlogo3",
+        auto: true, totalFrame: 1000 * 4, frames: [
+            {
+              obj: { type: 'image', rect: { x: 300, y: 100, width: 100, height: 100 }, src: "http://www.baidu.com/img/bdlogo.gif" },
+              steps: [{ start: 1000 * 0, end: 1000 * 1, changes: [{ attr: function (obj, val) { obj.rect.x = val; }, animate: "sin", from: 300, to: 400 }, { attr: function (obj, val) { obj.rect.width = val; }, from: 100, to: 200 }] },
+                      { start: 1000 * 1, end: 1000 * 2, changes: [{ attr: function (obj, val) { obj.rect.y = val; }, from: 100, to: 200 }, { attr: function (obj, val) { obj.rect.height = val; }, from: 100, to: 200 }] },
+                      { start: 1000 * 2, end: 1000 * 3, changes: [{ attr: function (obj, val) { obj.rect.y = val; }, from: 200, to: 100 },{ attr: function (obj, val) { obj.rect.height = val; }, from: 200, to: 100 }] },
+                      { start: 1000 * 3, end: 1000 * 4, changes: [{ attr: function (obj, val) { obj.rect.x = val; }, animate: "sin", from: 400, to: 300 }, { attr: function (obj, val) { obj.rect.width = val; }, from: 200, to: 100 }] }
+              ]
+            }
+        ]
+      };
+      var setting4 = {
+        name: "gd1",
+        auto: true, totalFrame: 50 * 6, frames: [
+            {
+              obj: { type: 'image', rect: { x: 500, y: 100, width: 300, height: 121 }, clip: { x: 0, y: 0, width: 400, height: 966 / 6 }, src: "hummingbird-spritesheet.jpg" },
+              steps: [
+                { start: 50 * 0, end: 50 * 1, changes: [{ attr: function (obj, val) { obj.rect.width = 300, obj.rect.height = 121; }, from: 0, to: 0 }] },
+                { start: 50 * 1, end: 50 * 6, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] }
+              ]
+            },
+            {
+              obj: { type: 'image', rect: { x: 500, y: 100, width: 300, height: 121 }, clip: { x: 0, y: 966 * 1 / 6, width: 400, height: 966 / 6 }, src: "hummingbird-spritesheet.jpg" },
+              steps: [
+                { start: 50 * 0, end: 50 * 1, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] },
+                { start: 50 * 1, end: 50 * 2, changes: [{ attr: function (obj, val) { obj.rect.width = 300, obj.rect.height = 121; }, from: 0, to: 0 }] },
+                { start: 50 * 2, end: 50 * 6, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] }
+              ]
+            },
+            {
+              obj: { type: 'image', rect: { x: 500, y: 100, width: 300, height: 121 }, clip: { x: 0, y: 966 * 2 / 6, width: 400, height: 966 / 6 }, src: "hummingbird-spritesheet.jpg" },
+              steps: [
+                { start: 50 * 0, end: 50 * 2, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] },
+                { start: 50 * 2, end: 50 * 3, changes: [{ attr: function (obj, val) { obj.rect.width = 300, obj.rect.height = 121; }, from: 0, to: 0 }] },
+                { start: 50 * 3, end: 50 * 6, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] }
+              ]
+            },
+            {
+              obj: { type: 'image', rect: { x: 500, y: 100, width: 300, height: 121 }, clip: { x: 0, y: 966 * 3 / 6, width: 400, height: 966 / 6 }, src: "hummingbird-spritesheet.jpg" },
+              steps: [
+                { start: 50 * 0, end: 50 * 3, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] },
+                { start: 50 * 3, end: 50 * 4, changes: [{ attr: function (obj, val) { obj.rect.width = 300, obj.rect.height = 121; }, from: 0, to: 0 }] },
+                { start: 50 * 4, end: 50 * 6, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] }
+              ]
+            },
+            {
+              obj: { type: 'image', rect: { x: 500, y: 100, width: 300, height: 121 }, clip: { x: 0, y: 966 * 4 / 6, width: 400, height: 966 / 6 }, src: "hummingbird-spritesheet.jpg" },
+              steps: [
+                { start: 50 * 0, end: 50 * 4, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] },
+                { start: 50 * 4, end: 50 * 5, changes: [{ attr: function (obj, val) { obj.rect.width = 300, obj.rect.height = 121; }, from: 0, to: 0 }] },
+                { start: 50 * 5, end: 50 * 6, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] }
+              ]
+            },
+            {
+              obj: { type: 'image', rect: { x: 500, y: 100, width: 300, height: 121 }, clip: { x: 0, y: 966 * 5 / 6, width: 400, height: 966 / 6 }, src: "hummingbird-spritesheet.jpg" },
+              steps: [
+                { start: 50 * 0, end: 50 * 5, changes: [{ attr: function (obj, val) { obj.rect.width = 0, obj.rect.height = 0; }, from: 0, to: 0 }] },
+                { start: 50 * 5, end: 50 * 6, changes: [{ attr: function (obj, val) { obj.rect.width = 300, obj.rect.height = 121; }, from: 0, to: 0 }] },
+              ]
+            }
+        ]
+      };
+      var setting5 = {
+        name: "gd2",
+        auto: true, totalFrame: 50 * 6, frames: [
+            {
+              obj: { type: 'image', rect: { x: 500, y: 300, width: 300, height: 121 }, clip: { x: 0, y: 0, width: 400, height: 966 / 6 }, src: "hummingbird-spritesheet.png" },
+              steps: [
+                { start: 50 * 0, end: 50 * 1, changes: [{ attr: function (obj, val) { obj.clip.y = 0; }, from: 0, to: 0 }] },
+                { start: 50 * 1, end: 50 * 2, changes: [{ attr: function (obj, val) { obj.clip.y = 966 * 1 / 6; }, from: 0, to: 0 }] },
+                { start: 50 * 2, end: 50 * 3, changes: [{ attr: function (obj, val) { obj.clip.y = 966 * 2 / 6; }, from: 0, to: 0 }] },
+                { start: 50 * 3, end: 50 * 4, changes: [{ attr: function (obj, val) { obj.clip.y = 966 * 3 / 6; }, from: 0, to: 0 }] },
+                { start: 50 * 4, end: 50 * 5, changes: [{ attr: function (obj, val) { obj.clip.y = 966 * 4 / 6; }, from: 0, to: 0 }] },
+                { start: 50 * 5, end: 50 * 6, changes: [{ attr: function (obj, val) { obj.clip.y = 966 * 5 / 6; }, from: 0, to: 0 }] }
+              ]
+            }
+        ]
+      };
+      var canvas2 = document.getElementsByTagName("canvas")[1];
+      var drawing2d2 = new myDraw.Drawing2D(canvas2);
+      drawing2d2.addFrames(setting1);
+      drawing2d2.addFrames(setting2);
+      drawing2d2.addFrames(setting3);
+      drawing2d2.addFrames(setting4);
+      drawing2d2.addFrames(setting5);
+
+      window.testDraw = drawing2d2;
+    }
+  </script>
+</head>
+<body onload="appLoad()">
+  <div class="container">
+    <canvas width="800" height="600" style="background:#eee;"></canvas>
+    <canvas width="800" height="600"></canvas>
+  </div>
+</body>
+</html>

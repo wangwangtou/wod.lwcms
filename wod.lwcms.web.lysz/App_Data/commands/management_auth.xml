@@ -10,7 +10,7 @@
         <!--excuteType:datareader,excute,scalar-->
         <sql>
           <![CDATA[
-Select count(1) from wod_lw_user where user_ID = :userName and user_Password = :password
+Select count(1) from wod_lw_user where user_ID = :account and user_Password = :password
     ]]>
         </sql>
       </sqlCommand>
@@ -18,7 +18,7 @@ Select count(1) from wod_lw_user where user_ID = :userName and user_Password = :
         <!--excuteType:datareader,excute,scalar-->
         <sql>
           <![CDATA[
-Select user_Roles from wod_lw_user where user_ID = :userName and user_Password = :password
+Select user_Roles from wod_lw_user where user_ID = :account and user_Password = :password
     ]]>
         </sql>
       </sqlCommand>

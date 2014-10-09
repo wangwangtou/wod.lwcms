@@ -1,0 +1,25 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title></title>
+  <style>
+    body, html { width:100%;height:100%;margin:0;padding:0;text-align:center;vertical-align:middle;}
+    .container {margin:auto auto;width:640px;height:320px;position:relative; }
+    canvas {margin:auto auto;width:640px;height:320px;position:absolute;top:0;left:0;}
+  </style>
+  <script src="drawing2d.js"></script>
+  <script src="game1.js"></script>
+  <script name="appload">
+    function appLoad() {
+      var container = document.getElementsByTagName("div")[0];
+      var app = new Games.game1(container);
+      app.init();
+      app.start();
+    }
+  </script>
+</head>
+<body onload="appLoad()">
+  <div class="container">
+  </div>
+</body>
+</html>
