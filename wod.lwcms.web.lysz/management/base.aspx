@@ -16,7 +16,6 @@
 
   protected override void PreCommand()
   {
-    //ServerParams.Add("curUser", "xvycn.com");
     base.PreCommand();
   }
 </script>

@@ -7,9 +7,14 @@ namespace wod.lwcms.web
 {
     public class tempControl : UserControl
     {
-        public static string ResourceUrl(string path)
+        public string ResourceUrl(string path)
         {
             return System.Web.VirtualPathUtility.GetDirectory("~/") + path;
+        }
+
+        public string RenderPartView(partView view)
+        {
+            return (Page as tempPage).RenderPartView(view);
         }
 
         public pageData PD
@@ -20,14 +25,24 @@ namespace wod.lwcms.web
 
     public class tempMaster : MasterPage
     {
-        public static string ResourceUrl(string path)
+        public string ResourceUrl(string path)
         {
             return System.Web.VirtualPathUtility.GetDirectory("~/") + path;
         }
 
-        public static string ThemeResourceUrl(string path)
+        public string ThemeResourceUrl(string path)
         {
-            return ResourceUrl(string.Format("theme/{0}/{1}",page.tempName,path));
+            return ResourceUrl(string.Format("theme/{0}/{1}",tempName,path));
+        }
+
+        public string RenderPartView(partView view)
+        {
+            return (Page as tempPage).RenderPartView(view);
+        }
+
+        public string tempName
+        {
+            get { return (Page as tempPage).tempName; }
         }
 
         public pageData PD

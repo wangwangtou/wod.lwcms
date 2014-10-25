@@ -37,13 +37,14 @@
                 </ul>
             </li>
             <li><a href="base.aspx" >基本信息</a>
+            <li><a href="basead.aspx" >基本信息高级模式</a>
         </ul>
         <div class="cl"></div>
     </div>
     <div class="l-content">
-    </div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
+    </div>
 </body>
 </html>

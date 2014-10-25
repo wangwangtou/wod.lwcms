@@ -57,6 +57,7 @@ namespace wod.lwcms.web
                 op.setOjbect("categoryPath", path);
             }
             op.setOjbect("requestName", p.requestName);
+            op.setOjbect("requestKey", request.Url.ToString().ToLower());
             foreach (string item in request.QueryString.Keys)
             {
                 op.setOjbect(item, getObj(request.QueryString, item));

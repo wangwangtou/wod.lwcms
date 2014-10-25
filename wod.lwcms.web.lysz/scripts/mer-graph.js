@@ -190,10 +190,14 @@
         $.fn.extend({
             merGraph : function(setting){
                 this.each(function(){
-                    var datagraph = setting ? setting :$(this).data("graph")||eval("("+$(this).attr("data-graph")+")");
-                    var mer = new MerGraph(this,datagraph.Width,datagraph.Height);
-                    mer.paintGraph(datagraph);
+                    var datagraph = setting ? setting :$(this).data("graph")||$(this).attr("data-graph");
+                    if(datagraph){
+                        datagraph = typeof(datagraph) == "string" ?eval("("+datagraph +")"):datagraph;
+                        var mer = new MerGraph(this,datagraph.Width,datagraph.Height);
+                        mer.paintGraph(datagraph);
+                    }
                 });
+                return this;
             }
         });
         $(function(){

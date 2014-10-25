@@ -28,8 +28,8 @@
 </head>
 <body>
     <div data-form="form">
-        <label>登录名：<input type="text" name="account" value="xvycn" /></label>
-        <label>密码：<input type="password" name="password" value="a123456" /></label>
+        <label>登录名：<input type="text" name="account" value="" /></label>
+        <label>密码：<input type="password" name="password" value="" /></label>
         <input type="button" value="登录" id="btnLogin">
     </div>
     <script type="text/javascript">

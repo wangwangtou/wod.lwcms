@@ -176,18 +176,22 @@
                 }
             }
             , showForm: function (data, callback) {
-                var d = data;
-                $.ui.getForm(setting.formTitle || "", setting.formName, d
+                $.ui.getForm(setting.formTitle || "", setting.formName
                     , function (frm) {
+                        frm.setFormData(data);
                         if (setting.schs) {
                             frm.wodForm({ schema: setting.schs });
                         }
                     }
-                    , function (data) {
-                        if (data) {
-                            callback($.extend(d, data));
+                    , function (frm) {
+                        if (frm) {
+                            frm.syncForm();
+                            var ndata = frm.getFormData();
+                            callback($.extend(data, ndata));
                         }
-                    }, function (data, errorCallback) {
+                    }, function (frm, errorCallback) {
+                        frm.syncForm();
+                        var data = frm.getFormData();
                         return setting.validate ? setting.validate(data, errorCallback) : true;
                     });
             }

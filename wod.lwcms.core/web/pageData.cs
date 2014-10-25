@@ -116,5 +116,10 @@ namespace wod.lwcms.web
                 throw new NotImplementedException();
             }
         }
+
+        public List<partView> getPartViews(partView.viewPos viewPos)
+        {
+            return op.getObject<List<partView>>(viewPos.ToString());
+        }
     }
 }

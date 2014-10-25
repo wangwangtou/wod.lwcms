@@ -1,32 +1,37 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sites>
   <site key="default">
-    <siteName>朝向美好</siteName>
-    <siteUrl>http://www.xvycn.com/</siteUrl>
-    <description>
-      <![CDATA[我是一名程序员，盼望着美好的未来。会一些糊口小菜、编程，刚刚开始学习经济学。如果您有需要帮助的，可以联系我，<a>我的能力范围</a>。
-    ]]>
-    </description>
+    <sitename>朝向美好</sitename>
+    <siteurl>http://www.xvycn.com/</siteurl>
+    <description>我是一名程序员，盼望着美好的未来。会一些糊口小菜、编程，刚刚开始学习经济学。如果您有需要帮助的，可以联系我。</description>
     <keywords>xvy小站,兰影书斋,economics学习</keywords>
-    <copyright>
-      <![CDATA[© Copyright 2014-2015   wangwangtou@qq.com版权所有<br>本站点为个人网站，转载请注明出处。]]>
-    </copyright>
+    <copyright>&amp;copy; Copyright 2014-2015   wangwangtou@qq.com版权所有&lt;br /&gt;
+本站点为个人网站，转载请注明出处。</copyright>
     <title>Xvy 朝向美好</title>
     <navis key="main">
-      <navi name="主页" target="_self" title="主页">/index.aspx
-        <subNavis></subNavis>
-      </navi>
+      <navi name="主页" target="_self" title="主页">/index.aspx</navi>
       <navi name="我的菜单" target="_self" title="我的菜单">/index.aspx?path=/default/cookbook</navi>
-        
       <navi name="学习日志" target="_self" title="学习日志">/index.aspx?path=/mer</navi>
     </navis>
-    <navis key="top">
+    <navis key="top" />
+    <navis key="bottom" />
+  </site>
+  <site key="cms">
+    <sitename>lwcms</sitename>
+    <siteurl>http://cms.xvycn.com/</siteurl>
+    <description>lwcms,往狭义CMS努力中</description>
+    <keywords>狭义CMS,beta CMS</keywords>
+    <copyright>&amp;copy; Copyright 2014-2015   wangwangtou@qq.com版权所有&lt;br /&gt;
+本站点为个人网站，转载请注明出处。</copyright>
+    <title>lwcms</title>
+    <navis key="main">
+      <navi name="主页" target="_self" title="主页">/index.aspx</navi>
     </navis>
-    <navis key="bottom">
-    </navis>
+    <navis key="top" />
+    <navis key="bottom" />
   </site>
 </sites>
-      <!--<navi name="兰影书斋" target="_self" title="兰影书斋">http://lysz.xvycn.com/index.aspx
+<!--<navi name="兰影书斋" target="_self" title="兰影书斋">http://lysz.xvycn.com/index.aspx
         <subNavis>
           <navi name="摄影园地" target="_self" title="摄影园地">http://lysz.xvycn.com/index.aspx?path=/photo</navi>
           <navi name="书法展示" target="_self" title="书法展示">http://lysz.xvycn.com/index.aspx?path=/lettering</navi>

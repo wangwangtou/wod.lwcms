@@ -8,24 +8,31 @@ namespace wod.lwcms.commands
     {
         private ioc ioc;
         private objectPool op;
+        public objectPool OP { get { return op; } } 
+
         public commandsParameter(ioc _ioc,objectPool _op)
         {
             this.ioc = _ioc;
             this.op = _op;
         }
 
-        internal object GetObject(string name, Type type)
+        public object GetObject(string name)
+        {
+            return GetObject(name, null);
+        }
+
+        public object GetObject(string name, Type type)
         {
             var obj = op.getObject(name);
             if (obj == null)
             {
-                obj = (ioc.GetInstance(name) ?? ioc.GetService(type, GetConstructorParameter));
+                obj = (ioc.GetInstance(name) ?? (type == null ?  null : ioc.GetService(type, GetConstructorParameter)));
                 op.setOjbect(name, obj);
             }
             return obj;
         }
 
-        internal object GetObject(Type type)
+        public object GetObject(Type type)
         {
             return ioc.GetService(type, GetConstructorParameter);
         }
@@ -45,7 +52,7 @@ namespace wod.lwcms.commands
             }
         }
 
-        internal void AddObject(string id, object data)
+        public void AddObject(string id, object data)
         {
             op.setOjbect(id, data);
         }

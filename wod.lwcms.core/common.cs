@@ -132,6 +132,32 @@ namespace wod.lwcms
                 }
             }
         }
+
+        internal static object ChangeType(Type valueType, string value)
+        {
+            switch (valueType.Name)
+            {
+                case "System.String":
+                    return value;
+                case "System.Int32":
+                case "System.Int64":
+                case "System.Decimal":
+                case "System.Double":
+                    double d;
+                    double.TryParse(value, out d);
+                    return Convert.ChangeType(d, valueType);
+                default:
+                    try
+                    {
+                        return Convert.ChangeType(value, valueType);
+                    }
+                    catch (Exception)
+                    {
+                        return common.GetInstance(valueType);
+                    }
+                    break;
+            }
+        }
     }
 
     public sealed class TypeHelper

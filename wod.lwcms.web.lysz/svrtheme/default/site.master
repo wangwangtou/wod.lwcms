@@ -1,6 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="wod.lwcms.web.tempMaster" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head runat="server">
     <title><asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder><%=PD.seotitle%></title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -16,6 +16,26 @@
         <div class="bg-f4">
             <h1 class="bg-h1"><img align="center" src="<%=ResourceUrl("theme/images/small.png")%>" /><%=PD.ws.siteName%></h1>
             <p class="bg-f3">逃避问题，问题增加一倍；面对问题，问题减少一半。</p>
+            <div class="nav-top link-h1">
+              <% List<siteNavi> topNav = PD.ws.navis["top"];
+                 for (int i = 0; i < topNav.Count; i++)
+                 {
+                   siteNavi nav = topNav[i];
+                   %><a href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
+                 }
+                 %>
+                 <span class="m-status">
+                 <%
+                   List<partView> pviews = PD.getPartViews(partView.viewPos.statusbar);
+                   if (pviews!=null)
+                   {
+                     foreach (partView view in pviews)
+                     {
+                    %><%=RenderPartView(view)%><% 
+                     }
+                   }%>
+                 </span>
+            </div>
         </div>
         <div class="nav bg-f2 link-main h4">
             <% List<siteNavi> mainNav = PD.ws.navis["main"]; 

@@ -10,12 +10,12 @@ namespace wod.lwcms.services
 
         void Login(string account, string roles, bool isRemember);
 
+        void Logout();
+
         string TryLogin(int validuser, string account, string roles, bool isRemember);
 
-        void GenerateVerCode();
+        string GetLoginName();
 
-        void ClearVerCode();
-
-        bool CheckVerCode(string vercode); 
+        bool IsLogin();
     }
 }

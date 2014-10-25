@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<aliasResource>
+  <types>
+  </types>
+  <commands>
+    <sqlCommand alias="index_totalCount_ACC" paramenterPrefix=":" excuteType="scalar">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select count(1) from wod_lw_article where art_State = "pub"
+    ]]>
+      </sql>
+    </sqlCommand>
+    <sqlCommand alias="index_pagedDr_ACC" paramenterPrefix=":" excuteType="datareader">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,art_Content,art_Page,art_SiteImage,art_ExtendData,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater,art_State from wod_lw_article 
+    where  art_State = "pub"
+    order by art_CreateOn desc
+    ]]>
+      </sql>
+    </sqlCommand>
+
+    <sqlCommand alias="category_totalCount_ACC" paramenterPrefix=":" excuteType="scalar">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select count(1) from wod_lw_article 
+    where cat_Path= :requestName and art_State = "pub"
+    ]]>
+      </sql>
+    </sqlCommand>
+    <sqlCommand alias="category_pagedDr_ACC" paramenterPrefix=":" excuteType="datareader">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select top #endRowIndex ID,art_Name,art_Code,art_PreContent,art_Content,art_Page,art_SiteImage,art_ExtendData,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater,art_State from wod_lw_article 
+    where cat_Path = :categoryPath and art_State = "pub" order by art_CreateOn desc
+    ]]>
+      </sql>
+    </sqlCommand>
+
+    <sqlCommand alias="article_singleDr_ACC" paramenterPrefix=":" excuteType="datareader">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select ID,art_Name,art_Code,art_PreContent,art_Content,art_SiteImage,art_ExtendData,art_Page,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater,art_State from wod_lw_article 
+    where cat_Path = :categoryPath and art_Code = :articleName and art_State = "pub"
+    ]]>
+      </sql>
+    </sqlCommand>
+    <sqlCommand alias="article_useraction_ACC" paramenterPrefix=":" excuteType="excute">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    insert into wod_lw_useraction (ID,art_ID,act_code,act_data,act_time)
+    values (:lw_newid,:aid,'view_article',:lw_actData,:lw_now)
+    ]]>
+      </sql>
+    </sqlCommand>
+    <sqlCommand alias="article_addviewcount_ACC" paramenterPrefix=":" excuteType="excute">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    update wod_lw_article
+    set art_viewcount = art_viewcount + 1
+    where ID = :aid
+    ]]>
+      </sql>
+    </sqlCommand>
+    <sqlCommand alias="article_usercomment_ACC" paramenterPrefix=":" excuteType="excute">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    insert into wod_lw_comment (ID,cmt_userName,cmt_userEmail,cmt_userType,cmt_content,cmt_time,cmt_aid)
+    values (:lw_newid,:name,:email,'ANONYMOUS_USER',:content,:lw_now,:aid)
+    ]]>
+      </sql>
+    </sqlCommand>
+    <sqlCommand alias="articleComment_totalCount_ACC" paramenterPrefix=":" excuteType="scalar">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select count(1) from wod_lw_comment
+    where cmt_aid= :aid
+    ]]>
+      </sql>
+    </sqlCommand>
+    <sqlCommand alias="articleComment_pagedDr_ACC" paramenterPrefix=":" excuteType="datareader">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select top #endRowIndex ID,cmt_userName,cmt_userEmail,cmt_userType,cmt_content,cmt_time,cmt_aid from wod_lw_comment 
+    where cmt_aid= :aid order by cmt_Time desc
+    ]]>
+      </sql>
+    </sqlCommand>
+  </commands>
+</aliasResource>

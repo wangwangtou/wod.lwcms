@@ -30,4 +30,8 @@
       </assCommand>
     </commands>     
   </multiCommand>
+  <multiCommand id="management_basead">
+    <commands>
+    </commands>
+  </multiCommand>
 </commands>

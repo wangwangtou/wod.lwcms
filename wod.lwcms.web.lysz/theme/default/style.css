@@ -65,9 +65,12 @@ p{text-indent:28px;font-size:14px;line-height:16px;padding:4px;}
 .link-f2 a,a.link-f2 { color:#9acd32;text-decoration:none; }
 
 .nav{padding:4px 10px; }
+.nav-top{position:absolute;top:3px;right:5px; }
+.nav-top a{padding:0px 3px;font-size:14px; }
 
 .module p { max-width:350px; }
 .module { vertical-align:top;text-align:left;}
+.g-header{position:relative;}
 .header { background:transparent url(small2.png) no-repeat right top;margin-top:0px;margin-right:0px;}
 .m-copyright{text-align:center;padding:20px 0;margin:0 70px;}
 .m-form,.m-form input,.m-form textarea{font-size:16px;line-height:20px;}

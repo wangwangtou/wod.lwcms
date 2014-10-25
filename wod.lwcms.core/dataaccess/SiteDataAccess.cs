@@ -167,6 +167,7 @@ namespace wod.lwcms.dataaccess
                 var navisNode = siteDoc.CreateElement("navis");
                 navisNode.SetAttribute("key", key);
                 WriteNaviNode(site.navis[key], navisNode, siteDoc);
+                siteNode.AppendChild(navisNode);
             }
         }
 

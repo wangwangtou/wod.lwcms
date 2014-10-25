@@ -4,22 +4,28 @@
     <name>xvy小站</name>
     <code>default</code>
     <fullpath>/default</fullpath>
-    <description></description>
-    <keywords></keywords>
+    <description>
+    </description>
+    <keywords>
+    </keywords>
     <page>category</page>
     <contentpage>content</contentpage>
-    <extendform></extendform>
+    <extendform>
+    </extendform>
     <subcategories>
       <category>
         <name>我的菜单~.~</name>
         <code>cookbook</code>
         <fullpath>/default/cookbook</fullpath>
-        <description></description>
-        <keywords></keywords>
+        <description>
+        </description>
+        <keywords>
+        </keywords>
         <page>category</page>
         <contentpage>content</contentpage>
         <extendform>cookbook</extendform>
-        <subcategories></subcategories>
+        <subcategories>
+        </subcategories>
       </category>
     </subcategories>
   </category>
@@ -31,7 +37,9 @@
     <keywords>经济学学习记录</keywords>
     <page>category</page>
     <contentpage>content</contentpage>
-    <extendform></extendform>
-    <subcategories></subcategories>
+    <extendform>
+    </extendform>
+    <subcategories>
+    </subcategories>
   </category>
 </categories>

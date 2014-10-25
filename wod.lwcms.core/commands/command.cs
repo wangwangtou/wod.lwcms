@@ -49,9 +49,26 @@ namespace wod.lwcms.commands
         public string typeName { get; set; }
         public string methodName { get; set; }
 
+        private Type _type;
+        private Type getType(commandsParameter cp)
+        {
+                if (_type == null)
+                {
+                    lock (this)
+                    {
+                        if (_type == null)
+                        {
+                            aliasResource resource = cp.GetObject("__aliasResource") as aliasResource;
+                            _type = resource.GetTypeByAlias(typeName) ?? Type.GetType(typeName);
+                        }
+                    }
+                }
+                return _type;
+        }
+
         protected override void excuteNoCheck(commandsParameter cp)
         {
-            Type type = Type.GetType(typeName);
+            Type type = getType(cp);
             var obj = cp.GetObject(type);
 
             var method = type.GetMethod(methodName);

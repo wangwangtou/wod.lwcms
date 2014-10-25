@@ -26,6 +26,7 @@ Select user_Roles from wod_lw_user where user_ID = :account and user_Password = 
         <typeName>wod.lwcms.services.IAuthenticationService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
         <methodName>TryLogin</methodName>
       </assCommand>
+      <logCommand id="logcmd"></logCommand>
     </commands>
   </multiCommand>
 </commands>

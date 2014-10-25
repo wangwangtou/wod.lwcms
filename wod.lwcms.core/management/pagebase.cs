@@ -13,12 +13,19 @@ namespace wod.lwcms.management
             ServerParams = new Dictionary<string, object>();
         }
 
+        private ioc _ioc;
+        private commands.commandPool pool;
+
         protected override void OnInit(EventArgs e)
         {
             string fn = new System.IO.FileInfo(Request.FilePath).Name;
             string pagename = fn.Substring(0, fn.Length - 5);
             ajaxCmd = pagename;
             loadCmd = pagename;
+
+
+            this._ioc = base.getIoc();
+            this.pool = _ioc.GetInstance<commands.commandPool>("__commandPool");
         }
 
         public Dictionary<string, object> ServerParams { get; private set; }
@@ -54,7 +61,7 @@ namespace wod.lwcms.management
                 commands.commandsParameter cp = new commands.commandsParameter(_ioc, po);
                 cp.AddObject("cp", cp);
                 cp.AddObject("context", Context);
-                var cmd = commands.commandPool.getCommand("management_" + loadCmd);
+                var cmd = pool.getCommand("management_" + loadCmd);
                 cmd.excute(cp);
                 PD = po;
             }
@@ -74,7 +81,7 @@ namespace wod.lwcms.management
             commands.commandsParameter cp = new commands.commandsParameter(_ioc, po);
             cp.AddObject("cp", cp);
             cp.AddObject("context", Context);
-            var cmd = commands.commandPool.getCommand("management_" + ajaxCmd);
+            var cmd = pool.getCommand("management_" + ajaxCmd);
             ajaxResult result = new ajaxResult();
             try
             {

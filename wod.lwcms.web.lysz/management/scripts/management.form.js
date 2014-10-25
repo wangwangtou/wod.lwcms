@@ -138,13 +138,13 @@ htmlEncode = function (txt) {
         };
         if(setting.type == "simple"){
             editorSetting.items = [
-                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', '|',
+                'source' , '|','fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', '|',
                 'italic', 'underline', 'strikethrough', 'lineheight',
                 'link', 'unlink', '|', 'about'];
             editorSetting.minWidth = "200px";
             editorSetting.resizeType=0;
         }
-        var editor1 = K.create(this.selector, editorSetting);
+        var editor1 = K.create(this[0], editorSetting);
     }
     $.fn.extend({ wodrichtext: _wodrichtext });
 
@@ -331,7 +331,7 @@ htmlEncode = function (txt) {
     }
 
 
-    function _wodForm(setting){
+    function _wodForm(_fpanel,setting){
         var sch = setting.schema;
         var formHandler={
             preSubmitHandler: []
@@ -341,37 +341,48 @@ htmlEncode = function (txt) {
                 }
             }
         };
-        var _fpanel = this; 
         for (var sn in sch) {
             var s = sch[sn];
             s.setting.formHandler = formHandler;
             _fpanel.find("[name='"+sn+"']")[s.type](s.setting);
         }
         var submitSet = setting.submit;
-        if(submitSet){
-            $(submitSet.selector).bind(submitSet.event,function(){
-                formHandler.preSubmit();
-                if(submitSet.posts){
-                    var _def = {
-                        url : "wodform.ashx?path=/submit"
-                        , callback : function(){}
-                        , command : "common_form_cmd"
-                    };
-                    var posts = $.extend(_def, submitSet.posts);
+        this.syncForm = function(){
+            formHandler.preSubmit();
+            if(submitSet && submitSet.posts){
+                var _def = {
+                    url : "wodform.ashx?path=/submit"
+                    , callback : function(){}
+                    , command : "common_form_cmd"
+                };
+                var posts = $.extend(_def, submitSet.posts);
 
-                    var data = _getFormData(_fpanel);
-                    var errorCallback = function(){};
-                    var validate = submitSet.validate;
-                    var ajOp = { type:"post" ,url : posts.url , data : data, dataType : "json", error: _$wod_form.ajaxError, success : function(data,statusText){if(_$wod_form.ajaxValidResponse(data)){ posts.callback(data.result); } } };
-                    if (!validate || validate(data, errorCallback)){
-                        $.ajax(ajOp);
-                    }
+                var data = _getFormData(_fpanel);
+                var errorCallback = function(){};
+                var validate = submitSet.validate;
+                var ajOp = { type:"post" ,url : posts.url , data : data, dataType : "json", error: _$wod_form.ajaxError, success : function(data,statusText){if(_$wod_form.ajaxValidResponse(data)){ posts.callback(data.result); } } };
+                if (!validate || validate(data, errorCallback)){
+                    $.ajax(ajOp);
                 }
-            });
+            }
+        };
+        if(submitSet){
+            $(submitSet.selector).bind(submitSet.event,this.syncForm);
         }
     }
+    var __formDataName = "_wodForm";
     $.fn.extend({
-        wodForm:_wodForm,
+        wodForm:function(setting){
+            this.each(function(){
+                $(this).data(__formDataName,new _wodForm($(this),setting));
+            });
+            return this;
+        },
+        syncForm:function(){
+            if(this.data(__formDataName)){
+                this.data(__formDataName).syncForm();
+            }
+        },
         setFormData:_setFormData,
         getFormData:function(){return _getFormData(this); }
     });

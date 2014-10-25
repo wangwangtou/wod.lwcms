@@ -110,7 +110,7 @@ namespace wod.lwcms.commands
         {
             if (data.isKeyName)
             {
-                return parameters[data.keyName];
+                return parameters.ContainsKey(data.keyName) ? parameters[data.keyName] : null;
             }
             else
             {
@@ -128,7 +128,7 @@ namespace wod.lwcms.commands
 
         private void getAllKeys(filter filter)
         {
-            if (_filter.type == filterType.combi)
+            if (filter.type == filterType.combi)
             {
                 foreach (filter item in filter.filters)
                 {

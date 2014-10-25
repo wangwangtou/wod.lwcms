@@ -16,6 +16,9 @@ namespace wod.lwcms.management
             var context = Context;
             var cmdId = context.Request.QueryString["command"];
 
+            ioc _ioc = base.getIoc();
+            commands.commandPool pool = _ioc.GetInstance<commands.commandPool>("__commandPool");
+
             objectPool po = _ioc.GetService<objectPool>();
 
             foreach (string key in context.Request.QueryString)
@@ -29,7 +32,7 @@ namespace wod.lwcms.management
 
             commands.commandsParameter cp = new commands.commandsParameter(_ioc, po);
             cp.AddObject("cp", cp);
-            var cmd = commands.commandPool.getCommand(cmdId);
+            var cmd = pool.getCommand(cmdId);
             ajaxResult result = new ajaxResult();
             try
             {

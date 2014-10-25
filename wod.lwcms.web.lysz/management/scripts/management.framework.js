@@ -85,7 +85,7 @@
         frm.find("label .errtxt").remove();
     }
     $.extend($.ui, {
-        getForm: function (title, name, data, loaded, callback, validate) {
+        getForm: function (title, name, loaded, callback, validate) {
             this.loadTmp(name, function (frm) {
                 var __win;
                 var errorCallback = function (name, msg) {
@@ -98,18 +98,18 @@
                         callback(undefined);
                     },
                     okCallback: function () {
-                        var data = _getFormData(frm);
+//                        var data = _getFormData(frm);
                         _clearErrorMsg(frm);
-                        if (!validate || validate(data, errorCallback)) {
-                            callback(data);
+                        if (!validate || validate(frm, errorCallback)) {
+                            callback(frm);
                             if (__win) __win.remove();
                         }
                     },
                     loadCallback: function (win) {
                         __win = win;
-                        if (data) {
-                            _setFormData(frm, data);
-                        }
+//                        if (data) {
+//                            _setFormData(frm, data);
+//                        }
                         loaded(frm);
                     }
                 });

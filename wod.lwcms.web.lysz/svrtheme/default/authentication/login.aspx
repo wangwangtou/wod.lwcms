@@ -11,35 +11,36 @@
         <input type="submit" value="登录" />
     </form>
     <script type="text/javascript">
-        function commetsubmit(form) {
-            if (!form.account.value) {
-                alert("帐号不能为空！");
-                return false;
-            }
-            if (!form.password.value) {
-                alert("密码不能为空！");
-                return false;
-            }
-            if (!form.vercode.value) {
-                alert("验证码不能为空！");
-                return false;
-            }
-            $(form).attr("disabled", true);
-            lwcms.login({ account: form.account.value
-                , password: form.password.value, vercode: form.vercode.value
-            },
-                function (data) {
-                    $(form).attr("disabled", false);
-                    if (data && data.result && !data.result.IsValid) {
-                        alert(data.result.Messages[0].message);
-                    }
-                    else {
-                        alert("登录成功！");
-                        location.href = "/index.aspx";
-                    }
-                });
-            return false;
+      function commetsubmit(form) {
+        if (!form.account.value) {
+          alert("帐号不能为空！");
+          return false;
         }
+        if (!form.password.value) {
+          alert("密码不能为空！");
+          return false;
+        }
+        if (!form.vercode.value) {
+          alert("验证码不能为空！");
+          return false;
+        }
+        $(form).attr("disabled", true);
+        lwcms.login({ account: form.account.value
+                , password: form.password.value, vercode: form.vercode.value
+        },
+                function (data) {
+                  $(form).attr("disabled", false);
+                  if (data && data.result && !data.result.IsValid) {
+                    alert(data.result.Messages[0].message);
+                    $(form).find("img").click();
+                  }
+                  else {
+                    alert("登录成功！");
+                    location.href = "/index.aspx";
+                  }
+                });
+        return false;
+      }
     </script>
 </div>
 </asp:Content>

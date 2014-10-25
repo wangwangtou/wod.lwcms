@@ -10,6 +10,18 @@ namespace wod.lwcms
         public static readonly string resourcePath = "~/App_Data/";
         public static readonly string siteKey = "default";
 
+        public static string GetDataPath(string sKey, string path)
+        {
+            if (siteKey == sKey)
+            {
+                return HttpContext.Current.Server.MapPath(resourcePath + path);
+            }
+            else
+            {
+                return HttpContext.Current.Server.MapPath(resourcePath + sKey + "/" + path);
+            }
+        }
+
         public static string GetDataPath(string path)
         {
             return HttpContext.Current.Server.MapPath(resourcePath + path);

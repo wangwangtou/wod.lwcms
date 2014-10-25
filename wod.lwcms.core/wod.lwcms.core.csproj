@@ -45,12 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="addin\vercodeValidation.cs" />
-    <Compile Include="addin\accountValidation.cs" />
+    <Compile Include="addin\addin.cs" />
+    <Compile Include="addin\extensionBase.cs" />
+    <Compile Include="alias.cs" />
+    <Compile Include="commands\addinCommand.cs" />
+    <Compile Include="commands\applyEditCommand.cs" />
     <Compile Include="commands\BoolExpress.cs" />
     <Compile Include="commands\commandPool.cs" />
     <Compile Include="commands\commandsParameter.cs" />
     <Compile Include="commands\command.cs" />
+    <Compile Include="commands\logCommand.cs" />
     <Compile Include="commands\objectBuildCommand.cs" />
     <Compile Include="commands\resultConvertCommand.cs" />
     <Compile Include="commands\validCommand.cs" />
@@ -61,6 +65,9 @@
     <Compile Include="dataaccess\pagerHelper.cs" />
     <Compile Include="dataaccess\WODDbParameter.cs" />
     <Compile Include="ioc.cs" />
+    <Compile Include="management\baseadpage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="web\ajaxResult.cs" />
     <Compile Include="management\commonHandle.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -70,9 +77,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="objectPool.cs" />
+    <Compile Include="web\authModule.cs" />
     <Compile Include="web\pageData.cs" />
+    <Compile Include="web\pageIoc.cs" />
     <Compile Include="web\pageParameter.cs" />
     <Compile Include="web\pageTransfer.cs" />
+    <Compile Include="web\partView.cs" />
     <Compile Include="web\tempControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

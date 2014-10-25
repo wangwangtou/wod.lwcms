@@ -7,6 +7,12 @@ namespace wod.lwcms.dataaccess
 {
     public class CategoryDataAccess : ICategoryDataAccess
     {
+        private string siteKey;
+        public CategoryDataAccess(string siteKey)
+        {
+            this.siteKey = siteKey;
+        }
+
         public List<models.category> GetAllCategories()
         {
             XmlDocument cateDoc = GetCategoriesDoc();
@@ -17,7 +23,7 @@ namespace wod.lwcms.dataaccess
 
         private string GetCategoriesDocPath()
         {
-            string cateXml = wodEnvironment.GetDataPath("category.xml");
+            string cateXml = wodEnvironment.GetDataPath(siteKey,"category.xml");
             return cateXml;
         }
 

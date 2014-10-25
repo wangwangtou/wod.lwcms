@@ -12,6 +12,21 @@ namespace wod.lwcms.services
         public AuthenticationService(HttpContext context)
         {
             this.context = context;
+            if (IsLogin())
+            {
+                //System.Web.HttpCookie cookie = context.Request.Cookies[System.Web.Security.FormsAuthentication.FormsCookieName];
+                //if (cookie != null)
+                //{
+                    //System.Web.Security.FormsAuthenticationTicket ticket = System.Web.Security.FormsAuthentication.Decrypt(cookie.Value);
+                    //this.context.User = new System.Security.Principal.GenericPrincipal(new System.Web.Security.FormsIdentity(ticket), ticket.UserData.Split(','));
+
+                    System.Web.Security.FormsIdentity fi = (System.Web.Security.FormsIdentity)context.User.Identity;
+                    System.Web.Security.FormsAuthenticationTicket ticket = fi.Ticket;
+                    string userData = ticket.UserData;
+                    string[] roles = userData.Split(',');
+                    context.User = new System.Security.Principal.GenericPrincipal(fi, roles);
+                //}
+            }
         }
 
         public string HashPassword(string password)
@@ -32,10 +47,17 @@ namespace wod.lwcms.services
             cookie.Value = cryptString;
             context.Response.Cookies.Add(cookie);
         }
+        
+        public void Logout()
+        {
+            System.Web.HttpCookie cookie = new System.Web.HttpCookie(System.Web.Security.FormsAuthentication.FormsCookieName);
+            cookie.Expires = DateTime.Now.AddYears(-10);
+            context.Response.Cookies.Add(cookie);
+            context.User = null;
+            context.Response.Redirect("~/index.aspx");
+        }
 
-
-        public string TryLogin(int validuser, string account, string roles, bool isRemember
-            )
+        public string TryLogin(int validuser, string account, string roles, bool isRemember)
         {
             if (validuser == 0)
                 return "用户名或密码错误！";
@@ -44,39 +66,18 @@ namespace wod.lwcms.services
                 return "";
         }
 
-        private static Random rdm = new Random();
-        private static readonly string vercodeSessionName = "wod_vercode";
 
-        public void GenerateVerCode()
+        public string GetLoginName()
         {
-            var code = rdm.Next(10).ToString() + rdm.Next(10).ToString() + rdm.Next(10).ToString() + rdm.Next(10).ToString();
-            context.Session[vercodeSessionName] = code;
-
-            context.Response.Clear();
-            context.Response.ContentType = "image/jpeg";
-            Bitmap map = new Bitmap(60, 20);
-            Graphics graph = Graphics.FromImage(map);
-            graph.FillRectangle(new SolidBrush(Color.White), 0, 0, 60, 20);
-            graph.DrawString(code.Substring(0, 1), new Font(SystemFonts.DialogFont.FontFamily,10, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(10, 5));
-            graph.DrawString(code.Substring(1, 1), new Font(SystemFonts.DialogFont.FontFamily,10, FontStyle.Italic), new SolidBrush(Color.Black), new PointF(20, 5));
-            graph.DrawString(code.Substring(2, 1), new Font(SystemFonts.DialogFont.FontFamily,10, FontStyle.Regular), new SolidBrush(Color.Black), new PointF(30, 5));
-            graph.DrawString(code.Substring(3, 1), new Font(SystemFonts.DialogFont.FontFamily,10, FontStyle.Strikeout), new SolidBrush(Color.Black), new PointF(40, 5));
-            for (int i = 0; i < 20; i++)
-            {
-                graph.FillRectangle(new SolidBrush(Color.Red), rdm.Next(60), rdm.Next(20), 2, 2);
-            }
-            map.Save(context.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-            context.Response.End();
+            if (this.context.User != null && this.context.User.Identity != null && this.context.User.Identity.IsAuthenticated)
+                return this.context.User.Identity.Name;
+            else
+                return "";
         }
 
-        public void ClearVerCode()
+        public bool IsLogin()
         {
-            context.Session[vercodeSessionName] = null;
-        }
-
-        public bool CheckVerCode(string vercode)
-        {
-            return vercode != null && vercode.Length == 4 && context.Session[vercodeSessionName] != null && context.Session[vercodeSessionName].ToString() == vercode;
+            return this.context.User != null && this.context.User.Identity != null && this.context.User.Identity.IsAuthenticated;
         }
     }
 }
