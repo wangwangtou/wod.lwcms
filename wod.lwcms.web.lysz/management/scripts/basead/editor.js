@@ -1,4 +1,4 @@
-function autherEdit(){
+function autherEdit(ae,prefix){
     this.canEdit = true;
     this.canDelete = true;
     var tmp;
@@ -16,18 +16,32 @@ function autherEdit(){
         }
         return $div; 
     };
-    this.delete = function($d){
-        return $d.parent().remove();  
+    this.remove = function ($d) {
+        var exp;
+        if ($d.parent().is("p.subs")) {
+            exp = prefix + "[" + ($d.parent().parent().children("a").index($d.parent()[0])) + "]" + ".subNavis[" + ($d.parent().find("a").index($d[0])) + "]";
+        }
+        else {
+            exp = prefix + "[" + ($d.parent().find("a").index($d[0])) + "]";
+        }
+        ae.push({ type: "delete", dataexp: exp + "", value: "" });
+        return $d.parent().remove();
     };
     this.getCommands = function ($d) {
-        if($d.is(".nav>a")){
+        if ($d.is(".nav>a")) {
             var $addSub = $("<a href='javascript:void(0);'>添加子导航</a>");
-            $addSub.click(function(){
-                if(!$d.next().is("p.subs")){
+            $addSub.click(function () {
+                if (!$d.next().is("p.subs")) {
                     $d.after("<p class='subs'><span class='subsplit'>|</span><span class='subsplit'>|</span></p>")
                 }
                 $d.next().find(".subsplit:eq(1)").before("<a href='http://'>新导航</a>");
-            })
+
+                var exp = prefix + "[" + ($d.parent().find("a").index($d[0])) + "]" + ".subNavis[" + ($d.next().find("a").length - 1) + "]";
+                ae.push({ type: "insert", dataexp: exp, value: "" });
+                ae.push({ type: "edit", dataexp: exp + ".name", value: "新导航" });
+                ae.push({ type: "edit", dataexp: exp + ".title", value: "新导航" });
+                ae.push({ type: "edit", dataexp: exp + ".naviUrl", value: "http://" });
+            });
             return $addSub;
         }
     };
@@ -37,7 +51,19 @@ function autherEdit(){
         $d.text(data.name)
             .attr("title",data.title)
             .attr("target",data.target)
-            .attr("href",data.naviUrl);
+            .attr("href", data.naviUrl);
+
+        var exp;
+        if ($d.parent().is("p.subs")) {
+            exp = prefix + "[" + ($d.parent().parent().children("a").index($d.parent()[0])) + "]" + ".subNavis[" + ($d.parent().find("a").index($d[0])) + "]";
+        }
+        else {
+            exp = prefix + "[" + ($d.parent().find("a").index($d[0])) + "]";
+        }
+        ae.push({ type: "edit", dataexp: exp + ".name", value: data.title });
+        ae.push({ type: "edit", dataexp: exp + ".title", value: data.title });
+        ae.push({ type: "edit", dataexp: exp + ".target", value: data.target });
+        ae.push({ type: "edit", dataexp: exp + ".naviUrl", value: data.naviUrl });
     };
     this.unbind=function(){
        pre = {};
@@ -51,13 +77,13 @@ function autherEdit(){
     };   
     $.ui.loadTmp("naviform",this.tmpLoaded.bind(this));
 }
-function navListEdit(){
+function navListEdit(ae, prefix) {
     this.canEdit = false;
     this.canDelete = false;
     this.cmdposition = "pointer";
     this.edit = function($d){
     };
-    this.delete = function($d){
+    this.remove = function($d){
     };
     this.getCommands = function ($d) {
         var $add = $("<a href='javascript:void(0);'>添加导航</a>");
@@ -66,6 +92,11 @@ function navListEdit(){
                 $d.append("<span class='split'>|</span>")
             }
             $d.append("<a href='http://'>新导航</a>");
+            var exp = prefix + "[" + ($d.parent().children("a").index($d[0])) + "]";
+            ae.push({ type: "insert", dataexp: exp, value: "" });
+            ae.push({ type: "edit", dataexp: exp + ".name", value: "新导航" });
+            ae.push({ type: "edit", dataexp: exp + ".title", value: "新导航" });
+            ae.push({ type: "edit", dataexp: exp + ".naviUrl", value: "http://" });
         })
         return $add;
     };
@@ -74,7 +105,7 @@ function navListEdit(){
     this.unbind=function(){
     };
 }
-function textEdit() {
+function textEdit(ae, prefix) {
     this.canEdit = true;
     this.canDelete = false;
     this.cmdposition = "pointer";
@@ -93,13 +124,14 @@ function textEdit() {
         }
         return $div; 
     };
-    this.delete = function($d){
+    this.remove = function($d){
       return $d.parent().remove();  
     };
     this.commit = function($d,$f){
         $f.syncForm();
         var data = $f.getFormData();
         $d.text(data.text);
+        ae.push({ type: "edit", dataexp: prefix, value: data.text });
     };
     this.unbind=function(){
        pre = {};
@@ -114,7 +146,7 @@ function textEdit() {
     $.ui.loadTmp("textarea",this.tmpLoaded.bind(this));
 }
 
-function htmlEdit() {
+function htmlEdit(ae,prefix) {
     this.canEdit = true;
     this.canDelete = false;
     this.cmdposition = "pointer";
@@ -136,13 +168,14 @@ function htmlEdit() {
         }
         return $div; 
     };
-    this.delete = function($d){
+    this.remove = function($d){
       return $d.parent().remove();  
     };
     this.commit = function($d,$f){
         $f.syncForm();
         var data = $f.getFormData();
         $d.html(data.html);
+        ae.push({ type: "edit", dataexp: prefix, value: data.html });
     };
     this.unbind=function(){
        pre = {};
@@ -159,12 +192,6 @@ function htmlEdit() {
 }
 
 var cfg = {
-    ".nav a": new autherEdit(),
-    ".nav": new navListEdit(),
-    ".wodhead .seotitle": new textEdit(),
-    ".wodhead .keywords": new textEdit(),
-    ".wodhead .description": new textEdit(),
-    ".m-copyright": new htmlEdit()
 };
 var css = document.createElement("div");
 var cssStr = "_<style>.__e_bd{border:2px solid #6d6;background:#eee;}";
@@ -225,6 +252,7 @@ $(function(){
            resetCur();
        }
     });
+
     function editcurr() {
         if(cur){
             var $d = cur_d;
@@ -250,7 +278,7 @@ $(function(){
     }
     function deletecurr() {
         var $d = cur_d;
-        if(cur)cur.delete($d);
+        if (cur) cur.remove($d);
         resetCur();
     }
     function bindcurr(evt){
@@ -299,4 +327,40 @@ $(function(){
         $d.unbind("mousedown",bindcurr);
         $d.bind("mousedown",bindcurr);
     }
-})
+});
+function saveBase(data,callback) {
+    /*
+    var data = {
+        "ae_ws_edit":$.toJSON([{type="edit", dataexp="[0].siteName", value="abc"},{type="edit", dataexp="[0].siteName", value="abc"}]),
+        "ae_ws_edit_hash":"hashcode"
+        "ae_allCats_edit_hash":"hashcode"
+    };
+    */
+    $.ajax({
+        url:"common.ashx?command=basead",
+        data:data,
+        type:"post",
+        dataType:"json",
+        success:function(data){
+            if(_$wod_form.ajaxValidResponse(data)){
+                callback(data.result);
+                /*
+                if(!result.ws_IsValid){
+                    alert(result.ws_Messages[0]);
+                    location.reload();
+                }
+                else{
+                    ws_hash = result.ws_NewHash;
+                }
+                if(!result.cat_IsValid){
+                    alert(result.cat_Messages[0]);
+                }
+                else{
+                    cat_hash = result.cat_NewHash;
+                }
+                */
+            }
+        },
+        error:_$wod_form.ajaxError
+    });
+}

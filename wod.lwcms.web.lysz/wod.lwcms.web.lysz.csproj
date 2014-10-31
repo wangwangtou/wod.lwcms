@@ -285,7 +285,10 @@
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="management\scripts\jquery.json-2.4.min.js" />
+    <Content Include="management\scripts\management.core.test.html" />
+    <Content Include="management\scripts\management.core.test.js" />
     <Content Include="management\scripts\management.form.base.js" />
+    <Content Include="management\scripts\management.core.js" />
     <Content Include="management\shared\pager.ascx" />
     <Content Include="management\base.aspx" />
     <Content Include="scripts\jquery-1.4.1.min.js" />

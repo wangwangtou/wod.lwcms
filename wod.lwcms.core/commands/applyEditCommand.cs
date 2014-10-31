@@ -14,24 +14,37 @@ namespace wod.lwcms.commands
         {
             object obj = cp.GetObject(ObjectName);
 
-            object editObj = cp.GetObject("edit");
-            if (editObj != null)
+            object editObj = cp.GetObject(id+"_edit");
+            object edit_hash = cp.GetObject(id+"_edit_hash");
+            if (editObj != null && edit_hash!=null)
             {
-                List<edit> edit;
-                if (editObj.GetType() == typeof(string))
+                string edit_hashStr = edit_hash.ToString();
+                if (edit_hashStr == common.GetHash(obj))
                 {
-                    edit = common.FromJson<List<edit>>(editObj.ToString());
+                    List<edit> edit;
+                    if (editObj.GetType() == typeof(string))
+                    {
+                        edit = common.FromJson<List<edit>>(editObj.ToString());
+                    }
+                    else
+                    {
+                        edit = editObj as List<edit>;
+                    }
+                    if (edit != null)
+                    {
+                        applyEdit(obj, edit);
+                    }
+                    cp.AddObject(id, true);
+                    cp.AddObject(id + ".newhash", common.GetHash(obj));
                 }
                 else
                 {
-                    edit = editObj as List<edit>;
-                }
-                if (edit != null)
-                {
-                    applyEdit(obj, edit);
+                    cp.AddObject(id, false);
+                    cp.AddObject(id + ".errors", new List<validationError>() { new validationError(){ name = ObjectName , message = "对象已被修改"} });
                 }
             }
         }
+
 
         private void applyEdit(object obj, List<edit> edit)
         {

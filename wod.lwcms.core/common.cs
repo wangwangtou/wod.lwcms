@@ -75,7 +75,7 @@ namespace wod.lwcms
             return type.GetConstructor(new Type[0]).Invoke(new object[0]);
         }
 
-        public static string ToJson<T>(T obj)
+        public static string ToJson(object obj)
         {
             JsonWriter jw = new JsonWriter();
             JsonMapper.ToJson(obj, jw);
@@ -157,6 +157,11 @@ namespace wod.lwcms
                     }
                     break;
             }
+        }
+
+        public static string GetHash(object obj)
+        {
+            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(obj == null ? "": common.ToJson(obj), "md5");
         }
     }
 

@@ -10,6 +10,12 @@ namespace wod.lwcms.management
         {
             base.PDLoad();
             PD.op.setOjbect("_editable", true);
+            //Dictionary<string, string> hashes = new Dictionary<string, string>();
+            //foreach (string key in PD.op.Pool.Keys)
+            //{
+            //    hashes.Add(key, common.GetHash(PD.op.Pool[key]));
+            //}
+            //PD.op.setOjbect("_hashes", hashes);
         }
     }
 }

@@ -7,6 +7,16 @@
     <script type="text/javascript" src="<%=ResourceUrl("scripts/lwcms-client.js?v=0.1") %>"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
     <wod:baseadscript runat="server" />
+    <script type="text/javascript">
+        $.extend(cfg, {
+            ".nav a": new autherEdit(ws_edit, "navis[main]."),
+            ".nav": new navListEdit(ws_edit, "navis[main]."),
+            ".wodhead .seotitle": new textEdit(ws_edit, "seotitle"),
+            ".wodhead .keywords": new textEdit(ws_edit, "keywords"),
+            ".wodhead .description": new textEdit(ws_edit, "description"),
+            ".m-copyright": new htmlEdit(ws_edit, "copyright")
+        });
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div class="wodhead">

@@ -32,6 +32,34 @@
   </multiCommand>
   <multiCommand id="management_basead">
     <commands>
+      <assCommand id="ws">
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getSite</methodName>
+      </assCommand>
+      <assCommand id="allCats">
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getAllCategories</methodName>
+      </assCommand>
+      <applyEditCommand id="ae_ws" ObjectName="ws"></applyEditCommand>
+      <applyEditCommand id="ae_allCats" ObjectName="allCats"></applyEditCommand>
+      <assCommand id="siteUpdate">
+        <actfilter>@ae_ws == false</actfilter>
+        <typeName>wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>updateSite</methodName>
+      </assCommand>
+      <assCommand id="catsUpdate">
+        <actfilter>@ae_allCats == false</actfilter>
+        <typeName>wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>updateCategories</methodName>
+      </assCommand>
+      <resultConvertCommand id="result">
+        <cdata valueName="ae_ws" dataName="ws_IsValid"></cdata>
+        <cdata valueName="ae_ws.newhash" dataName="ws_NewHash"></cdata>
+        <cdata valueName="ae_ws.errors" dataName="ws_Messages"></cdata>
+        <cdata valueName="ae_allCats" dataName="cat_IsValid"></cdata>
+        <cdata valueName="ae_allCats.newhash" dataName="cat_NewHash"></cdata>
+        <cdata valueName="ae_allCats.errors" dataName="cat_Messages"></cdata>
+      </resultConvertCommand>
     </commands>
   </multiCommand>
 </commands>
