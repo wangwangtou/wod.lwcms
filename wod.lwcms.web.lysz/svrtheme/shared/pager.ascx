@@ -26,6 +26,8 @@
     }
     start = Math.Max(1, start);
     end = Math.Min(pageCount, end);
+    
+    if(pageCount>1){
        %>
 <div class="m-page">
     <a href="<%=pageIndex == 1 ? nolink : url +"pageIndex=" + (pageIndex-1) %>" class="pageprv<%=pageIndex == 1 ? " z-dis" : ""%>">上一页</a>
@@ -44,3 +46,4 @@
       <%  } %>
     <a href="<%=pageIndex == pageCount ? nolink : url +"pageIndex=" + (pageIndex+1) %>" class="pagenxt<%=pageIndex == pageCount ? " z-dis" : ""%>">下一页</a>
 </div>
+<%} %>

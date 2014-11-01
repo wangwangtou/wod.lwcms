@@ -2,10 +2,10 @@
 <asp:Content runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="maincontent">
-<div class="article">
+<div class="bg-main pd-20">
     <h1><%=PD.art.name %></h1>
-    <h5><%=PD.art.createOn.ToString("yyyy-MM-dd HH:mm:ss") %></h5>
-    <div><%=PD.art.content %></div>
+    <span><%=PD.art.createOn.ToString("yyyy-MM-dd HH:mm:ss") %></span>
+    <div class="m-doc"><%=PD.art.content %></div>
 </div>
 <script type="text/javascript">
     var __aid = "<%=PD.art.id %>";
@@ -13,16 +13,16 @@
         lwcms.viewArticle(__aid);
     }, 1000 * 30);
 </script>
-<div class="comment_list">
+<div class="bg-f1 pd-20">
     <h1>评论列表</h1>
     <div id="comments"></div>
     <script type="text/javascript">
         lwcms.getComments(__aid, "#comments");
     </script>
 </div>
-<div class="comment_form">
+<div class="bg-f4 pd-20">
     <h1>发表评论</h1>
-    <form onsubmit="return commetsubmit(this);">
+    <form class="m-cmtform" onsubmit="return commetsubmit(this);">
         <label>姓名：<br /><input type="text" name="name" value="" /></label><br />
         <label>邮箱：<br /><input type="text" name="email" value="" /></label><br />
         <label>评论：<br /><textarea name="comment"></textarea></label><br />

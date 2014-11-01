@@ -4,18 +4,17 @@
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="maincontent">
 <%List<article> al = PD.op.getObject<List<article>>("articleList"); %>
-<div class="category_description">
-<h2><%=PD.cat.name %></h2>
-<%=PD.cat.content %>
-</div>
-<div class="m-artlist link-h1">
+
+<h2 class="pd-5 bg-f2"><%=PD.cat.name %></h2>
+<p class="pd-5 bg-f3"><%=PD.cat.content %></p>
+<ul class="m-artlist link-h1">
 <%foreach (article a in al)
   {
-%>
-<h3><a href="/index.aspx?path=<%=a.category.fullpath + "/" + a.code + ".html" %>"><%=a.name%></a></h3>
-<div class="article"><%=a.content %></div>
-<%      
+%><li>
+<h3 class="pd-5"><a href="/index.aspx?path=<%=a.category.fullpath + "/" + a.code + ".html" %>"><%=a.name%></a></h3>
+<div class="pd-10 m-doc"><%=a.content %></div>
+</li><%      
   } %>
-</div>
+</ul>
 <s:pager runat="server" />
 </asp:Content>
