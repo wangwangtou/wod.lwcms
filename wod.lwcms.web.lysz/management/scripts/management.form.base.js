@@ -34,9 +34,11 @@
         preHandlerArr.push(function () {
             var d = $.extend(true, [], data);
             var deltid = function (arr) {
-                for (var i = 0, length = arr.length; i < length; i++) {
-                    delete arr[i]["tid"];
-                    deltid(getChildren(arr[i]));
+                if (arr) {
+                    for (var i = 0, length = arr.length; i < length; i++) {
+                        delete arr[i]["tid"];
+                        deltid(getChildren(arr[i]));
+                    } 
                 }
             };
             deltid(d);

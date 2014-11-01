@@ -1,0 +1,87 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" Inherits="wod.lwcms.web.tempMaster" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title><asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder><%=PD.seotitle%></title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <%=string.Format("<meta name=\"keywords\" content=\"{0}\"/>", PD.keywords)%>
+    <%=string.Format("<meta name=\"description\" content=\"{0}\"/>", PD.description)%>
+    <%=string.Format("<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\" />", ThemeResourceUrl("style.css"))%>
+    <script type="text/javascript" src="<%=ResourceUrl("scripts/jquery-1.4.1.min.js") %>"></script>
+    <script type="text/javascript" src="<%=ResourceUrl("scripts/lwcms-client.js?v=0.1") %>"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body class="w-auto bg-bg">
+    <div class="g-header">
+        <div class="bg-f4">
+            <h1 class="bg-h1"><%=PD.ws.siteName%></h1>
+            <p class="bg-f3"><%=PD.ws.description %></p>
+            <div class="nav-top link-h1">
+              <% List<siteNavi> topNav = PD.ws.navis["top"];
+                 for (int i = 0; i < topNav.Count; i++)
+                 {
+                   siteNavi nav = topNav[i];
+                   %><a href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
+                 }
+                 %>
+                 <span class="m-status">
+                 <%
+                   List<partView> pviews = PD.getPartViews(partView.viewPos.statusbar);
+                   if (pviews!=null)
+                   {
+                     foreach (partView view in pviews)
+                     {
+                    %><%=RenderPartView(view)%><% 
+                     }
+                   }%>
+                 </span>
+            </div>
+        </div>
+        <div class="nav bg-f2 link-main h4">
+            <% List<siteNavi> mainNav = PD.ws.navis["main"]; 
+                for (int i = 0; i < mainNav.Count; i++)
+                {
+                    siteNavi nav = mainNav[i];
+                    %><a <%=i==mainNav.Count-1 ? "class=\"f-menu_a_last\" " : "" %>href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
+                    if (nav.subNavis.Count > 0)
+                    { %>
+                    <p class="subs">
+                    <span class="subsplit">|</span>
+                    <% for(int j = 0;j < nav.subNavis.Count;j++)
+                        {
+                            siteNavi snav = nav.subNavis[j];
+                            %><a <%=j==nav.subNavis.Count-1 ? "class=\"f-menu_a_last\" " : "" %>href="<%=snav.naviUrl %>" title="<%=snav.title %>" target="<%=snav.target %>"><%=snav.name %></a><%
+                        }                                                                                                           
+                    %>
+                    <span class="subsplit">|</span></p><%                                                                                                          
+                    }
+                    if (i != mainNav.Count - 1)
+                    {%>
+                    <span class="split">|</span>
+                <%}
+                }  %>
+        </div>
+    </div>
+    <div class="bg-main">
+        <asp:ContentPlaceHolder ID="maincontent" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    <div class="bg-f3 pd-v20">
+        <div class="nav-bottom">
+            <% 
+            List<siteNavi> bNav = PD.ws.navis["bottom"];
+            for (int i = 0; i < bNav.Count; i++)
+            {
+                siteNavi nav = bNav[i];
+                %><a <%=i==bNav.Count-1 ? "class=\"f-bottomnav_a_last\" " : "" %>href="<%=nav.naviUrl %>" title="<%=nav.title %>" target="<%=nav.target %>"><%=nav.name %></a><%
+                if (i != mainNav.Count - 1)
+                {%>
+                    <span class="split">|</span><%}
+            }%>
+        </div>
+        <p class="m-copyright bg-f2"><%=PD.ws.copyright%></p>
+    </div>
+    <script type="text/javascript" src="<%=ResourceUrl("scripts/mer-graph.js?v=0.1") %>"></script>
+</body>
+</html>

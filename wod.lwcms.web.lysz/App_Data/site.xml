@@ -26,6 +26,8 @@
     <title>lwcms</title>
     <navis key="main">
       <navi name="主页" target="_self" title="主页">/index.aspx</navi>
+      <navi name="更新日志" target="_self" title="更新日志">/index.aspx?path=/default/log.html</navi>
+      <navi name="留言板" target="_self" title="留言板">/index.aspx?path=/common/messageboard</navi>
     </navis>
     <navis key="top" />
     <navis key="bottom" />

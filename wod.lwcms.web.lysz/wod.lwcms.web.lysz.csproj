@@ -52,6 +52,9 @@
     <Content Include="App_Data\alias\10_index_aliasResource.xml" />
     <Content Include="App_Data\category.xml" />
     <Content Include="App_Data\cms\category.xml" />
+    <Content Include="App_Data\cms\commands\index.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\cms\lwcms.mdb" />
     <Content Include="App_Data\commands\index.xml">
       <SubType>Designer</SubType>
@@ -297,6 +300,7 @@
     <Content Include="management\theme\nec-reset.css" />
     <Content Include="scripts\lwcms-client.js" />
     <Content Include="scripts\mer-graph.js" />
+    <Content Include="svrtheme\cms\messageboard.aspx" />
     <Content Include="svrtheme\default\authentication\auth_status.ascx" />
     <Content Include="svrtheme\default\authentication\login.aspx" />
     <Content Include="svrtheme\default\authentication\regist.aspx" />
@@ -316,9 +320,27 @@
     <Content Include="svrtheme\cms\category.aspx" />
     <Content Include="svrtheme\cms\getcomment.aspx" />
     <Content Include="svrtheme\cms\index.aspx" />
+    <Content Include="svrtheme\cms_myself\article.aspx" />
+    <Content Include="svrtheme\cms_myself\authentication\auth_status.ascx" />
+    <Content Include="svrtheme\cms_myself\authentication\login.aspx" />
+    <Content Include="svrtheme\cms_myself\authentication\regist.aspx" />
+    <Content Include="svrtheme\cms_myself\authentication\userinfo.aspx" />
+    <Content Include="svrtheme\cms_myself\category.aspx" />
+    <Content Include="svrtheme\cms_myself\getcomment.aspx" />
+    <Content Include="svrtheme\cms_myself\index.aspx" />
+    <Content Include="theme\cms\bullet.png" />
+    <Content Include="theme\cms\content.png" />
+    <Content Include="theme\cms\footer.png" />
+    <Content Include="theme\cms\graphic.png" />
+    <Content Include="theme\cms\link.png" />
+    <Content Include="theme\cms\logo.png" />
+    <Content Include="theme\cms\menu.png" />
+    <Content Include="theme\cms\menu_select.png" />
+    <Content Include="theme\cms\search.png" />
     <Content Include="theme\default\style.css" />
     <Content Include="theme\images\small.png" />
     <Content Include="theme\cms\style.css" />
+    <Content Include="theme\cms_myself\style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -368,7 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\cms\alias\" />
-    <Folder Include="App_Data\cms\commands\" />
     <Folder Include="App_Data\plugins\" />
   </ItemGroup>
   <ItemGroup>
@@ -376,6 +397,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="svrtheme\cms\site.master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="svrtheme\cms_myself\editorSite.master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="svrtheme\cms_myself\site.master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

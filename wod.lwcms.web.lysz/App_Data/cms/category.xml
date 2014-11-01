@@ -1,3 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <categories>
+  <category>
+    <name>默认</name>
+    <code>default</code>
+    <fullpath>
+    </fullpath>
+    <description>
+    </description>
+    <keywords>
+    </keywords>
+    <page>category</page>
+    <contentpage>
+    </contentpage>
+    <extendform>
+    </extendform>
+    <subcategories>
+    </subcategories>
+  </category>
 </categories>
