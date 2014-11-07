@@ -25,6 +25,12 @@
         var html = d.innerHTML;
         return html.replace(/"/g, "&quot;");
     };
+    decodeHTML = function (html) {
+        var d = document.createElement("div");
+        d.innerHTML = html;
+        html = d.innerText;
+        return html;
+    };
     /* 结束：基础函数，对js的扩展及兼容性适配 */
 
     /* 开始：实现名称空间和类的注册 */
@@ -177,7 +183,8 @@
             var arr;
             if (!clsName || ((arr = clsName.split(".")) && arr.length < 1))
                 return undefined;
-            return this.getNS(arr.slice(1,arr.length).join("."));
+            arr.pop();
+            return this.getNS(arr.join("."));
         },
         _getClassCLS: function (clsName) {
             return this._getClassBaseTo(clsName, this);
@@ -229,50 +236,327 @@
     /* 结束：实现名称空间和类的注册 */
 })(window);
 
+/*form主体，无jQuery依赖*/
 (function (wod) {
     var formNS = wod.CLS.getNS("wod.forms");
+    wod.CLS.getClass({
+        _components:{},
+        notify: function (name, field/*arguments*/) {
+            var components = this._components[name];
+            if (components) {
+                for (var i = 0, length = components.length; i < length; i++) {
+                    components[i].notify.apply(components[i], arguments);
+                }
+            }
+        },
+        registComponent: function (notifyTypes,component) {
+            for (var i = 0, length = notifyTypes.length; i < length; i++) {
+                var components = this._components[notifyTypes[i]];
+                if (!components) {
+                    components = [];
+                    this._components[notifyTypes[i]] = components;
+                }
+                components.push(component);
+            }
+        },
+        unRegistComponent: function (notifyTypes) {
+            for (var i = 0, length = notifyTypes.length; i < length; i++) {
+                var components = this._components[notifyTypes[i]];
+                if (components) {
+                    delete this._components[notifyTypes[i]];
+                }
+            }
+        }
+    }, "wod.forms.FieldComponents");
+
+    wod.CLS.getClass({
+        notify: function (name, field/*arguments*/) {
+            if (this[name]) {
+                var args = [];
+                for (var i = 1, length = arguments.length; i < length; i++) {
+                    args.push(arguments[i]);
+                }
+                this[name].apply(this, args);
+            }
+        }
+    }, "wod.forms.FieldComponentBase");
+
     /* 开始，字段基类 */
     wod.CLS.getClass({
-        name: function () {
-
-        },
-        _init: function () {
+        form: null,
+        name: "",
+        setting: { autoSync: true },
+        components:null,
+        _field: null,
+        _value:"",
+        _init: function (form, field, setting) {
             this.parent();
+            if (arguments.length) {
+                this.init(form, field, setting);
+            }
         },
         getForm: function () {
-            
+            return this.form;
         },
-        init: function (fieldBody, setting) {
-
+        init: function (form, field, setting) {
+            this.form = form;
+            this._field = field;
+            this.name = setting.name;
+            wod.statics.mixin(this.setting, setting);
+            this._value = this._syncValue();
+            this.render();
+            if (this.setting.autoSync) {
+                this.registAutoSync();
+            }
+        },
+        isEquals:function (val1,val2) {
+            return val1 == val2;
+        },
+        _innerSetValue: function (val) {
+            if (!this.isEquals(this._value, val)) {
+                this._value = val;
+                //this.raiseEvent("valueChanged");
+                return true;
+            }
+            return false;
+        },
+        setValue: function (val) {
+            if (this._innerSetValue(val)) {
+                this.update();
+            }
+        },
+        getValue: function () {
+            if (this.setting.autoSync) {
+                this.sync();
+            }
+            return this._value;
+        },
+        _syncValue: function () {
+            var val = this._field.getValue();
+            return val;
+        },
+        sync: function () {
+            var val = this._syncValue();
+            this._innerSetValue(val);
+        },
+        registAutoSync: function () {
+        },
+        unRegistAutoSync: function () {
+        },
+        notifyError: function (msg) {
+            (this.components || formNS.FieldBase.components).notify("notifyError", this, msg);
+        },
+        clearError: function () {
+            (this.components || formNS.FieldBase.components).notify("clearError", this);
+        },
+        render: function () {
+        },
+        update: function () {
+            this._field.setValue(this.getValue());
         }
     }, "wod.forms.FieldBase");
+    formNS.FieldBase.components = new formNS.FieldComponents();
     /* 结束，字段基类 */
 
     /* 开始，表单类 */
     wod.CLS.getClass({
-        fields:[],
-        name:"",
+        _domMgr:null,
+        _getDomManager: function (dom) {
+            return new Object();
+        },
+        _getFieldType: function (type) {
+            for (var typeName in formNS) {
+                if (typeName == type
+                    && formNS[typeName].isSubclassOf(formNS.FieldBase)) {
+                    return formNS[typeName];
+                }
+            }
+            return formNS.FieldBase;
+        },
+        fields: [],
+        customValidates:[],
+        name: "",
+        _init: function (formBody, setting) {
+            this.parent();
+            if (arguments.length) {
+                this.init(formBody, setting);
+            }
+        },
         init: function (formBody, fieldsDefine) {
-
+            this._domMgr = this._getDomManager(formBody);
+            for (var i = 0, length = fieldsDefine.length; i < length; i++) {
+                var fieldDef = fieldsDefine[i];
+                var fieldType = this._getFieldType(fieldDef.type);
+                var field = new fieldType(this,this._domMgr.getField(fieldDef.name),fieldDef);
+                this.fields.push(field);
+            }
         },
         sync: function () {
-
+            for (var i = 0, length=this.fields.length; i < length; i++) {
+                this.fields[i].sync();
+            }
+        },
+        getFields:function () {
+            return this.fields;
+        },
+        getField: function (name) {
+            for (var i = 0, length = this.fields.length; i < length; i++) {
+                if (name == this.fields[i].name) {
+                    return this.fields[i];
+                }
+            }
         },
         getData: function () {
-            this.sync();
+            var data = {};
+            for (var i = 0, length = this.fields.length; i < length; i++) {
+                data[this.fields[i].name] = this.fields[i].getValue();
+            }
+            return data;
         },
         setData: function (data) {
-
+            for (var i = 0, length = this.fields.length; i < length; i++) {
+                if (data[this.fields[i].name] != undefined) {
+                    this.fields[i].setValue(data[this.fields[i].name]);
+                }
+            }
         },
         registValidate: function (validator) {
-
+            this.customValidates.push(validator);
+        },
+        unRegistValidate: function (validator) {
+            for (var i = 0,length =this.customValidates.length; i < length; i++) {
+                if (this.customValidates[i] == validator) {
+                    this.customValidates.splice(i, 1);
+                    break;
+                }
+            }
         },
         validate: function () {
-
+            this.sync();
+            var data = this.getData();
+            for (var i = 0, length = this.customValidates.length; i < length; i++) {
+                if (!this.customValidates[i].call(this, data)) {
+                    return false;
+                }
+            }
+            return true;
         },
-        tipError: function (fname, msg) {
-
+        notifyError: function (name, msg) {
+            var field = this.getField(name);
+            field.notifyError(msg);
+        },
+        clearError: function () {
+            for (var i = 0, length = this.fields.length; i < length; i++) {
+                this.fields[i].clearError();
+            }
         }
-    }, "wod.forms.Form");
+    }, "wod.forms.FormBase");
     /* 结束，表单类 */
 })(wod);
+
+/*此段必须引用在jquery之后*/
+(function (wod, $) {
+    var formNS = wod.CLS.getNS("wod.forms");
+    /* 开始，dom封装 */
+    wod.CLS.getClass({
+        dom: null,
+        _init: function (dom) {
+            this.parent();
+            if (arguments.length) {
+                this.init(dom);
+            }
+        },
+        init: function (dom) {
+            this.dom = dom;
+        },
+        getValue: function () {
+            var val;
+            switch (this.dom.tagName.toUpperCase()) {
+                case "select":
+                    val = $(this.dom).find(":selected").val();
+                    break;
+                default:
+                    val = this.dom.value;
+                    break;
+            }
+            return val;
+        },
+        setValue: function (val) {
+            switch (this.dom.tagName.toUpperCase()) {
+                case "select":
+                    val = $(this.dom).find("[value=\"" + val + "\"]").attr("selected", true);
+                    break;
+                default:
+                    this.dom.value = val;
+                    break;
+            }
+        },
+        on: function (event,callback) {
+            $(this.dom).on(event, callback);
+        },
+        off: function (event) {
+            $(this.dom).off(event);
+        },
+        css: function (data) {
+            $(this.dom).css(data);
+        },
+        attr: function (data) {
+            $(this.dom).attr(data);
+        },
+        swap: function (body) {
+            var $sdom = $(body);
+            $(this.dom).hide().after($sdom);
+            this.dom = $sdom[0];
+        },
+        innerHTML: function (html) {
+            $(this.dom).html(html);
+        }
+    }, "wod.dom.fields");
+
+    wod.CLS.getClass({
+        $: null,
+        _init: function (body) {
+            this.parent();
+            this.$ = wod.dom.jQueryDomManager.$;
+            if (arguments.length) {
+                this.init(body);
+            }
+        },
+        init: function (body) {
+            this.body = body;
+        },
+        getByName: function (name) {
+            return this.$(this.body).find("[name=\"" + encodeHTML(name) + "\"]")[0];
+        },
+        getField: function (name) {
+            return new wod.dom.fields(this.getByName(name));
+        }
+    }, "wod.dom.jQueryDomManager").$ = jQuery;
+
+    wod.CLS.getClass({
+        $: null,
+        errorClass: "field_error",
+        _init: function () {
+            this.parent();
+            this.$ = wod.dom.jQueryDomManager.$;
+        },
+        notifyError: function (field, msg) {
+            this.$(field._field.dom).addClass(this.errorClass)
+                .attr("title", msg);
+        },
+        clearError: function (field) {
+            this.$(field._field.dom).removeClass(this.errorClass)
+                .attr("title", "");
+        }
+    }, "wod.dom.components.CommonNotifyErrorComponent", "wod.forms.FieldComponentBase")
+        .notifyTypes = ["notifyError", "clearError"];
+    /* 结束，dom封装 */
+
+    wod.CLS.getClass({
+        _getDomManager: function (body) {
+            return new wod.dom.jQueryDomManager(body);
+        }
+    }, "wod.forms.Form", "wod.forms.FormBase");
+    formNS.FieldBase.components.registComponent(wod.dom.components.CommonNotifyErrorComponent.notifyTypes,
+        new wod.dom.components.CommonNotifyErrorComponent());
+})(wod, jQuery);
