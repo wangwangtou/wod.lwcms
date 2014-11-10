@@ -25,6 +25,10 @@
             try {
                 arg = arg(function (msg) {
                     writeResult(msgPanel, msg);
+                }, function (result,msg) {
+                    if (!result) {
+                        throw new Error(msg);
+                    }
                 });
             } catch (e) {
                 arg = false;
