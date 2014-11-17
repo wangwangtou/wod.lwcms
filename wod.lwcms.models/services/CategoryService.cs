@@ -49,7 +49,17 @@ namespace wod.lwcms.services
 
         public void updateCategories(List<models.category> allCats)
         {
+            updateCategoriesPath(allCats, "");
             dataaccess.SaveCategories(allCats);
+        }
+
+        private void updateCategoriesPath(List<models.category> cats, string path)
+        {
+            foreach (var cat in cats)
+            {
+                cat.fullpath = path + "/" + cat.code;
+                updateCategoriesPath(cat.subCategory, cat.fullpath);
+            }
         }
     }
 }

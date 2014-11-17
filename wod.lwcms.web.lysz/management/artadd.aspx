@@ -32,39 +32,33 @@ MasterPageFile="~/management/managepage.master"%>
 <asp:Content runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+  <script type="text/javascript">
+    var form;
+    $(function () {
+      form = new wod.forms.wodform();
+      form.init(document.body, articleFields);
+      form.registValidate(articleValidate);
+      $("#fsubmit").click(form.submit.bind(form,"artadd.aspx?id=<%=Request.QueryString["id"] %>",function(data){
+          location.href = "artadd.aspx?id="+data.result.id;
+      }));
+      $("#fcancel").click(function () {
+          location.reload();
+      });
+    });
+  </script>
 <%article art = PD==null? null : PD.getObject<article>("art");
   if (art != null)
   {%>
     <script type="text/javascript">var artData = <%=wod.lwcms.common.ToJson(art) %>;
-    _$wod_form.artSch.extendData.setting.formName = '<%=art.extendForm %>';
-    /*artData.cat = artData.category.fullpath;
+    /*_$wod_form.artSch.extendData.setting.formName = '<%=art.extendForm %>';
+    artData.cat = artData.category.fullpath;
     artData.image = $.toJSON(artData.image);*/</script>
     <script type="text/javascript">
         $(function () {
-            $("body").setFormData(artData);
+          form.setData(artData);
         });
     </script>
 <% }%>
-    <script type="text/javascript">
-        $(function () {
-            $("body").wodForm({
-                schema: _$wod_form.artSch
-                , submit: { selector: "#fsubmit"
-                    , event: "click"
-                    , posts: { url: "artadd.aspx?id=<%=Request.QueryString["id"] %>", callback : function(){ alert("保存成功");} }
-                    , validate : function(data,errorCallback){
-                        errorCallback("name","不能为空");
-                        return true;
-                    }
-                    , preSubmit : function(){
-                    }
-                }
-            });
-            $("#fcancel").click(function () {
-                location.reload();
-            });
-        });
-    </script>
 <div class="g-left">
     <fieldset class="f-form f-form-c2">
         <legend>基本信息</legend>

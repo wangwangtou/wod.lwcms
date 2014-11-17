@@ -35,6 +35,10 @@ Values(:newGUID, :name, :code, :content, :preContent,:image,:extendData, :catego
     ]]>
         </sql>
       </sqlCommand>
+
+      <resultConvertCommand id="result">
+        <cdata valueName="newGUID" dataName="id"></cdata>
+      </resultConvertCommand>
     </commands>
   </multiCommand>
   <multiCommand id="management_artupdate">
@@ -80,6 +84,10 @@ Where ID = :artid
     ]]>
         </sql>
       </sqlCommand>
+
+      <resultConvertCommand id="result">
+        <cdata valueName="artid" dataName="id"></cdata>
+      </resultConvertCommand>
     </commands>
   </multiCommand>
   <multiCommand id="management_artpublish">

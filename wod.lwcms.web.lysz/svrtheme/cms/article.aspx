@@ -23,10 +23,12 @@
 <div class="comment_form">
     <h1>发表评论</h1>
     <form onsubmit="return commetsubmit(this);">
-        <label>姓名：<br /><input type="text" name="name" value="" /></label><br />
-        <label>邮箱：<br /><input type="text" name="email" value="" /></label><br />
-        <label>评论：<br /><textarea name="comment"></textarea></label><br />
-        <input type="submit" value="发表评论" />
+        <div class="form_settings">
+          <p><span>姓名：</span><input type="text" name="name" value="" /></p>
+          <p><span>邮箱：</span><input type="text" name="email" value="" /></p>
+          <p><span>评论：</span><textarea name="comment"></textarea></p>
+          <p><span>&nbsp;</span><input type="submit" class="submit" value="发表" /></p>
+        </div>
     </form>
     <script type="text/javascript">
         function commetsubmit(form) {

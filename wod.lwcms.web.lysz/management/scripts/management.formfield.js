@@ -440,10 +440,10 @@
     wod.CLS.getClass({
         setting: {
             autoSync: true,
-            allownull: true,
+            allownull: false,
             options: [],
             optionscmd: "op_category",
-            optionscmddata: {}
+            optionscmddata: null
         },
         getSource: function (callback) {
             if (this.setting.options.length) {
@@ -451,18 +451,18 @@
             }
             else {
                 $.ajax({
-                    url: "common.ashx?command=" + setting.optionscmd,
-                    data: setting.optionscmddata,
+                    url: "common.ashx?command=" + this.setting.optionscmd,
+                    data: this.setting.optionscmddata || {},
                     type: "post",
                     dataType: "json",
-                    success: function (data) {
+                    success: (function (data) {
                         //if (_$wod_form.ajaxValidResponse(data)) {
                         if (data && data.result && data.result.length) {
                             this.setting.options = data.result;
                         }
                         callback(this.setting.options);
                         //}
-                    },
+                    }).bind(this),
                     error: function () {
                         callback(this.setting.options);
                     }//_$wod_form.ajaxError
@@ -470,7 +470,7 @@
 
             }
         }
-    }, "wod.forms.woddrop", "wod.forms.commondrop");
+    }, "wod.forms.woddrop", "wod.forms.wodcommondrop");
 })(wod, jQuery);
 /*wodrichtext,siteImage*/
 (function (wod, $, K) {
@@ -545,20 +545,23 @@
     wod.CLS.getClass({
         setting: {
             autoSync:false,
-            datatype: "json",//"object","json"
+            datatype: "json"//"object","json"
         },
         _form: null,
         _objValue: null,
         render: function () {
             var fields = this.initFields();
             var formBody = this.renderFormBody(fields);
-            this._form = new forms.Form();
+            this._form = new wod.forms.Form();
             this._form.init(formBody, fields);
             this._field.swap(formBody);
 
+            this._setJsonValue(this._value);
+        },
+        _setJsonValue:function(jsonVal){
             try {
-                this._objValue = $.parseJSON(this._value);
-                if (this._objValue) {
+                this._objValue = $.parseJSON(jsonVal);
+                if (!this._objValue) {
                     this._objValue = wod.statics.mixin({},this.setting.defaultObjValue);
                 }
             } catch (e) {
@@ -568,6 +571,9 @@
             if (this.datatype == "object") {
                 this._value = this._objValue;
             }
+            else{
+                this._value = jsonVal;
+            }
         },
         initFields: function () {
             return [];
@@ -576,12 +582,40 @@
             return document.createElement("div");
         },
         _syncValue: function () {
-            this._objValue = this._imgForm.getData();
-            if (this.datatype == "object") {
-                return this._objValue;
+            if(this._form){
+                this._form.sync();
+                this._objValue = this._form.getData();
+                if (this.datatype == "object") {
+                    return this._objValue;
+                }
+                else {
+                    return $.toJSON(this._objValue);
+                }
             }
-            else {
-                return $.toJSON(this._objValue);
+            else{
+                return this._value;
+            }
+        },
+        _innerSetValue:function(val){
+            if(this.datatype == "object"){
+                if( typeof(val) == "object"){
+                    this.parent(val);
+                    this._objValue = val;
+                    this._form.setData(this._objValue);
+                }
+                else{
+                    this._setJsonValue(val);
+                }
+            }
+            else{
+                if( typeof(val) == "object"){
+                    this._objValue = val;
+                    this.parent($.toJSON(this._objValue));
+                    this._form.setData(this._objValue);
+                }
+                else{
+                    this._setJsonValue(val);
+                }
             }
         }
     }, "wod.forms.wodformfield", "wod.forms.FieldBase");
@@ -614,8 +648,6 @@
                 description: "大图片(建议尺寸960*350)"
             }
         },
-        _imgForm: null,
-        _objValue:null,
         render: function () {
             this.parent();
             //var formPanel = document.createElement("div");
@@ -651,7 +683,7 @@
         },
         initFields: function () {
             var type = "wodimage";
-            var fields = [{ name: "small", type: type },{ name: "normal", type: type },{ name: "big", type: type }];
+            var fields = [{ name: "smallImg", type: type },{ name: "normalImg", type: type },{ name: "bigImg", type: type }];
             wod.statics.mixin(fields[0], this.setting.small);
             wod.statics.mixin(fields[1], this.setting.normal);
             wod.statics.mixin(fields[2], this.setting.big);
@@ -666,15 +698,29 @@
             }
             formPanel.innerHTML = formBody.join("");
             return formPanel;
-        },
-        _syncValue: function () {
-            this._objValue = this._imgForm.getData();
-            if (this.datatype == "object") {
-                return this._objValue;
-            }
-            else {
-                return $.toJSON(this._objValue);
-            }
         }
     }, "wod.forms.wodsiteImage", "wod.forms.wodformfield");
 })(wod, jQuery, KindEditor);
+
+
+(function (wod,$) {
+    wod.CLS.getClass({
+        submit:function (url,callback){
+            if(this.validate()){
+                $.ajax({
+                    data:this.getData(),
+                    url:url,
+                    type:"post",
+                    success:function(data){
+                        if (data && data.status) {
+                            callback(data);
+                        }
+                        else{
+                            alert(data.message);
+                        }
+                    }
+                });
+            }
+        }
+    },"wod.forms.wodform","wod.forms.Form");
+})(wod,jQuery)

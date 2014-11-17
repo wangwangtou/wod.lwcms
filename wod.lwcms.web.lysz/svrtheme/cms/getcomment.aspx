@@ -3,7 +3,7 @@
 <% List<comment> cmtList = PD.op.getObject<List<comment>>("cmtList");
    if (cmtList.Count == 0)
    { 
-     %><h4>暂无评论</h4><%
+     %><h4>暂无内容</h4><%
    }
    %>
 

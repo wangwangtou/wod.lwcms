@@ -99,6 +99,7 @@ namespace wod.lwcms.web
             pool.init(resource, wodEnvironment.GetDataPath("commands"));
             if (siteKey != wodEnvironment.siteKey)
                 pool.init(resource, wodEnvironment.GetDataPath(siteKey, "commands"));
+
             _ioc.RegistInstance("__commandPool", pool);
             return _ioc;
         }

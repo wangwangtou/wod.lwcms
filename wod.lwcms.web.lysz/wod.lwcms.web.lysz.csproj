@@ -51,6 +51,9 @@
     <Content Include="App_Data\alias\00_base_aliasResource.xml" />
     <Content Include="App_Data\alias\10_index_aliasResource.xml" />
     <Content Include="App_Data\category.xml" />
+    <Content Include="App_Data\cms\alias\index_aliasResource.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\cms\category.xml" />
     <Content Include="App_Data\cms\commands\index.xml">
       <SubType>Designer</SubType>
@@ -288,10 +291,15 @@
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="management\scripts\jquery.json-2.4.min.js" />
-    <Content Include="management\scripts\management.core.test.html" />
-    <Content Include="management\scripts\management.core.test.js" />
+    <Content Include="management\scripts\management.common.js" />
     <Content Include="management\scripts\management.form.base.js" />
     <Content Include="management\scripts\management.core.js" />
+    <Content Include="management\scripts\management.formfield.js" />
+    <Content Include="management\scripts\tests\management.core.test.html" />
+    <Content Include="management\scripts\tests\management.core.test.js" />
+    <Content Include="management\scripts\tests\management.formfield.test.html" />
+    <Content Include="management\scripts\tests\management.formfield.test.js" />
+    <Content Include="management\scripts\tests\management.testcore.js" />
     <Content Include="management\shared\pager.ascx" />
     <Content Include="management\base.aspx" />
     <Content Include="scripts\jquery-1.4.1.min.js" />
@@ -389,7 +397,6 @@
     <Content Include="management\common.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\cms\alias\" />
     <Folder Include="App_Data\plugins\" />
   </ItemGroup>
   <ItemGroup>

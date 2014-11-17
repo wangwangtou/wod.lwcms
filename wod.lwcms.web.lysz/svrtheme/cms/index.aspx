@@ -3,7 +3,6 @@
 <asp:Content runat="server" ContentPlaceHolderID="head">
 </asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="maincontent">
-
 <div class="aglin-center pd-v20">
     <div class="inline-block bg-f2 module pd-5 link-f2">
         <h3>内容模版</h3>

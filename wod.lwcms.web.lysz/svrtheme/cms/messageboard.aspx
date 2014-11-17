@@ -4,10 +4,12 @@
 <asp:Content ID="Content2" runat="server" ContentPlaceHolderID="maincontent">
 <div class="comment_form">
     <form onsubmit="return commetsubmit(this);">
-        <label>姓名：<br /><input type="text" name="name" value="" /></label><br />
-        <label>邮箱：<br /><input type="text" name="email" value="" /></label><br />
-        <label>留言：<br /><textarea name="comment"></textarea></label><br />
-        <input type="submit" value="提交" />
+        <div class="form_settings">
+          <p><span>姓名：</span><input type="text" name="name" value="" /></p>
+          <p><span>邮箱：</span><input type="text" name="email" value="" /></p>
+          <p><span>留言：</span><textarea name="comment"></textarea></p>
+          <p><span>&nbsp;</span><input type="submit" class="submit" value="发表" /></p>
+        </div>
     </form>
     <script type="text/javascript">
       function commetsubmit(form) {
@@ -32,7 +34,7 @@
                   }
                   else {
                     $(form).find("input[type='text'],textarea").val("");
-                    lwcms.getComments(__aid, "#comments");
+                    lwcms.getComments(__aid, "#comments",50);
                   }
                 });
         return false;

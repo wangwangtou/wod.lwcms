@@ -67,6 +67,7 @@ namespace wod.lwcms.web
                 Response.Clear();
                 Response.ContentType = "text/json";
                 Response.Write(common.ToJson(result));
+                PD.op.Dispose();
                 Response.End();
             }
         }
@@ -138,6 +139,12 @@ namespace wod.lwcms.web
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+        }
+
+        protected override void OnUnload(EventArgs e)
+        {
+            PD.op.Dispose();
+            base.OnUnload(e);
         }
 
         public override void Dispose()

@@ -352,7 +352,7 @@
         render: function () {
         },
         update: function () {
-            this._field.setValue(this.getValue());
+            this._field.setValue(this._value);
         }
     }, "wod.forms.FieldBase");
     formNS.FieldBase.components = new formNS.FieldComponents();

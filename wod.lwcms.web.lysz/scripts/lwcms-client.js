@@ -3,7 +3,7 @@
     window.lwcms.viewArticle = function(id){
         $.post("/index.aspx?path=/common/view&aid="+id);
     };
-    window.lwcms.getComments = function(id,container,callback){
+    window.lwcms.getComments = function(id,container,ps,callback){
         function pageLinkClick()
         {
         var href =$(this).attr("href");
@@ -17,7 +17,7 @@
             });
             return false;}
         }
-        $.get("/index.aspx?path=/common/getcomment&aid="+id +"&rdcode="+Math.random(),function(html){
+        $.get("/index.aspx?path=/common/getcomment&pageSize="+(ps||10)+"&aid="+id +"&rdcode="+Math.random(),function(html){
             $(container).html(html);
             $(container).find(".m-page a").click(pageLinkClick);
             if(callback) callback();

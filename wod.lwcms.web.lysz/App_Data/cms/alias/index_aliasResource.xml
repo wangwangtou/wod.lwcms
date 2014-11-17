@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<aliasResource>
+  <types>
+  </types>
+  <commands>
+    <multiCommand alias="indexCommand">
+      <commands>
+        <addinBeforeCommand id="beforeCmd"></addinBeforeCommand>
+        <getSite type="alias" id="ws"></getSite>
+        <getAllCats type="alias" id="allCats"></getAllCats>
+        <sqlCommand id="singleDr" paramenterPrefix=":" excuteType="datareader">
+          <!--excuteType:datareader,excute,scalar-->
+          <sql>
+            <![CDATA[
+    select ID,art_Name,art_Code,art_PreContent,art_Content,art_SiteImage,art_ExtendData,art_Page,cat_Path,art_Description,art_Keywords,art_CreateOn,art_ViewCount,art_Creater,art_State from wod_lw_article 
+    where cat_Path = '/default' and art_Code = 'index' and art_State = "pub"
+    ]]>
+          </sql>
+        </sqlCommand>
+        <getSingleArticle_DR type="alias" id="art"></getSingleArticle_DR>
+        <getArticleTransfer type="alias" id="pageTransferName"></getArticleTransfer>
+        <addinAfterCommand id="afterCmd"></addinAfterCommand>
+      </commands>
+    </multiCommand>
+  </commands>
+</aliasResource>

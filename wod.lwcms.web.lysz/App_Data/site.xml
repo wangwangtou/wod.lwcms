@@ -19,7 +19,7 @@
   <site key="cms">
     <sitename>lwcms</sitename>
     <siteurl>http://cms.xvycn.com/</siteurl>
-    <description>lwcms,往狭义CMS努力中</description>
+    <description>lwcms,功能简单的cms；不断更新中,往狭义CMS努力中。</description>
     <keywords>狭义CMS,beta CMS</keywords>
     <copyright>&amp;copy; Copyright 2014-2015   wangwangtou@qq.com版权所有&lt;br /&gt;
 本站点为个人网站，转载请注明出处。</copyright>
@@ -27,6 +27,7 @@
     <navis key="main">
       <navi name="主页" target="_self" title="主页">/index.aspx</navi>
       <navi name="更新日志" target="_self" title="更新日志">/index.aspx?path=/default/log.html</navi>
+      <navi name="我的客户" target="_self" title="我的客户">/index.aspx?path=/default/clients.html</navi>
       <navi name="留言板" target="_self" title="留言板">/index.aspx?path=/common/messageboard</navi>
     </navis>
     <navis key="top" />
