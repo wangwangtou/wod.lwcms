@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web;
 using wod.lwcms.services;
 using wod.lwcms.dataaccess;
+using System.Xml;
 
 namespace wod.lwcms.web
 {
@@ -45,26 +46,16 @@ namespace wod.lwcms.web
                 _iocs.Add(createIoc(wodEnvironment.siteKey));
             }
         }
-
+        
         private static ioc createIoc(string siteKey)
         {
             ioc _ioc = new ioc();
 
             _ioc.RegistInstance("siteKey", siteKey);
-            _ioc.RegistInstance("pageSize", 20);
-            _ioc.RegistInstance("pageIndex", 0);
-            _ioc.RegistInstance("connectionString", "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + wodEnvironment.GetDataPath(siteKey, "lwcms.mdb") + ";User Id=;Password=;");
-            _ioc.RegistInstance("dbProviderFactory", System.Data.Common.DbProviderFactories.GetFactory("System.Data.OleDb"));
+            var appConfigXml = wodEnvironment.GetDataPath("application/app.xml");
 
-            _ioc.Regist(typeof(ISiteService), typeof(SiteService));
-            _ioc.Regist(typeof(ICategoryService), typeof(CategoryService));
-            _ioc.Regist(typeof(IArticleService), typeof(ArticleService));
-            _ioc.Regist(typeof(IAuthenticationService), typeof(AuthenticationService));
-            _ioc.Regist(typeof(IGenerateService), typeof(GenerateService));
+            LoadApplicationConfig(siteKey,_ioc,appConfigXml);
 
-            _ioc.Regist(typeof(ISiteDataAccess), typeof(SiteDataAccess));
-            _ioc.Regist(typeof(ICategoryDataAccess), typeof(CategoryDataAccess));
-            _ioc.Regist(typeof(ICommonDataAccess), typeof(CommonDataAccess));
 
             commands.commandPool pool = new commands.commandPool();
             aliasResource resource = new aliasResource(pool);
@@ -102,6 +93,15 @@ namespace wod.lwcms.web
 
             _ioc.RegistInstance("__commandPool", pool);
             return _ioc;
+        }
+
+        private static void LoadApplicationConfig(string siteKey, ioc _ioc, string appConfigXml)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(appConfigXml);
+            config.applicationParse.ParseIocsNode(_ioc, doc.SelectSingleNode("/app/defaults/icos"), (ins) => _ioc.RegistInstance(ins.name, ins.value), (abstractType) => _ioc.Regist(abstractType.abstractType, abstractType.realizeType));
+
+            config.applicationParse.ParseIocsNode(_ioc, doc.SelectSingleNode("/app/sites[@key=\""+siteKey+"\"]/icos"), (ins) => _ioc.RegistInstance(ins.name, ins.value), (abstractType) => _ioc.Regist(abstractType.abstractType, abstractType.realizeType));
         }
 
         private static List<addin.IAddin> loadExtensions(ioc _ioc, List<string> extensions)

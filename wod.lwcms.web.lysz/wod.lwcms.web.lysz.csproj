@@ -50,6 +50,9 @@
     <Content Include="App_Data\alias\01_sql_aliasResource.xml" />
     <Content Include="App_Data\alias\00_base_aliasResource.xml" />
     <Content Include="App_Data\alias\10_index_aliasResource.xml" />
+    <Content Include="App_Data\application\app.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\category.xml" />
     <Content Include="App_Data\cms\alias\index_aliasResource.xml">
       <SubType>Designer</SubType>
@@ -74,8 +77,12 @@
     <Content Include="App_Data\commands\otherextend.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\commands\management_update.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\extensions\authentication\aliasResource.xml" />
     <Content Include="App_Data\extensions\cacheable\aliasResource.xml" />
-    <Content Include="App_Data\extensions\authentication\cmds.xml">
+    <Content Include="App_Data\extensions\authentication\command.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\commands\management_base.xml">
@@ -302,6 +309,8 @@
     <Content Include="management\scripts\tests\management.testcore.js" />
     <Content Include="management\shared\pager.ascx" />
     <Content Include="management\base.aspx" />
+    <Content Include="management\cmtpub.aspx" />
+    <Content Include="management\update.aspx" />
     <Content Include="scripts\jquery-1.4.1.min.js" />
     <Content Include="management\scripts\management.framework.js" />
     <Content Include="management\theme\management.css" />
@@ -310,6 +319,7 @@
     <Content Include="scripts\mer-graph.js" />
     <Content Include="svrtheme\cms\messageboard.aspx" />
     <Content Include="svrtheme\default\authentication\auth_status.ascx" />
+    <Content Include="svrtheme\default\authentication\commentadd.ascx" />
     <Content Include="svrtheme\default\authentication\login.aspx" />
     <Content Include="svrtheme\default\authentication\regist.aspx" />
     <Content Include="svrtheme\default\authentication\userinfo.aspx" />
@@ -319,6 +329,7 @@
     <Content Include="svrtheme\default\category.aspx" />
     <Content Include="svrtheme\default\article.aspx" />
     <Content Include="svrtheme\default\getpuzzle.aspx" />
+    <Content Include="svrtheme\default\commentadd.ascx" />
     <Content Include="svrtheme\shared\pager.ascx" />
     <Content Include="svrtheme\cms\article.aspx" />
     <Content Include="svrtheme\cms\authentication\auth_status.ascx" />
@@ -410,6 +421,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="svrtheme\cms_myself\site.master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="svrtheme\default\Web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

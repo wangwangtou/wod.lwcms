@@ -51,7 +51,11 @@ namespace wod.lwcms
 
         private void distinctAlias<T1>(List<alias<T1>> aliass)
         {
-            aliass.Sort((at1, at2) => { int r = at1.AliasName.CompareTo(at2.AliasName); return r == 0 ? -1 : r; });
+            aliass.Sort((at1, at2) => {
+                if (at1 == at2) return 0;
+                int r = at1.AliasName.CompareTo(at2.AliasName); 
+                return r == 0 ? -1 : r; 
+            });
             for (int i = 1; i < aliass.Count; i++)
             {
                 if (aliass[i - 1].AliasName == aliass[i].AliasName)

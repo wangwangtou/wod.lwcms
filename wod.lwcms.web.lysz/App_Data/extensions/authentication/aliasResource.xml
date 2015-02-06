@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<aliasResource>
+  <types>
+  </types>
+  <commands>
+    <sqlCommand alias="getUserName_ACC" paramenterPrefix=":" excuteType="scalar">
+      <!--excuteType:datareader,excute,scalar-->
+      <sql>
+        <![CDATA[
+    select user_Name from wod_lw_user where user_ID = :lw_user
+    ]]>
+      </sql>
+    </sqlCommand>
+    <multiCommand alias="commentArticleCommand">
+      <commands>
+        <addinBeforeCommand id="beforeCmd"></addinBeforeCommand>
+        <getUserName_ACC id="name">
+          <actfilter>@auth_islogin == true</actfilter>
+        </getUserName_ACC>
+        <checkParam_commentArticle type="alias" id="checkParam"></checkParam_commentArticle>
+        <article_usercomment_ACC type="alias" id="usercomment">
+          <actfilter>@checkParam == true</actfilter>
+        </article_usercomment_ACC>
+        <resultConvertCommand id="result">
+          <cdata valueName="checkParam" dataName="IsValid"></cdata>
+          <cdata valueName="checkParam.errors" dataName="Messages"></cdata>
+        </resultConvertCommand>
+        <addinAfterCommand id="afterCmd"></addinAfterCommand>
+      </commands>
+    </multiCommand>
+  </commands>
+</aliasResource>

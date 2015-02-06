@@ -48,6 +48,7 @@
     <Compile Include="models\siteImage.cs" />
     <Compile Include="models\indexData.cs" />
     <Compile Include="models\ISeoObject.cs" />
+    <Compile Include="models\user.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="models\wodsite.cs" />
     <Compile Include="services\ArticleService.cs" />

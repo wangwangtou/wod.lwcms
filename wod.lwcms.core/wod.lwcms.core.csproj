@@ -35,6 +35,9 @@
     <Reference Include="CommonLibrary.L2">
       <HintPath>..\resource\dll\CommonLibrary.L2.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\resource\dll\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="LitJSON">
       <HintPath>..\resource\dll\LitJSON.dll</HintPath>
     </Reference>
@@ -59,8 +62,10 @@
     <Compile Include="commands\resultConvertCommand.cs" />
     <Compile Include="commands\validCommand.cs" />
     <Compile Include="common.cs" />
+    <Compile Include="config\applicationParse.cs" />
     <Compile Include="dataaccess\CategoryDataAccess.cs" />
     <Compile Include="dataaccess\CommonDataAccess.cs" />
+    <Compile Include="dataaccess\daHelper.cs" />
     <Compile Include="dataaccess\DataAccessContext.cs" />
     <Compile Include="dataaccess\pagerHelper.cs" />
     <Compile Include="dataaccess\WODDbParameter.cs" />
@@ -68,6 +73,9 @@
     <Compile Include="management\baseadpage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="update\db.cs" />
+    <Compile Include="update\updateManage.cs" />
+    <Compile Include="update\zip.cs" />
     <Compile Include="web\ajaxResult.cs" />
     <Compile Include="management\commonHandle.cs">
       <SubType>ASPXCodeBehind</SubType>

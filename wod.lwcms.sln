@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{6382EEFF-29A
 		resource\dll\Autofac.Integration.Web.dll = resource\dll\Autofac.Integration.Web.dll
 		resource\dll\CommonLibrary.dll = resource\dll\CommonLibrary.dll
 		resource\dll\CommonLibrary.L2.dll = resource\dll\CommonLibrary.L2.dll
+		resource\dll\ICSharpCode.SharpZipLib.dll = resource\dll\ICSharpCode.SharpZipLib.dll
 		resource\dll\LitJSON.dll = resource\dll\LitJSON.dll
 	EndProjectSection
 EndProject

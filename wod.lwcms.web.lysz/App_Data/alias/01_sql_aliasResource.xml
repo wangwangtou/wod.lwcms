@@ -73,8 +73,8 @@
       <!--excuteType:datareader,excute,scalar-->
       <sql>
         <![CDATA[
-    insert into wod_lw_comment (ID,cmt_userName,cmt_userEmail,cmt_userType,cmt_content,cmt_time,cmt_aid)
-    values (:lw_newid,:name,:email,'ANONYMOUS_USER',:content,:lw_now,:aid)
+    insert into wod_lw_comment (ID,cmt_userName,cmt_userEmail,cmt_userType,cmt_content,cmt_time,cmt_aid,cmt_userID,cmt_State)
+    values (:lw_newid,:name,:email,:lw_usertype,:content,:lw_now,:aid,:lw_user,'unpub')
     ]]>
       </sql>
     </sqlCommand>
@@ -83,7 +83,7 @@
       <sql>
         <![CDATA[
     select count(1) from wod_lw_comment
-    where cmt_aid= :aid
+    where cmt_aid= :aid and cmt_State='pub'
     ]]>
       </sql>
     </sqlCommand>

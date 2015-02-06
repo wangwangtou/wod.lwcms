@@ -4,9 +4,9 @@ MasterPageFile="~/management/managepage.master"%>
 
 <script runat="server" type="text/C#">
     public override string ajaxCmd { get { 
-        return Request.QueryString["act"] == "pub" ? "artpublish" 
-            : (Request.QueryString["act"] == "unpub" ? "artunpublish" 
-                :"artdelete"); 
+        return Request.QueryString["act"] == "pub" ? "cmtpublish"
+            : (Request.QueryString["act"] == "unpub" ? "cmtunpublish"
+                : "cmtdelete"); 
     } set { } }
 
     protected override void PreLoadCommand()
@@ -24,20 +24,20 @@ MasterPageFile="~/management/managepage.master"%>
     <script type="text/javascript">
         function _delete(id) {
             if (confirm("确定要删除该内容？")) {
-                $.ajax({ url: "artlist.aspx?act=delete", data: { artid: id }, type: "post", success: function (data) {
+                $.ajax({ url: "cmtpub.aspx?act=delete", data: { cmtid: id }, type: "post", success: function (data) {
                     location.reload();
                 }, error: function () { alert("删除失败！"); location.reload(); }
                 });
             }
         }
         function _publish(id) {
-            $.ajax({ url: "artlist.aspx?act=pub", data: { artid: id }, type: "post", success: function (data) {
+            $.ajax({ url: "cmtpub.aspx?act=pub", data: { cmtid: id }, type: "post", success: function (data) {
                 location.reload();
             }, error: function () { alert("发布成功！"); location.reload(); }
             });
         }
         function _unpublish(id) {
-            $.ajax({ url: "artlist.aspx?act=unpub", data: { artid: id }, type: "post", success: function (data) {
+            $.ajax({ url: "cmtpub.aspx?act=unpub", data: { cmtid: id }, type: "post", success: function (data) {
                 location.reload();
             }, error: function () { alert("取消发布成功！"); location.reload(); }
             });
