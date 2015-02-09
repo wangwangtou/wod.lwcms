@@ -291,10 +291,12 @@
         },
         isEquals:function (val1,val2) {
             if (this.setting.datatype == "date") {
-                return !(val1 && !val2)
-                    || !(val2 && !val1)
-                    || (!val1 && !val2)
-                    || val1.valueOf() == val2.valueOf();
+                if (val1) {
+                    return val2 && val1.valueOf() == val2.valueOf();
+                }
+                else {
+                    return !val2;
+                }
             }
             else {
                 return this.parent(val1, val2);
@@ -440,10 +442,10 @@
     wod.CLS.getClass({
         setting: {
             autoSync: true,
-            allownull: false,
+            allownull: true,
             options: [],
             optionscmd: "op_category",
-            optionscmddata: null
+            optionscmddata: {}
         },
         getSource: function (callback) {
             if (this.setting.options.length) {

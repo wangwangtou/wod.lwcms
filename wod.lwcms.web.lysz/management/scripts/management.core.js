@@ -352,7 +352,7 @@
         render: function () {
         },
         update: function () {
-            this._field.setValue(this._value);
+            this._field.setValue(this.getValue());
         }
     }, "wod.forms.FieldBase");
     formNS.FieldBase.components = new formNS.FieldComponents();
@@ -434,8 +434,10 @@
         validate: function () {
             this.sync();
             var data = this.getData();
+            this.clearError();
+            var notifyError = this.notifyError.bind(this);
             for (var i = 0, length = this.customValidates.length; i < length; i++) {
-                if (!this.customValidates[i].call(this, data)) {
+                if (!this.customValidates[i].call(this, data, notifyError)) {
                     return false;
                 }
             }
