@@ -16,10 +16,13 @@ namespace wod.lwcms.models
         public string userEmail { get; set; }
 
         public string userType { get; set; }
+        public string userID { get; set; }
 
         public string commentContent { get; set; }
         public DateTime commentTime { get; set; }
 
         public string commentAid { get; set; }
+
+        public string state { get; set; }
     }
 }

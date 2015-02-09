@@ -41,7 +41,7 @@
                 </ul>
             </li>
             <li><a href="base.aspx" >基本信息</a>
-            <li><a href="basead.aspx" >基本信息高级模式</a>
+            <%--<li><a href="basead.aspx" >基本信息高级模式</a>--%>
             <li><a href="update.aspx" >程序更新管理</a>
         </ul>
         <div class="cl"></div>

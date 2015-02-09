@@ -80,6 +80,9 @@
     <Content Include="App_Data\commands\management_update.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\commands\management_cmt.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\extensions\authentication\aliasResource.xml" />
     <Content Include="App_Data\extensions\cacheable\aliasResource.xml" />
     <Content Include="App_Data\extensions\authentication\command.xml">

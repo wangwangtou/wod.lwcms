@@ -91,7 +91,7 @@
       <!--excuteType:datareader,excute,scalar-->
       <sql>
         <![CDATA[
-    select top #endRowIndex ID,cmt_userName,cmt_userEmail,cmt_userType,cmt_content,cmt_time,cmt_aid from wod_lw_comment 
+    select top #endRowIndex ID,cmt_userName,cmt_userEmail,cmt_userType,cmt_content,cmt_time,cmt_aid,cmt_State,cmt_userID from wod_lw_comment 
     where cmt_aid= :aid order by cmt_Time desc
     ]]>
       </sql>
