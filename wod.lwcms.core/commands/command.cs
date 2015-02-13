@@ -143,6 +143,9 @@ namespace wod.lwcms.commands
             {
                 var paraName = m.Groups["p"].Value.Substring(1);
                 var obj =cp.GetObject(paraName,null) ?? "";
+                if (obj.GetType() == typeof(string) && string.IsNullOrEmpty(obj as string)) {
+                    obj = DBNull.Value;
+                }
                 parameters.Add(new dataaccess.WODDbParameter(paraName,
                      GetDbType(obj), obj));
             }
