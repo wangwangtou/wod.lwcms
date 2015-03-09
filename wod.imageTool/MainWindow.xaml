@@ -9,6 +9,7 @@
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" >
             <Button Content="重置大小" Command="{Binding ResizeCommand}"/>
+            <Button Content="设置透明" Command="{Binding OpacityCommand}"/>
         </ToolBar>
         <Frame Grid.Row="1" x:Name="main" />
     </Grid>

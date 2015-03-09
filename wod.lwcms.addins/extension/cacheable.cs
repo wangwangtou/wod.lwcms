@@ -42,28 +42,34 @@ namespace wod.lwcms.addins.extension
 
         public commands.command getAfterCommand(string pageCommandId)
         {
-            switch (pageCommandId)
+            if (base.enable)
             {
-                case "index":
-                case "category":
-                case "article":
-                    return new addCacheCommand(_cache);
-                default:
-                    break;
+                switch (pageCommandId)
+                {
+                    case "index":
+                    case "category":
+                    case "article":
+                        return new addCacheCommand(_cache);
+                    default:
+                        break;
+                }
             }
             return new commands.emptyCommand();
         }
 
         public commands.command getBeforeCommand(string pageCommandId)
         {
-            switch (pageCommandId)
+            if (base.enable)
             {
-                case "index":
-                case "category":
-                case "article":
-                    return new getFromCacheCommand(_cache);
-                default:
-                    break;
+                switch (pageCommandId)
+                {
+                    case "index":
+                    case "category":
+                    case "article":
+                        return new getFromCacheCommand(_cache);
+                    default:
+                        break;
+                }
             }
             return new commands.emptyCommand();
         }

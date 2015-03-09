@@ -34,10 +34,12 @@ namespace wod.imageTool
         {
             this.frame = frame;
 
-            ResizeCommand = new NavCommand("resizeParameter.xaml",frame);
+            ResizeCommand = new NavCommand("resizeParameter.xaml", frame);
+            OpacityCommand = new NavCommand("opacityParameter.xaml", frame);
 
         }
         public ICommand ResizeCommand { get; set; }
+        public ICommand OpacityCommand { get; set; }
 
     }
 

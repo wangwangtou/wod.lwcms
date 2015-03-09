@@ -11,16 +11,10 @@
     <script src="scripts/jquery.json-2.4.min.js" type="text/javascript"></script>
     <script src="editor/kindeditor.js" type="text/javascript"></script>
     <script src="scripts/management.framework.js?v=0.1" type="text/javascript"></script>
-    <script src="scripts/management.form.js?v=0.1" type="text/javascript"></script>
 
     <script src="scripts/management.core.js?v=141109" type="text/javascript"></script>
     <script src="scripts/management.formfield.js?v=141109" type="text/javascript"></script>
     <script src="scripts/management.common.js?v=141109" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function () {
-            $.wodMF.menu("#f-menu");
-        });
-    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -41,7 +35,11 @@
                 </ul>
             </li>
             <li><a href="base.aspx" >基本信息</a>
-            <li><a href="basead.aspx" >基本信息高级模式</a>
+                <ul class="f-submenu">
+                    <li><a href="attribute.aspx">网站属性</a></li>
+                </ul>
+            </li>
+            <%--<li><a href="basead.aspx" >基本信息高级模式</a></li>--%>
         </ul>
         <div class="cl"></div>
     </div>

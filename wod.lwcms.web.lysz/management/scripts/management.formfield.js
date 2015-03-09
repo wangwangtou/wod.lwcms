@@ -481,12 +481,12 @@
             fileManagerJson: 'editor/file_manager_json.ashx',
             allowFileManager: true,
             autoSync: false,
-            type: ""//simple
+            richtype: ""//simple
         },
         _editor:null,
         render: function () {
             var editorSetting = wod.statics.mixin({},this.setting);
-            if (this.setting.type == "simple") {
+            if (this.setting.richtype == "simple") {
                 editorSetting.items = [
                     'source', '|', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', '|',
                     'italic', 'underline', 'strikethrough', 'lineheight',
@@ -547,17 +547,8 @@
             autoSync:false,
             datatype: "json"//"object","json"
         },
-        _form: null,
         _objValue: null,
-        render: function () {
-            var fields = this.initFields();
-            var formBody = this.renderFormBody(fields);
-            this._form = new wod.forms.Form();
-            this._form.init(formBody, fields);
-            this._field.swap(formBody);
-
-            this._setJsonValue(this._value);
-        },
+        _canSync:false,
         _setJsonValue:function(jsonVal){
             try {
                 this._objValue = $.parseJSON(jsonVal);
@@ -567,41 +558,20 @@
             } catch (e) {
                 this._objValue = wod.statics.mixin({}, this.setting.defaultObjValue);
             }
-            this._form.setData(this._objValue);
-            if (this.datatype == "object") {
+            this.update();
+            if (this.setting.datatype == "object") {
                 this._value = this._objValue;
             }
             else{
                 this._value = jsonVal;
             }
         },
-        initFields: function () {
-            return [];
-        },
-        renderFormBody:function (fields) {
-            return document.createElement("div");
-        },
-        _syncValue: function () {
-            if(this._form){
-                this._form.sync();
-                this._objValue = this._form.getData();
-                if (this.datatype == "object") {
-                    return this._objValue;
-                }
-                else {
-                    return $.toJSON(this._objValue);
-                }
-            }
-            else{
-                return this._value;
-            }
-        },
         _innerSetValue:function(val){
-            if(this.datatype == "object"){
+            if(this.setting.datatype == "object"){
                 if( typeof(val) == "object"){
                     this.parent(val);
                     this._objValue = val;
-                    this._form.setData(this._objValue);
+                    this.update();
                 }
                 else{
                     this._setJsonValue(val);
@@ -611,14 +581,62 @@
                 if( typeof(val) == "object"){
                     this._objValue = val;
                     this.parent($.toJSON(this._objValue));
-                    this._form.setData(this._objValue);
+                    this.update();
                 }
                 else{
                     this._setJsonValue(val);
                 }
             }
+        },
+        _innerGetObject:function(){
+            return this._objValue;
+        },
+        _syncValue: function () {
+            if(this._canSync){
+                this._objValue = this._innerGetObject();
+                if (this.setting.datatype == "object") {
+                    return this._objValue;
+                }
+                else {
+                    return $.toJSON(this._objValue);
+                }
+            }
+            else{
+                return this._value;
+            }
         }
-    }, "wod.forms.wodformfield", "wod.forms.FieldBase");
+    },"wod.forms.ObjectField", "wod.forms.FieldBase");
+
+    wod.CLS.getClass({
+        setting: {
+            autoSync:false,
+            datatype: "json"//"object","json"
+        },
+        _form: null,
+        _objValue: null,
+        render: function () {
+            var fields = this.initFields();
+            var formBody = this.renderFormBody(fields);
+            this._form = new wod.forms.Form();
+            this._form.init(formBody, fields);
+            this._field.swap(formBody);
+            this._canSync = true;
+            this._setJsonValue(this._value);
+        },
+        update:function (){
+            this._form.setData(this._objValue);
+        },
+        initFields: function () {
+            return [];
+        },
+        renderFormBody:function (fields) {
+            return document.createElement("div");
+        },
+        _innerGetObject:function(){
+            this._form.sync();
+            return this._form.getData();
+        }
+    }, "wod.forms.wodformfield", "wod.forms.ObjectField");
 
     wod.CLS.getClass({
         setting: {
@@ -650,36 +668,6 @@
         },
         render: function () {
             this.parent();
-            //var formPanel = document.createElement("div");
-            //var type = "wodimage";
-            //var fields = [{ name: "small", type: type },{ name: "normal", type: type },{ name: "big", type: type }];
-            //wod.statics.mixin(fields[0], this.setting.small);
-            //wod.statics.mixin(fields[1], this.setting.normal);
-            //wod.statics.mixin(fields[2], this.setting.big);
-
-            //var formBody = [];
-            //for (var i = 0, length = fields.length; i < length; i++) {
-            //    formBody.push("<label>" + encodeHTML(fields[i].description) + "</label><br>");
-            //    formBody.push("<input type=\"text\" name=\"" + encodeHTML(fields[i].name) + "\">");
-            //}
-            //formPanel.innerHTML = formBody.join("");
-
-            //this._imgForm = new forms.Form();
-            //this._imgForm.init(formPanel, fields);
-            //this._field.swap(formPanel);
-
-            //try {
-            //    this._objValue = $.parseJSON(this._value);
-            //    if (this._objValue) {
-            //        this._objValue = { small: "", normal: "", big: "" };
-            //    }
-            //} catch (e) {
-            //    this._objValue = { small: "", normal: "", big: "" };
-            //}
-            //this._imgForm.setData(this._objValue);
-            //if (this.datatype == "object") {
-            //    this._value = this._objValue;
-            //}
         },
         initFields: function () {
             var type = "wodimage";
@@ -702,7 +690,7 @@
     }, "wod.forms.wodsiteImage", "wod.forms.wodformfield");
 })(wod, jQuery, KindEditor);
 
-
+/* wodform submit*/
 (function (wod,$) {
     wod.CLS.getClass({
         submit:function (url,callback){
@@ -723,4 +711,238 @@
             }
         }
     },"wod.forms.wodform","wod.forms.Form");
-})(wod,jQuery)
+})(wod,jQuery);
+
+/* wodtreesubform */
+(function (wod,$) {
+    wod.CLS.getClass({
+        setting:{
+            edittype: 'node',//'none','content','node'
+            formname: "subform", 
+            formtitle: "子表单", 
+            titleprop: "name", 
+            childrenprop: "children",
+            validate: null,
+            fields: []
+        },
+        body:null,
+        _lineActionHTML:"",
+        _tidFeed:0,
+        _cache:{},
+        render:function(){
+            var html = [];
+            html.push("<div class='f-tree-wrap'>");
+            if (this.setting.edittype == "node") {
+                html.push("<div class='tcmd'><a href='javascript:;' class='tadd' data-action='add'>添加</a><a href='javascript:;' class='tadds' data-action='addsub'>添加子节点</a><a href='javascript:;' class='tup' data-action='moveup'>上移</a><a href='javascript:;' class='tdown' data-action='movedown'>下移</a></div>"); 
+                //<a href='javascript:;' class='tlvlup' data-action='tlvlup'>升级</a><a href='javascript:;' class='tlvldown' data-action='tlvldown'>降级</a>
+
+                this._lineActionHTML = "<a href='javascript:;' class='del'  data-action='remove'>删除</a><a href='javascript:;' class='edit' data-action='edit'>编辑</a>";
+            }
+            html.push("<ul class='f-tree  f-root'>");
+            html.push("</ul>");
+            html.push("</div>");
+            this.body = $(html.join(""));
+            this.root = this.body.find(".f-root");
+            this._field.swap(this.body);
+
+            var context = this;
+            this.body.on("click", "[data-action]",function () {
+                var tid = $(this).parents(".tnode:eq(0)").attr("data-tid");
+                if(!tid){
+                    tid = context.body.find(".curr").attr("data-tid");
+                }
+                var data = context._cache[tid];
+                var node = data ?data.node:null;
+                var pnode = data ?context._cache[data.ptid]:null;
+                var callback = context["action_"+ $(this).attr("data-action")].bind(context,node,pnode);
+                callback();
+                return false;
+            });
+            this.body.on("click", ".tnode",function () {
+                context.body.find(".curr").removeClass("curr");
+                $(this).addClass("curr");
+                return false;
+            });
+            
+            this._canSync = true;
+            this._setJsonValue(this._value);
+        },
+        update:function (){
+            this.root.empty();
+            this.root.html(this._getTreeNodesHTML(this._objValue));
+        },
+        _getTreeNodesHTML:function(nodes,ptid){
+            var html = [];
+            for (var i = 0,length = nodes && nodes.length; i < length; i++) {
+                var item = nodes[i];
+                var tid = this._getNewTid();
+                this._cache[tid] = {node:item,ptid:ptid};
+                var child = this._getNodeChild(item);
+                var text = encodeHTML( this._getNodeText(item));
+                html.push("<li class='tnode' data-tid='" + tid + "'>"
+                    +"<span class='tit'>" + text + "</span>"
+                    +"<span class='tncmd'>" + this._lineActionHTML + "</span>" 
+                    + (child && child.length ? "<ul class='f-tree'>" + this._getTreeNodesHTML(child,tid) +"</ul>" : "") 
+                    + "</li>");
+            }
+            return html.join("");
+        },
+        _getNewTid:function(){
+            return 'tn' + (this._tidFeed++).toString()
+        },
+        _getNodeChild:function(node){
+            return node[this.setting.childrenprop];
+        },
+        _getOrCreateNodeChild:function(node){
+            var child = node[this.setting.childrenprop];
+            if(!child){
+                child = [];
+                node[this.setting.childrenprop] = child;
+            }
+            return child;
+        },
+        _getNodeText:function(node){
+            return node[this.setting.titleprop];
+        },
+        _innerGetObject:function(){
+            return this._objValue;
+        },
+        _showForm:function(data,callback){
+            var form = new wod.forms.wodform();
+            var fields = this.setting.fields;
+            var validate = this.setting.validate;
+            $.ui.getForm(this.setting.formtitle || "", this.setting.formname
+                , function (frm) {
+                    form.init(frm[0],fields);
+                    form.registValidate(validate);
+                    form.setData(data);
+                }
+                , function (frm) {
+                    if(frm){
+                        callback(form.getData());
+                    }
+                }, function (frm, errorCallback) {
+                    return form.validate();
+                });
+        },
+        action_add:function(node,pnode){
+            var arr = pnode ? this._getOrCreateNodeChild(pnode) : this._objValue;
+            var context = this;
+            this._showForm({},function (newNode) {
+                if(!newNode)return;
+                if(!node){
+                    arr.push(newNode);
+                }
+                else{
+                    for (var i = 0,length=arr.length; i < length; i++) {
+                        if(node == arr[i]){
+                            arr.splice(i,0,newNode);
+                            break;
+                        }
+                    }
+                }
+                context.update();
+            });
+        },
+        action_addsub:function(node,pnode){
+            var arr = node ? this._getOrCreateNodeChild(node) : this._objValue;
+            var context = this;
+            this._showForm({},function (newNode) {
+                if(!newNode)return;
+                arr.push(newNode);
+                context.update();
+            });
+        },
+        action_moveup:function(node,pnode){
+            if(node){
+                var arr = pnode ? this._getOrCreateNodeChild(pnode) : this._objValue;
+                for (var i = 0,length=arr.length; i < length; i++) {
+                    if(node == arr[i]){
+                        arr.splice(i,1);
+                        arr.splice(Math.max(0,i-1),0,node);
+                        break;
+                    }
+                }
+            }
+        },
+        action_movedown:function(node,pnode){
+            if(node){
+                var arr = pnode ? this._getOrCreateNodeChild(pnode) : this._objValue;
+                for (var i = 0,length=arr.length; i < length; i++) {
+                    if(node == arr[i]){
+                        arr.splice(i,1);
+                        arr.splice(Math.min(length,i+1),0,node);
+                        break;
+                    }
+                }
+                this.update();
+            }
+        },
+        action_remove:function(node,pnode){
+            if(node){
+                var arr = pnode ? this._getOrCreateNodeChild(pnode) : this._objValue;
+                for (var i = 0,length=arr.length; i < length; i++) {
+                    if(node == arr[i]){
+                        arr.splice(i,1);
+                        break;
+                    }
+                }
+                this.update();
+            }
+        },
+        action_edit:function(node,pnode){
+            if(node){
+                var context = this;
+                this._showForm(node,function (newNode) {
+                    wod.statics.mixin(node,newNode);
+                    context.update();
+                });
+            }
+        }
+    }, "wod.forms.wodtreesubform", "wod.forms.ObjectField");
+
+    
+    wod.CLS.getClass({
+        setting: {
+            datatype: "json",//"object","json"
+            names: { },
+            formname: "naviform", formtitle: "导航", titleprop: "name", childrenprop: "subNavis",
+            validate: null,
+            fields: null
+        },
+        render: function () {
+            this.parent();
+        },
+        initFields: function () {
+            var type = "wodtreesubform";
+            var fields = [];
+            for (var key in this.setting.names) {
+                fields.push({name:key,type:type,description:this.setting.names[key]});
+            }
+            var setting = {
+                formname: this.setting.formname, 
+                formtitle: this.setting.formtitle, 
+                titleprop: this.setting.titleprop, 
+                childrenprop: this.setting.childrenprop,
+                validate: this.setting.validate,
+                fields: this.setting.fields,
+                datatype: "object"
+            }
+            wod.statics.mixin(fields[0], setting);
+            wod.statics.mixin(fields[1], setting);
+            wod.statics.mixin(fields[2], setting);
+            return fields;
+        },
+        renderFormBody: function (fields) {
+            var formPanel = document.createElement("div");
+            formPanel.className="f-multitree";
+            var formBody = [];
+            for (var i = 0, length = fields.length; i < length; i++) {
+                formBody.push("<label class='treename'>" + encodeHTML(fields[i].description) + "</label><br>");
+                formBody.push("<input type=\"text\" name=\"" + encodeHTML(fields[i].name) + "\">");
+            }
+            formPanel.innerHTML = formBody.join("");
+            return formPanel;
+        }
+    }, "wod.forms.wodnavitree", "wod.forms.wodformfield");
+})(wod,jQuery);

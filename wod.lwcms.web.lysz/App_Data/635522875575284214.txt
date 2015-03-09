@@ -1,0 +1,11 @@
+account:xvycn
+password:8A6F2805B4515AC12058E79E66539BE9
+isRemember:False
+cp:wod.lwcms.commands.commandsParameter
+context:System.Web.HttpContext
+__breakall:System.Object
+__aliasResource:wod.lwcms.aliasResource
+dataaccess:wod.lwcms.dataaccess.DataAccessContext
+validuser:0
+roles:
+result:用户名或密码错误！

@@ -13,5 +13,7 @@ namespace wod.lwcms.addin
         Dictionary<string, commands.command> initCommands(aliasResource resource);
         commands.command getBeforeCommand(string pageCommandId);
         commands.command getAfterCommand(string pageCommandId);
+
+        void setSetting(List<models.addinSetting> setting);
     }
 }

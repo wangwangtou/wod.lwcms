@@ -58,32 +58,6 @@
             }
         }
     });
-
-
-    function _getFormData(frm) {
-        var data = {};
-        frm.find("input,textarea,select").each(function () {
-            if (this.name) {
-                data[this.name] = $(this).val();
-            }
-        });
-        return data;
-    }
-    function _setFormData(frm, data) {
-        for (var name in data) {
-            frm.find("[name='" + name + "']").val(data[name]);
-        }
-        return data;
-    }
-    function _showErrorMsg(frm, name, msg) {
-        var label = frm.find("[name='" + name + "']").parents("label");
-        label.addClass("err");
-        label.append("<span class='errtxt'>" + msg + "</span>");
-    }
-    function _clearErrorMsg(frm) {
-        frm.find("label").removeClass("err");
-        frm.find("label .errtxt").remove();
-    }
     $.extend($.ui, {
         getForm: function (title, name, loaded, callback, validate) {
             this.loadTmp(name, function (frm) {
@@ -98,8 +72,6 @@
                         callback(undefined);
                     },
                     okCallback: function () {
-//                        var data = _getFormData(frm);
-                        _clearErrorMsg(frm);
                         if (!validate || validate(frm, errorCallback)) {
                             callback(frm);
                             if (__win) __win.remove();
@@ -107,21 +79,10 @@
                     },
                     loadCallback: function (win) {
                         __win = win;
-//                        if (data) {
-//                            _setFormData(frm, data);
-//                        }
                         loaded(frm);
                     }
                 });
             });
         }
     });
-
-    var wodMF = {};
-    $.extend({
-        wodMF: wodMF
-    });
-    wodMF.menu = function (p) {
-        var $m = $(p);
-    };
 })($, window);

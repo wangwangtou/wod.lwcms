@@ -20,10 +20,21 @@
   }
 </script>
 <asp:Content runat="server" ContentPlaceHolderID="head">
-  <script src="scripts/management.form.base.js" type="text/javascript"></script>
-</asp:Content>
-<asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  <% wodsite site = PD.getObject<wodsite>("ws");
+  <script type="text/javascript">
+    var form;
+    $(function () {
+      form = new wod.forms.wodform();
+      form.init(document.body, siteBaseFields);
+      form.registValidate(siteBaseValidate);
+      $("#fsubmit").click(form.submit.bind(form,"base.aspx",function(data){
+          location.reload();
+      }));
+      $("#fcancel").click(function () {
+          location.reload();
+      });
+    });
+  </script>
+    <% wodsite site = PD.getObject<wodsite>("ws");
      List<category> allCats = PD.getObject<List<category>>("allCats"); 
   %>
   <script type="text/javascript">
@@ -31,32 +42,14 @@
   siteData.allCats =  <%=common.ToJson(allCats) %>;
   </script>
   <script type="text/javascript">
-      $(function () {
-        $("body").setFormData(siteData);
-      });
+    $(function () {
+      form.setData(siteData);
+    });
   </script>
-    <script type="text/javascript">
-        $(function () {
-            $("body").wodForm({
-                schema: _$wod_form.baseSch
-                , submit: { selector: "#fsubmit"
-                    , event: "click"
-                    , posts: { url: "base.aspx", callback : function(){ alert("保存成功");} }
-                    , validate : function(data,errorCallback){
-                        errorCallback("name","不能为空");
-                        return true;
-                    }
-                    , preSubmit : function(){
-                    }
-                }
-            });
-            $("#fcancel").click(function () {
-                location.reload();
-            });
-        });
-    </script>
+</asp:Content>
+<asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
   <div class="g-left">
-    <fieldset class="f-form f-form-c2" <%--data-form="subform" subform-name="site" str--%>>
+    <fieldset class="f-form f-form-c2" >
       <legend>基本信息</legend>
       <div class="fr">
         <div class="fr-label"><label for="input1">站点名称：</label></div>
@@ -68,11 +61,11 @@
       </div>
       <div class="fr">
         <div class="fr-label"><label for="input4">描述：</label></div>
-        <div class="fr-input"><textarea type="text" name="description" id="input4"></textarea></div>
+        <div class="fr-input"><textarea name="description" id="input4"></textarea></div>
       </div>
       <div class="fr">
         <div class="fr-label"><label for="input6">版权信息：</label></div>
-        <div class="fr-input"><textarea type="text" name="copyright" id="input6"></textarea></div>
+        <div class="fr-input"><textarea name="copyright" id="input6"></textarea></div>
       </div>
       <div class="fr">
         <div class="fr-label"><label for="input7">关键字：</label></div>
@@ -84,7 +77,7 @@
       </div>
       <div class="fr ">
         <div class="fr-label"><label for="input9">导航链接：</label></div>
-        <div class="fr-input"><input type="text" wod str name="navis" value="" id="input9" /></div>
+        <div class="fr-input"><input type="text" name="navis" value="" id="input9" /></div>
       </div>
     </fieldset>
   </div>
@@ -93,7 +86,7 @@
     <fieldset class="f-form f-sdoc">
       <legend>所有分类</legend>    
       <div class="fr ">
-        <div class="fr-input"><input type="text" wod str name="allCats" value="" id="input91" /></div>
+        <div class="fr-input"><input type="text" name="allCats" value="" id="input91" /></div>
       </div>
     </fieldset>
   </div>

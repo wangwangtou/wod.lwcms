@@ -74,6 +74,9 @@
     <Content Include="App_Data\commands\otherextend.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\commands\management_attribute.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\extensions\cacheable\aliasResource.xml" />
     <Content Include="App_Data\extensions\authentication\cmds.xml">
       <SubType>Designer</SubType>
@@ -82,6 +85,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\lwcms.mdb" />
+    <Content Include="App_Data\attribute.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="index.aspx" />
     <Content Include="management\artforms\cookbook.html" />
     <Content Include="management\artforms\dataform-sample.html" />
@@ -90,6 +96,7 @@
     <Content Include="management\artforms\naviform.html" />
     <Content Include="management\artforms\textarea.html" />
     <Content Include="management\artforms\richtext.html" />
+    <Content Include="management\attribute.aspx" />
     <Content Include="management\basead.aspx" />
     <Content Include="management\baseadscript.ascx" />
     <Content Include="management\editor\demo.aspx" />
@@ -292,7 +299,6 @@
     <Content Include="management\scripts\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="management\scripts\jquery.json-2.4.min.js" />
     <Content Include="management\scripts\management.common.js" />
-    <Content Include="management\scripts\management.form.base.js" />
     <Content Include="management\scripts\management.core.js" />
     <Content Include="management\scripts\management.formfield.js" />
     <Content Include="management\scripts\tests\management.core.test.html" />
@@ -308,6 +314,9 @@
     <Content Include="management\theme\nec-reset.css" />
     <Content Include="scripts\lwcms-client.js" />
     <Content Include="scripts\mer-graph.js" />
+    <Content Include="scripts\tests\vector.core.test.html" />
+    <Content Include="scripts\vector.core.js" />
+    <Content Include="scripts\tests\vector.core.test.js" />
     <Content Include="svrtheme\cms\messageboard.aspx" />
     <Content Include="svrtheme\default\authentication\auth_status.ascx" />
     <Content Include="svrtheme\default\authentication\login.aspx" />
@@ -366,9 +375,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="management\managepage.master" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="management\scripts\management.form.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\wod.lwcms.addins\wod.lwcms.addins.csproj">

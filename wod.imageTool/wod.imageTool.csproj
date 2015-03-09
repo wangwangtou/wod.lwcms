@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="command\parameterCommandBase.cs" />
     <Compile Include="command\resizeCommand.cs" />
+    <Compile Include="command\opacityCommand.cs" />
     <Compile Include="imageLib\common.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -78,6 +79,10 @@
     <Page Include="parameterView\resizeParameter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="parameterView\opacityParameter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

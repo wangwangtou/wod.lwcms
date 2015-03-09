@@ -82,16 +82,16 @@ namespace wod.lwcms
 
         internal commands.command GetCommandByAlias(string aliasName)
         {
-            commandCreator creator = GetCommandByAlias(aliasName, aliasCommands);
+            commandCreator creator = GetObjectByAlias(aliasName, aliasCommands);
             return creator == null ? null : creator.Parse();
         }
 
         internal Type GetTypeByAlias(string aliasName)
         {
-            return GetCommandByAlias(aliasName, aliasTypes);
+            return GetObjectByAlias(aliasName, aliasTypes);
         }
 
-        private T GetCommandByAlias<T>(string aliasName, List<alias<T>> pool)
+        private T GetObjectByAlias<T>(string aliasName, List<alias<T>> pool)
         {
             foreach (var item in pool)
             {

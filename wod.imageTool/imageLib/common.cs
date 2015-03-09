@@ -9,6 +9,7 @@ namespace wod.imageTool.imageLib
 {
     public class common
     {
+        private static readonly string ImageFilter = "图片文件|*.BMP;*.EMF;*.EXIF;*.GIF;*.ICON;*.JPEG;*.JPG;*.PNG";
         private static readonly List<string> ImageExtensions = new List<string>()
         {
         //public static ImageFormat Bmp { get; }
@@ -107,6 +108,49 @@ namespace wod.imageTool.imageLib
                 rw = (int)(maxW ?? rw);
                 rh = (int)(maxH ?? rh);
             }
+        }
+
+        public static void OpacityImages(string targetFolder, List<string> sourceImage, Color opacityPoint, double? opacityRange)
+        {
+            foreach (string imgFile in sourceImage)
+            {
+                using (Bitmap img = new Bitmap(imgFile))
+                {
+                    try
+                    {
+                        var filename = new FileInfo(imgFile);
+                        var newImage = MakeOpacity(img, opacityPoint.R, opacityPoint.G, opacityPoint.B, opacityRange);
+                        newImage.Save(Path.Combine(targetFolder, filename.Name.Substring(0, filename.Name.Length - filename.Extension.Length)) + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                        newImage.Dispose();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private static Bitmap MakeOpacity(Bitmap img, int r, int g, int b, double? opacityRange)
+        {
+            Bitmap bitMap = new Bitmap(img.Width, img.Height);
+            for (int x = 0; x < img.Width; x++)
+            {
+                for (int y = 0; y < img.Height; y++)
+                {
+                    var color = img.GetPixel(x, y);
+                    var d = Math.Abs(color.R - r) + Math.Abs(color.G - g) + Math.Abs(color.B - b);
+                    if (d <= opacityRange)
+                    {
+                        bitMap.SetPixel(x, y, Color.Transparent);
+                    }
+                    else
+                    {
+                        bitMap.SetPixel(x, y, color);
+                    }
+                }
+            }
+            return bitMap;
         }
     }
 }

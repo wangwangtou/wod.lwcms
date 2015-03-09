@@ -39,5 +39,23 @@ namespace wod.lwcms.addin
             }
             return partView;
         }
+
+        public void setSetting(List<models.addinSetting> setting)
+        {
+            enable = true;
+            if (setting != null)
+            {
+                foreach (var item in setting)
+                {
+                    if (item.name == "state" && item.value == "off")
+                    {
+                        enable = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        public bool enable { get; set; }
     }
 }

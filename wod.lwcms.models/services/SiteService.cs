@@ -32,5 +32,26 @@ namespace wod.lwcms.services
         {
             _da.SaveSite(_siteKey, site);
         }
+
+
+        public models.siteAttribute getCommonAttribute()
+        {
+            return _da.GetCommonAttribute();
+        }
+
+        public models.siteAttribute getSiteAttribute()
+        {
+            models.siteAttribute attrs = _da.GetCommonAttribute();
+            models.siteAttribute attrs1 = _da.GetSiteAttribute(_siteKey);
+            attrs1.ioc.InsertRange(0, attrs.ioc);
+            attrs1.svrTemplates = attrs.svrTemplates;
+            attrs1.themes = attrs.themes;
+            return attrs1;
+        }
+
+        public void updateSiteAttribute(models.siteAttribute attrs)
+        {
+            _da.SaveSiteAttribute(_siteKey, attrs);
+        }
     }
 }

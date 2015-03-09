@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<attributes>
+  <ioc>
+    <item name="pageSize" type="Instance" datatype="Int">20</item>
+    <item name="pageIndex" type="Instance" datatype="Int">0</item>
+    <item name="connectionString" type="Instance" datatype="String">Provider=Microsoft.Jet.OLEDB.4.0;Data Source=[rel:lwcms.mdb];User Id=;Password=;</item>
+    <item name="dbProviderFactory" type="Instance" datatype="DbProviderFactory">System.Data.OleDb</item>
+    <item type="Type">
+      <target>siteService</target>
+      <realize>siteService_Realize</realize>
+    </item>
+    <item type="Type">
+      <target>categoryService</target>
+      <realize>categoryService_Realize</realize>
+    </item>
+    <item type="Type">
+      <target>articleService</target>
+      <realize>articleService_Realize</realize>
+    </item>
+    <item type="Type">
+      <target>authenticationService</target>
+      <realize>authenticationService_Realize</realize>
+    </item>
+    <item type="Type">
+      <target>generateService</target>
+      <realize>generateService_Realize</realize>
+    </item>
+    <item type="Type">
+      <target>commonDataAccess</target>
+      <realize>commonDataAccess_Realize</realize>
+    </item>
+    <item type="Type">
+      <target>siteDataAccess</target>
+      <realize>siteDataAccess_Realize</realize>
+    </item>
+    <item type="Type">
+      <target>categoryDataAccess</target>
+      <realize>categoryDataAccess_Realize</realize>
+    </item>
+  </ioc>
+  <extension>
+    <item name="authentication">
+      <setting name="state">on</setting>
+    </item>
+    <item name="cacheable">
+      <setting name="state">on</setting>
+    </item>
+  </extension>
+  <addin>
+    
+  </addin>
+  <svrTemplates>
+    <item name="default" description="默认"></item>
+    <item name="cms" description="CMS"></item>
+  </svrTemplates>
+  <themes>
+    <item name="default" description="默认">/preview1.png</item>
+    <item name="cms" description="CMS">/preview2.png</item>
+  </themes>
+  <siteAttribute>
+    <attribute siteKey="default">
+      <svrTemplate>default</svrTemplate>
+      <theme>default</theme>
+      <ioc>
+      </ioc>
+      <extension>
+        <item name="authentication">
+          <setting name="state">on</setting>
+        </item>
+        <item name="cacheable">
+          <setting name="state">on</setting>
+        </item>
+      </extension>
+      <addin>
+      </addin>
+    </attribute>
+    <attribute siteKey="cms">
+      <svrTemplate>cms</svrTemplate>
+      <theme>cms</theme>
+      <ioc>
+      </ioc>
+      <extension>
+        <item name="authentication">
+          <setting name="state">on</setting>
+        </item>
+        <item name="cacheable">
+          <setting name="state">on</setting>
+        </item>
+      </extension>
+      <addin>
+      </addin>
+    </attribute>
+  </siteAttribute>
+</attributes>   
+                
+                

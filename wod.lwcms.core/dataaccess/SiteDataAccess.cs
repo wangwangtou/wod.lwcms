@@ -189,5 +189,136 @@ namespace wod.lwcms.dataaccess
                 navisNode.AppendChild(node);
             }
         }
+
+        private string GetSiteAttributeXml()
+        {
+            string siteXml = wodEnvironment.GetDataPath("attribute.xml");
+            return siteXml;
+        }
+        private XmlDocument GetSiteAttributeXmlDoc()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(GetSiteAttributeXml());
+            return doc;
+        }
+
+        public siteAttribute GetCommonAttribute()
+        {
+            XmlDocument doc = GetSiteAttributeXmlDoc();
+            return ReadSiteAttribute(doc.SelectSingleNode("/attributes"));
+        }
+
+        private siteAttribute ReadSiteAttribute(XmlNode doc)
+        {
+            siteAttribute attr = new siteAttribute();
+            attr.ioc = ReadIoc(doc.SelectNodes("ioc/item"));
+            attr.extensions = ReadExtensions(doc.SelectNodes("extension/item"));
+            attr.plugins = ReadExtensions(doc.SelectNodes("addin/item"));
+            attr.svrTemplates = ReadSvrTemplates(doc.SelectNodes("svrTemplates/item"));
+            attr.themes = ReadThemes(doc.SelectNodes("themes/item"));
+            attr.svrTemplate = ReadSvrTemplate(doc.SelectSingleNode("svrTemplate"));
+            attr.theme = ReadTheme(doc.SelectSingleNode("theme"));
+            return attr;
+        }
+
+        private svrTemplate ReadSvrTemplate(XmlNode xmlNode)
+        {
+            return xmlNode == null ? null : new svrTemplate() { name = xmlNode.InnerText };
+        }
+
+        private theme ReadTheme(XmlNode xmlNode)
+        {
+            return xmlNode == null ? null : new theme() { name = xmlNode.InnerText };
+        }
+
+        private List<theme> ReadThemes(XmlNodeList xmlNodeList)
+        {
+            List<theme> themes = new List<theme>();
+
+            foreach (XmlNode node in xmlNodeList)
+            {
+                themes.Add(new theme()
+                {
+                    name = GetAttr(node, "name"),
+                    description = GetAttr(node, "description"),
+                    preImage = node.InnerText
+                });
+            }
+            return themes;
+        }
+
+        private List<svrTemplate> ReadSvrTemplates(XmlNodeList xmlNodeList)
+        {
+            List<svrTemplate> temps = new List<svrTemplate>();
+
+            foreach (XmlNode node in xmlNodeList)
+            {
+                temps.Add(new svrTemplate()
+                {
+                    name = GetAttr(node, "name"),
+                    description = GetAttr(node, "description"),
+                });
+            }
+            return temps;
+        }
+
+        private List<models.addin> ReadExtensions(XmlNodeList xmlNodeList)
+        {
+            List<models.addin> exts = new List<models.addin>();
+            foreach (XmlNode node in xmlNodeList)
+            {
+                var typeNode = node.SelectSingleNode("type");
+                List<models.addinSetting> settings = new List<addinSetting>();
+                foreach (XmlNode setNode in node.SelectNodes("setting"))
+                {
+                    settings.Add(new addinSetting()
+                    {
+                        name = GetAttr(node, "name"),
+                        description = GetAttr(node, "description"),
+                        value = node.InnerText,
+                    });
+                }
+                exts.Add(new models.addin()
+                {
+                    name = GetAttr(node, "name"),
+                    description = GetAttr(node, "description"),
+                    type =  typeNode == null ? "" : typeNode.InnerText,
+                    addinSettings = settings
+                });
+            }
+            return exts;
+        }
+
+        private List<models.ioc> ReadIoc(XmlNodeList xmlNodeList)
+        {
+            List<models.ioc> ioc = new List<models.ioc>();
+            foreach (XmlNode node in xmlNodeList)
+            {
+                var datatype = GetAttr(node, "datatype");
+                var targetNode =  node.SelectSingleNode("target");
+                var realizeNode =  node.SelectSingleNode("realize");
+                ioc.Add(new models.ioc()
+                {
+                    name = GetAttr(node, "name"),
+                    type = (models.ioc.ioctype)Enum.Parse(typeof(models.ioc.ioctype), GetAttr(node, "type")),
+                    datatype = string.IsNullOrEmpty(datatype) ? models.ioc.iocdatatype.UnKown: (models.ioc.iocdatatype)Enum.Parse(typeof(models.ioc.iocdatatype), datatype),
+                    target = targetNode == null ? "" : targetNode.InnerText,
+                    realize = realizeNode == null ? "" : realizeNode.InnerText,
+                    value = node.InnerText
+                });
+            }
+            return ioc;
+        }
+
+        public siteAttribute GetSiteAttribute(string _siteKey)
+        {
+            XmlDocument doc = GetSiteAttributeXmlDoc();
+            return ReadSiteAttribute(doc.SelectSingleNode("/attributes/siteAttribute/attribute[@siteKey=\"" + _siteKey + "\"]"));
+        }
+
+        public void SaveSiteAttribute(string _siteKey, siteAttribute attrs)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

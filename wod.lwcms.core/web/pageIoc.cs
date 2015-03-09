@@ -51,29 +51,23 @@ namespace wod.lwcms.web
             ioc _ioc = new ioc();
 
             _ioc.RegistInstance("siteKey", siteKey);
-            _ioc.RegistInstance("pageSize", 20);
-            _ioc.RegistInstance("pageIndex", 0);
-            _ioc.RegistInstance("connectionString", "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + wodEnvironment.GetDataPath(siteKey, "lwcms.mdb") + ";User Id=;Password=;");
-            _ioc.RegistInstance("dbProviderFactory", System.Data.Common.DbProviderFactories.GetFactory("System.Data.OleDb"));
-
-            _ioc.Regist(typeof(ISiteService), typeof(SiteService));
-            _ioc.Regist(typeof(ICategoryService), typeof(CategoryService));
-            _ioc.Regist(typeof(IArticleService), typeof(ArticleService));
-            _ioc.Regist(typeof(IAuthenticationService), typeof(AuthenticationService));
-            _ioc.Regist(typeof(IGenerateService), typeof(GenerateService));
-
-            _ioc.Regist(typeof(ISiteDataAccess), typeof(SiteDataAccess));
-            _ioc.Regist(typeof(ICategoryDataAccess), typeof(CategoryDataAccess));
-            _ioc.Regist(typeof(ICommonDataAccess), typeof(CommonDataAccess));
-
             commands.commandPool pool = new commands.commandPool();
             aliasResource resource = new aliasResource(pool);
             resource.init(wodEnvironment.GetDataPath("alias"));
             if (siteKey != wodEnvironment.siteKey)
                 resource.init(wodEnvironment.GetDataPath(siteKey, "alias"));
+
+            _ioc.Regist(typeof(ISiteService), typeof(SiteService));
+            _ioc.Regist(typeof(ISiteDataAccess), typeof(SiteDataAccess));
+
+            ISiteService siteService = _ioc.GetService<ISiteService>();
+            wod.lwcms.models.siteAttribute attr = siteService.getSiteAttribute();
+            initIoc(_ioc,siteKey, attr.ioc, resource);
+
             _ioc.RegistInstance("__aliasResource", resource);
 
-            var exts = loadExtensions(_ioc, new List<string> { "cacheable", "authentication" });
+            #region 扩展
+            var exts = loadExtensions(_ioc, attr.extensions);
             _ioc.RegistInstance("extensions", exts);
 
             foreach (var ext in exts)
@@ -95,6 +89,33 @@ namespace wod.lwcms.web
                 }
                 pool.addAddinCommand(ext.initCommands(resource));
             }
+            #endregion
+            #region 插件
+            
+            var plugins = loadPlugins(_ioc, attr.plugins);
+            _ioc.RegistInstance("plugins", plugins);
+
+            foreach (var plugin in plugins)
+            {
+                //加载_ioc
+                var svs = plugin.getServices();
+                if (svs != null)
+                {
+                    foreach (var item in svs.Keys)
+                    {
+                        _ioc.Regist(item, svs[item]);
+                    }
+                }
+                //加载别名，插件中会重写别名
+                string aliasFile = plugin.initAlias();
+                if (!string.IsNullOrEmpty(aliasFile))
+                {
+                    resource.addAlias(aliasFile);
+                }
+                pool.addAddinCommand(plugin.initCommands(resource));
+            }
+            #endregion
+
             resource.distinctAlias();
             pool.init(resource, wodEnvironment.GetDataPath("commands"));
             if (siteKey != wodEnvironment.siteKey)
@@ -104,21 +125,96 @@ namespace wod.lwcms.web
             return _ioc;
         }
 
-        private static List<addin.IAddin> loadExtensions(ioc _ioc, List<string> extensions)
+        private static void initIoc(ioc _ioc,string siteKey, List<models.ioc> list, aliasResource resource)
         {
-            var exts = new List<addin.IAddin>();
-            var types = System.Reflection.Assembly.Load("wod.lwcms.addins").GetTypes();
-            foreach (var type in types)
+            foreach (var item in list)
             {
-                if (extensions.IndexOf(type.Name) > -1
-                    && typeof(addin.IAddin).IsAssignableFrom(type)
-                    && type.Namespace == "wod.lwcms.addins.extension")
+                switch (item.type)
                 {
-                    addin.IAddin ext = _ioc.GetService(type) as addin.IAddin;
-                    exts.Add(ext);
+                    case wod.lwcms.models.ioc.ioctype.Instance:
+                        _ioc.RegistInstance(item.name, ParseData(item.value, siteKey, item.datatype));
+                        break;
+                    case wod.lwcms.models.ioc.ioctype.Type:
+                        Type target = resource.GetTypeByAlias(item.target);
+                        if(target == null)
+                            target = Type.GetType(item.target);
+                        Type realize = resource.GetTypeByAlias(item.realize);
+                        if(realize == null)
+                            realize = Type.GetType(item.realize);
+                        _ioc.Regist(target, realize);
+                        break;
+                    default:
+                        break;
                 }
             }
-            exts.Sort((a1, a2) => extensions.IndexOf(a1.GetType().Name).CompareTo(extensions.IndexOf(a2.GetType().Name)));
+        }
+
+        private static object ParseData(string value,string siteKey, models.ioc.iocdatatype iocdatatype)
+        {
+            object data = null;
+            switch (iocdatatype)
+            {
+                case wod.lwcms.models.ioc.iocdatatype.Int:
+                    data = int.Parse(value);
+                    break;
+                case wod.lwcms.models.ioc.iocdatatype.String:
+                    System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex("\\[rel:([^\\]]+)\\]");
+                    value = reg.Replace(value, (mache) =>
+                    {
+                        return wodEnvironment.GetDataPath(siteKey, mache.Groups[1].Value);
+                    });
+                    data = value;
+                    break;
+                case wod.lwcms.models.ioc.iocdatatype.DbProviderFactory:
+                    data = System.Data.Common.DbProviderFactories.GetFactory(value);
+                    break;
+                case wod.lwcms.models.ioc.iocdatatype.UnKown:
+                    data = value;
+                    break;
+                default:
+                    break;
+            }
+            return data;
+        }
+
+        private static List<addin.IAddin> loadPlugins(ioc _ioc, List<models.addin> plugins)
+        {
+            var plugin = new List<addin.IAddin>();
+            foreach (var item in plugins)
+            {
+                Type extType = Type.GetType(item.type);
+                addin.IAddin addin = _ioc.GetService(extType) as addin.IAddin;
+                addin.setSetting(item.addinSettings);
+                plugin.Add(addin);
+            }
+            return plugin;
+        }
+
+        private static List<addin.IAddin> loadExtensions(ioc _ioc, List<models.addin> extensions)
+        {
+            var exts = new List<addin.IAddin>();
+            var ass = System.Reflection.Assembly.Load("wod.lwcms.addins");//.GetTypes();
+
+            foreach (var item in extensions)
+            {
+                Type extType = ass.GetType("wod.lwcms.addins.extension." + item.name);
+                addin.IAddin ext = _ioc.GetService(extType) as addin.IAddin;
+                ext.setSetting(item.addinSettings);
+                item.description = ext.description;
+                exts.Add(ext);
+            }
+
+            //foreach (var type in types)
+            //{
+            //    if (extensions.IndexOf(type.Name) > -1
+            //        && typeof(addin.IAddin).IsAssignableFrom(type)
+            //        && type.Namespace == "wod.lwcms.addins.extension")
+            //    {
+            //        addin.IAddin ext = _ioc.GetService(type) as addin.IAddin;
+            //        exts.Add(ext);
+            //    }
+            //}
+            //exts.Sort((a1, a2) => extensions.IndexOf(a1.GetType().Name).CompareTo(extensions.IndexOf(a2.GetType().Name)));
             return exts;
         }
 

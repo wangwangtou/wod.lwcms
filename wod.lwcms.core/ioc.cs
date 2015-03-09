@@ -16,12 +16,26 @@ namespace wod.lwcms
 
         public void Regist(Type target, Type real)
         {
-            dicType.Add(target, real);
+            if (!dicType.ContainsKey(target))
+            {
+                dicType.Add(target, real);
+            }
+            else
+            {
+                dicType[target] = real;
+            }
         }
 
         public void RegistInstance(string name, object obj)
         {
-            dicInstance.Add(name, obj);
+            if (!dicInstance.ContainsKey(name))
+            {
+                dicInstance.Add(name, obj);
+            }
+            else
+            {
+                dicInstance[name] = obj;
+            }
         }
 
         private Dictionary<Type, Type> dicType;

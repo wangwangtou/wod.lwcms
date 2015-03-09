@@ -4,11 +4,25 @@
     <type alias="siteService">wod.lwcms.services.ISiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
     <type alias="categoryService">wod.lwcms.services.ICategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
     <type alias="articleService">wod.lwcms.services.IArticleService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="authenticationService">wod.lwcms.services.IAuthenticationService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="generateService">wod.lwcms.services.IGenerateService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
 
     <type alias="pagerHelper">wod.lwcms.dataaccess.pagerHelper, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
     <type alias="commonDataAccess">wod.lwcms.dataaccess.ICommonDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
-    
+    <type alias="siteDataAccess">wod.lwcms.dataaccess.ISiteDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="categoryDataAccess">wod.lwcms.dataaccess.ICategoryDataAccess, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+
     <type alias="pageTransfer">wod.lwcms.web.pageTransfer, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+
+    <type alias="siteService_Realize">wod.lwcms.services.SiteService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="categoryService_Realize">wod.lwcms.services.CategoryService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="articleService_Realize">wod.lwcms.services.ArticleService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="authenticationService_Realize">wod.lwcms.services.AuthenticationService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="generateService_Realize">wod.lwcms.services.GenerateService, wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    
+    <type alias="commonDataAccess_Realize">wod.lwcms.dataaccess.CommonDataAccess, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="siteDataAccess_Realize">wod.lwcms.dataaccess.SiteDataAccess, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
+    <type alias="categoryDataAccess_Realize">wod.lwcms.dataaccess.CategoryDataAccess, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</type>
   </types>
   <commands>
     <assCommand alias="getSite">

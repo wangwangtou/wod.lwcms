@@ -30,7 +30,9 @@ namespace wod.lwcms.addins.extension
 
         public commands.command getBeforeCommand(string pageCommandId)
         {
-            return new loginLinkCommand(AddPartView);
+            return base.enable ? 
+                new loginLinkCommand(AddPartView) as commands.command : 
+                new commands.emptyCommand();
         }
 
         public commands.command getAfterCommand(string commandName)

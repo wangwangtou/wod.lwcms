@@ -45,6 +45,7 @@
     <Compile Include="models\article.cs" />
     <Compile Include="models\category.cs" />
     <Compile Include="models\comment.cs" />
+    <Compile Include="models\siteAttribute.cs" />
     <Compile Include="models\siteImage.cs" />
     <Compile Include="models\indexData.cs" />
     <Compile Include="models\ISeoObject.cs" />

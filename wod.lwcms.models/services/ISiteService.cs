@@ -11,5 +11,9 @@ namespace wod.lwcms.services
         void updateSite(models.wodsite site);
 
         models.indexData getIndexData();
+
+        models.siteAttribute getCommonAttribute();
+        models.siteAttribute getSiteAttribute();
+        void updateSiteAttribute(models.siteAttribute attrs);
     }
 }
