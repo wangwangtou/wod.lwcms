@@ -37,7 +37,7 @@ namespace wod.lwcms.management
         {
             base.OnLoad(e);
 
-            if (Request.Form.Count > 0)
+            if (Request.Form.Count > 0 || Request.Files.Count > 0)
             {
                 PreCommand();
                 ExcuteCommand();
@@ -94,11 +94,47 @@ namespace wod.lwcms.management
                 result.status = false;
                 result.message = ex.Message;
             }
-            po.Dispose();
             Response.Clear();
-            Response.ContentType = "text/json";
-            Response.Write(common.ToJson(result));
+            if (result.result != null && result.result is System.IO.Stream)
+            {
+                Response.ContentType = "application/stream";
+                string filename = po.getObject("resultName") as string;
+                WriteStream(Response, filename, result.result as System.IO.Stream);
+            }
+            else
+            {
+                Response.ContentType = "text/json";
+                Response.Write(common.ToJson(result));
+            }
+            po.Dispose();
             Response.End();
+        }
+
+        private void WriteStream(System.Web.HttpResponse response, string filename, System.IO.Stream stream)
+        {
+            if (!string.IsNullOrEmpty(filename))
+            {
+                response.AddHeader("content-disposition", "attachment;filename=" + Server.UrlEncode(filename));
+            }
+            response.AddHeader("content-length", stream.Length.ToString());
+            response.ContentType = "application/octet-stream";
+            response.ContentEncoding = Encoding.UTF8;
+            stream.Seek(0, System.IO.SeekOrigin.Begin);
+            byte[] buffer = new byte[2048];
+            int size;
+            while (true)
+	        {
+                size = stream.Read(buffer, 0, buffer.Length);
+                if (size > 0)
+                {
+                    response.OutputStream.Write(buffer, 0, size);
+                    response.Flush();
+                }
+                else
+                {
+                    break;
+                }
+	        }
         }
 
         private void InitPo(objectPool po, System.Collections.Specialized.NameValueCollection formData, Dictionary<string, object> serverParams)

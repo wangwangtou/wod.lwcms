@@ -46,6 +46,10 @@ namespace wod.lwcms
         {
             return ANONYMOUS_USER;
         }
+        public static object GetUserType()
+        {
+            return ANONYMOUS_USER;
+        }
 
         private const string ANONYMOUS_USER = "ANONYMOUS_USER";
 

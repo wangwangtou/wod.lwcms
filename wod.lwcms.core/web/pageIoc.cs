@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web;
 using wod.lwcms.services;
 using wod.lwcms.dataaccess;
+using System.Xml;
 
 namespace wod.lwcms.web
 {
@@ -45,12 +46,17 @@ namespace wod.lwcms.web
                 _iocs.Add(createIoc(wodEnvironment.siteKey));
             }
         }
-
+        
         private static ioc createIoc(string siteKey)
         {
             ioc _ioc = new ioc();
 
             _ioc.RegistInstance("siteKey", siteKey);
+            var appConfigXml = wodEnvironment.GetDataPath("application/app.xml");
+
+            LoadApplicationConfig(siteKey,_ioc,appConfigXml);
+
+
             commands.commandPool pool = new commands.commandPool();
             aliasResource resource = new aliasResource(pool);
             resource.init(wodEnvironment.GetDataPath("alias"));
@@ -123,6 +129,15 @@ namespace wod.lwcms.web
 
             _ioc.RegistInstance("__commandPool", pool);
             return _ioc;
+        }
+
+        private static void LoadApplicationConfig(string siteKey, ioc _ioc, string appConfigXml)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(appConfigXml);
+            config.applicationParse.ParseIocsNode(_ioc, doc.SelectSingleNode("/app/defaults/icos"), (ins) => _ioc.RegistInstance(ins.name, ins.value), (abstractType) => _ioc.Regist(abstractType.abstractType, abstractType.realizeType));
+
+            config.applicationParse.ParseIocsNode(_ioc, doc.SelectSingleNode("/app/site[@key=\"" + siteKey + "\"]/icos"), (ins) => _ioc.RegistInstance(ins.name, ins.value), (abstractType) => _ioc.Regist(abstractType.abstractType, abstractType.realizeType));
         }
 
         private static void initIoc(ioc _ioc,string siteKey, List<models.ioc> list, aliasResource resource)

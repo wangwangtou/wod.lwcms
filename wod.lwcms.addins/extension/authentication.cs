@@ -8,6 +8,8 @@ namespace wod.lwcms.addins.extension
 {
     public class authentication : extensionBase,IAddin
     {
+        public const string registUserType = "REGIST_USER";
+
         public override string name
         {
             get { return "authentication"; }
@@ -20,24 +22,51 @@ namespace wod.lwcms.addins.extension
 
         public Dictionary<string, commands.command> initCommands(aliasResource resource)
         {
-            return commands.commandPool.LoadCommand(resource,base.getPath("cmds.xml"));
+            return commands.commandPool.LoadCommand(resource, base.getPath("command.xml"));
         }
 
         public string initAlias()
         {
-            return null;
+            return base.getPath("aliasResource.xml");
         }
 
         public commands.command getBeforeCommand(string pageCommandId)
         {
-            return base.enable ? 
-                new loginLinkCommand(AddPartView) as commands.command : 
-                new commands.emptyCommand();
+            switch (pageCommandId)
+            {
+                case "addcomment":
+                    return new authCommentCommand();
+                default:
+                    break;
+            }
+            return new loginLinkCommand(AddPartView);
         }
 
         public commands.command getAfterCommand(string commandName)
         {
             return new commands.emptyCommand();
+        }
+
+        private class authCommentCommand : commands.command
+        {
+            public override bool canExcute(commands.commandsParameter cp)
+            {
+                return true;//不会受breakall影响
+            }
+
+            protected override void excuteNoCheck(commands.commandsParameter cp)
+            {
+                IAuthenticationService service = cp.GetObject(typeof(IAuthenticationService)) as IAuthenticationService;
+                if (service.IsLogin())
+                {
+                    string userid = service.GetLoginName();
+                    cp.AddObject("lw_user", userid);
+                    cp.AddObject("lw_usertype", authentication.registUserType);
+
+                    cp.AddObject("email", "");
+                    cp.AddObject("name", "");
+                }
+            }
         }
 
         private class loginLinkCommand : commands.command

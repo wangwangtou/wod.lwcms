@@ -5,7 +5,7 @@
     { name: "category", type: "woddrop", optionscmd: "op_category" },
     { name: "code", type: "wodtext" },
     { name: "content", type: "wodrichtext" },
-    { name: "preContent", type: "wodtext" },
+    { name: "preContent", type: "wodrichtext", setting: { type: "simple"} },
     { name: "page", type: "wodtext" },
     { name: "image", type: "wodsiteImage" },
     { name: "extendData", type: "wodtext" }

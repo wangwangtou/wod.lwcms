@@ -125,7 +125,7 @@ namespace wod.lwcms.commands
             //Validation.IsStringLengthMatch("user01", false, true, true, 2, 12);
         }
 
-        internal List<validation> validations { get; set; }
+        public List<validation> validations { get; set; }
 
         public override void parseProperty(System.Xml.XmlNode node)
         {

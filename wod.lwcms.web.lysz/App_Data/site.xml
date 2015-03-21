@@ -33,13 +33,29 @@
     <navis key="top" />
     <navis key="bottom" />
   </site>
-</sites>
-<!--<navi name="兰影书斋" target="_self" title="兰影书斋">http://lysz.xvycn.com/index.aspx
+  <site key="lysz">
+    <sitename>兰影书斋</sitename>
+    <siteurl>http://lysz.xvycn.com/</siteurl>
+    <description>书斋主人的摄影书画爱好以及其参与的傅氏宗亲联谊活动。</description>
+    <keywords>兰影书斋,摄影,书画,摄影书画,傅氏宗亲,联谊,活动,联谊活动</keywords>
+    <copyright>
+      &amp;copy; Copyright 2014-2015   wangwangtou@qq.com版权所有&lt;br /&gt;
+      本站点为个人网站，转载请注明出处。
+    </copyright>
+    <title>兰影书斋</title>
+    <navis key="main">
+      <navi name="日志" target="_self" title="日志">/index.aspx?path=/blog</navi>
+      <navi name="书画" target="_self" title="书画">javascript:void(0)
         <subNavis>
-          <navi name="摄影园地" target="_self" title="摄影园地">http://lysz.xvycn.com/index.aspx?path=/photo</navi>
-          <navi name="书法展示" target="_self" title="书法展示">http://lysz.xvycn.com/index.aspx?path=/lettering</navi>
-          <navi name="我的文本" target="_self" title="我的文本">http://lysz.xvycn.com/index.aspx?path=/article</navi>
-          <navi name="其他作品" target="_self" title="其他作品">http://lysz.xvycn.com/index.aspx?path=/other</navi>
-          <navi name="关于" target="_self" title="关于">http://lysz.xvycn.com/index.aspx?path=/about.html</navi>
+          <navi name="书法" target="_self" title="书法">/index.aspx?path=/calligraphy</navi>
+          <navi name="绘画" target="_self" title="绘画">/index.aspx?path=/painting</navi>
         </subNavis>
-      </navi>-->
+      </navi>
+      <navi name="摄影" target="_self" title="摄影">/index.aspx?path=/photograph</navi>
+      <navi name="傅氏宗亲联谊活动" target="_self" title="傅氏宗亲联谊活动">/index.aspx?path=/activity</navi>
+      <navi name="留言板" target="_self" title="留言板">/index.aspx?path=/common/messageboard</navi>
+    </navis>
+    <navis key="top" />
+    <navis key="bottom" />
+  </site>
+</sites>

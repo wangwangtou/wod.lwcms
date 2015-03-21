@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<aliasResource>
+  <types>
+  </types>
+  <commands>
+    <multiCommand alias="indexCommand">
+      <commands>
+        <addinBeforeCommand id="beforeCmd"></addinBeforeCommand>
+        <getSite type="alias" id="ws"></getSite>
+        <getAllCats type="alias" id="allCats"></getAllCats>
+        <getIndexTransfer type="alias" id="pageTransferName"></getIndexTransfer>
+        <addinAfterCommand id="afterCmd"></addinAfterCommand>
+      </commands>
+    </multiCommand>
+  </commands>
+</aliasResource>

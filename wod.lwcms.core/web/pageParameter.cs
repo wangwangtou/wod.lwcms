@@ -13,7 +13,9 @@ namespace wod.lwcms.web
             op.setOjbect("lw_actData", wodEnvironment.GetActDataString(request));
             op.setOjbect("lw_newid", wodEnvironment.GetNewId());
             op.setOjbect("lw_now", wodEnvironment.GetNowString());
+
             op.setOjbect("lw_user", wodEnvironment.GetUser());
+            op.setOjbect("lw_usertype", wodEnvironment.GetUserType());
         }
 
         public pageType pageType { get; private set; }

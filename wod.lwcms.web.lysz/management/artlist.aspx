@@ -73,7 +73,7 @@ MasterPageFile="~/management/managepage.master"%>
   {
 %><li>
 <div class="f-list-item<%=(alt=!alt)?"":" alt"%>"><%=a.name %>
-    <div class="f-cmd"><%=a.state == "pub" ? "<a href=\"javascript:_unpublish('" + a.id + "');\">取消发布</a>" : "<a href=\"javascript:_publish('" + a.id + "');\">发布</a>"%><a href="artadd.aspx?id=<%=a.id %>">编辑</a><a href="javascript:_delete('<%=a.id %>');">删除</a></div>
+    <div class="f-cmd"><%=a.state == "pub" ? "<a href=\"javascript:_unpublish('" + a.id + "');\">取消发布</a>" : "<a href=\"javascript:_publish('" + a.id + "');\">发布</a>"%><a href="artadd.aspx?id=<%=a.id %>">编辑</a><a href="javascript:_delete('<%=a.id %>');">删除</a><a href="cmtpub.aspx?aid=<%=a.id %>">评论审核</a></div>
 </div></li><%      
   } %>
 </ul>

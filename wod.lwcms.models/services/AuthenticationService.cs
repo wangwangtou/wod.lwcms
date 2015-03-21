@@ -79,5 +79,6 @@ namespace wod.lwcms.services
         {
             return this.context.User != null && this.context.User.Identity != null && this.context.User.Identity.IsAuthenticated;
         }
+
     }
 }

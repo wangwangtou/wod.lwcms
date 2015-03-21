@@ -78,7 +78,7 @@ namespace wod.lwcms.commands
             for (int i = 0; i < objTypes.Length; i++)
             {
                 pars[i] = cp.GetObject(objTypes[i].Name,objTypes[i].ParameterType);
-                if (pars[i].GetType() == typeof(string))
+                if (pars[i]!=null && pars[i].GetType() == typeof(string))
                 {
                     pars[i] = common.ChangeType(objTypes[i].ParameterType, pars[i].ToString());
                 }
@@ -143,6 +143,9 @@ namespace wod.lwcms.commands
             {
                 var paraName = m.Groups["p"].Value.Substring(1);
                 var obj =cp.GetObject(paraName,null) ?? "";
+                if (obj.GetType() == typeof(string) && string.IsNullOrEmpty(obj as string)) {
+                    obj = DBNull.Value;
+                }
                 parameters.Add(new dataaccess.WODDbParameter(paraName,
                      GetDbType(obj), obj));
             }

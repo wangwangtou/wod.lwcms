@@ -20,6 +20,7 @@ namespace wod.lwcms.web
     public class page : wodPagebase
     {
         public string tempName { get; private set; }
+        public string cssTempName { get; private set; }
 
         protected string path;
 
@@ -30,7 +31,11 @@ namespace wod.lwcms.web
             this.path = Request.QueryString["path"];
             ioc _ioc = base.getIoc();
 
-            tempName = _ioc.GetInstance<string>("siteKey");
+            tempName = _ioc.GetInstance<string>("tempName")
+                ?? _ioc.GetInstance<string>("siteKey");
+
+            cssTempName = _ioc.GetInstance<string>("cssTempName")
+                ?? _ioc.GetInstance<string>("siteKey");
 
             commands.commandPool pool = _ioc.GetInstance<commands.commandPool>("__commandPool");
             objectPool po = _ioc.GetService<objectPool>();
@@ -100,6 +105,11 @@ namespace wod.lwcms.web
         public string tempName
         {
             get { return (this.PreviousPage as page).tempName; }
+        }
+
+        public string cssTempName
+        {
+            get { return (PreviousPage as page).cssTempName; }
         }
 
         public pageData PD { get; set; }

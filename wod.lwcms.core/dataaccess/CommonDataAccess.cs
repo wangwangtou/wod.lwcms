@@ -678,9 +678,11 @@ namespace wod.lwcms.dataaccess
             art.userName = dr.GetString(dr.GetOrdinal("cmt_userName"));
             art.userEmail = dr.GetString(dr.GetOrdinal("cmt_userEmail"));
             art.userType = dr.GetString(dr.GetOrdinal("cmt_userType"));
+            art.userID = dr.GetString(dr.GetOrdinal("cmt_userID"));
             art.commentAid = dr.GetString(dr.GetOrdinal("cmt_aid"));
             art.commentTime = dr.GetDateTime(dr.GetOrdinal("cmt_Time"));
             art.commentContent = dr.GetString(dr.GetOrdinal("cmt_Content"));
+            art.state = dr.GetString(dr.GetOrdinal("cmt_State"));
             return art;
         }
     }

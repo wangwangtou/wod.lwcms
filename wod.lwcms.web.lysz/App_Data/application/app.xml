@@ -75,4 +75,12 @@
   </defaults>
   <site key="default">
   </site>
+  <site key="lysz">
+    <icos>
+      <item type="instance" dataType="System.String">
+        <name>cssTempName</name>
+        <value>default_blue</value>
+      </item>
+    </icos>
+  </site>
 </app>

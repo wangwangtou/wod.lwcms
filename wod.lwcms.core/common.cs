@@ -78,6 +78,14 @@ namespace wod.lwcms
         public static string ToJson(object obj)
         {
             JsonWriter jw = new JsonWriter();
+            if (obj != null &&
+                (obj.GetType() == typeof(string)
+                || obj.GetType() == typeof(int)
+                || obj.GetType() == typeof(double)
+                || obj.GetType() == typeof(DateTime)))
+            {
+                obj = new JsonData(obj);
+            }
             JsonMapper.ToJson(obj, jw);
             return jw.ToString();
         }
