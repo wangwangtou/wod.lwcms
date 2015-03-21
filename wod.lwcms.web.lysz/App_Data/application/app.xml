@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<app>
+  <defaults>
+    <icos>
+      <item type="instance" dataType="System.Int32">
+        <name>pageSize</name>
+        <value>20</value>
+      </item>
+      <item type="instance" dataType="System.Int32">
+        <name>pageIndex</name>
+        <value>0</value>
+      </item>
+      <item type="dynamicInstance">
+        <name>mdbpath</name>
+        <dynamicType>wod.lwcms.wodEnvironment,wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</dynamicType>
+        <dynamicMethod>GetDataPath</dynamicMethod>
+        <parameters>
+          <parameter name="sKey" rel="true">siteKey</parameter>
+          <parameter name="path">lwcms.mdb</parameter>
+        </parameters>
+      </item>
+      <item type="dynamicInstance">
+        <name>connectionString</name>
+        <dynamicType>wod.lwcms.dataaccess.daHelper,wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</dynamicType>
+        <dynamicMethod>buildMdbConnectionString</dynamicMethod>
+        <parameters>
+          <parameter name="provider">Microsoft.Jet.OLEDB.4.0</parameter>
+          <parameter name="path" rel="true">mdbpath</parameter>
+          <parameter name="userId"></parameter>
+          <parameter name="password"></parameter>
+        </parameters>
+      </item>
+      <item type="dynamicInstance">
+        <name>dbProviderFactory</name>
+        <dynamicType>System.Data.Common.DbProviderFactories,System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</dynamicType>
+        <dynamicMethod>GetFactory</dynamicMethod>
+        <parameters>
+          <parameter name="providerInvariantName">System.Data.OleDb</parameter>
+        </parameters>
+      </item>
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.services.ISiteService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.services.SiteService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.services.ICategoryService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.services.CategoryService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.services.IArticleService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.services.ArticleService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.services.IAuthenticationService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.services.AuthenticationService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.services.IGenerateService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.services.GenerateService,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+      <!--dataaccess-->
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.dataaccess.ISiteDataAccess,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.dataaccess.SiteDataAccess,wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.dataaccess.ICategoryDataAccess,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.dataaccess.CategoryDataAccess,wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+      <item type="abstractTypes">
+        <abstract>wod.lwcms.dataaccess.ICommonDataAccess,wod.lwcms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</abstract>
+        <realize>wod.lwcms.dataaccess.CommonDataAccess,wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</realize>
+      </item>
+    </icos>
+  </defaults>
+  <site key="default">
+  </site>
+</app>

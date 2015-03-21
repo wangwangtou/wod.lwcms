@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="management_cmtlist">
+    <commands>
+      <articleComment_totalCount_ACC type="alias" id="totalCount"></articleComment_totalCount_ACC>
+      <getStartRowIndex type="alias" id="startRowIndex"></getStartRowIndex>
+      <getEndRowIndex type="alias" id="endRowIndex"></getEndRowIndex>
+      <articleComment_pagedDr_ACC type="alias" id="pagedDr"></articleComment_pagedDr_ACC>
+      <getArticleCmtList_DR type="alias" id="cmtList"></getArticleCmtList_DR>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_cmtpublish">
+    <commands>
+      <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+Update wod_lw_comment
+set cmt_State='pub'
+Where ID = :cid
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_cmtunpublish">
+    <commands>
+      <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+Update wod_lw_comment
+set cmt_State='unpub'
+Where ID = :cid
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_cmtdelete">
+    <commands>
+      <sqlCommand id="none" paramenterPrefix=":" excuteType="excute">
+        <!--excuteType:datareader,excute,scalar-->
+        <sql>
+          <![CDATA[
+delete from wod_lw_comment where ID = :cid
+    ]]>
+        </sql>
+      </sqlCommand>
+    </commands>
+  </multiCommand>
+</commands>

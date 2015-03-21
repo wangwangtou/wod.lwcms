@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="management_updateload">
+    <commands>
+    </commands>
+  </multiCommand>
+
+  <multiCommand id="management_updateupdate">
+    <commands>
+      <assCommand id="update">
+        <typeName>wod.lwcms.update.updateManage, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>update</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_updaterestart">
+    <commands>
+      <assCommand id="update">
+        <typeName>wod.lwcms.update.updateManage, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>restart</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+  <multiCommand id="management_updatedownload">
+    <commands>
+      <assCommand id="result">
+        <typeName>wod.lwcms.update.updateManage, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>download</methodName>
+      </assCommand>
+      <assCommand id="resultName">
+        <typeName>wod.lwcms.update.updateManage, wod.lwcms.core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</typeName>
+        <methodName>getName</methodName>
+      </assCommand>
+    </commands>
+  </multiCommand>
+</commands>
