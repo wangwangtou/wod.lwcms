@@ -1,0 +1,146 @@
+/* nec-reset.css */
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
+header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
+table{border-collapse:collapse;border-spacing:0;}
+caption,th{text-align:left;font-weight:normal;}
+html,body,fieldset,img,iframe,abbr{border:0;}
+i,cite,em,var,address,dfn{font-style:normal;}
+[hidefocus],summary{outline:0;}
+li{list-style:none;}
+h1,h2,h3,h4,h5,h6,small{font-size:100%;}
+sup,sub{font-size:83%;}
+pre,code,kbd,samp{font-family:inherit;}
+q:before,q:after{content:none;}
+textarea{overflow:auto;resize:none;}
+label,summary{cursor:default;}
+a,button{cursor:pointer;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight:bold;}
+del,ins,u,s,a,a:hover{text-decoration:none;}
+body,textarea,input,button,select,keygen,legend{font:12px/1.14 arial,\5b8b\4f53;outline:0;}
+body{background:#fff;}
+a,a:hover{color:#333;}
+
+
+h1,.h1{font-size:24px;line-height:32px;}
+h2,.h2{font-size:20px;line-height:28px;}
+h3,.h3{font-size:18px;line-height:26px;}
+h4,.h4{font-size:16px;line-height:26px;}
+p{text-indent:28px;font-size:14px;line-height:16px;padding:4px;}
+
+.nav p.subs {
+    display: inline;
+    font-size: 12px;
+}
+
+.nav .subs span.subsplit {
+    display: none;
+}
+
+.m-doc ul{}
+.m-doc ol{padding-left:10px;list-style-type:decimal;}
+.m-doc ol li{text-indent:28px;list-style-type:decimal;list-style-position:inside;font-size:14px;line-height:16px;}
+
+.pd-v20{padding:20px 0;}
+.pd-v15{padding:15px 0;}
+.pd-v10{padding:10px 0;}
+.pd-v5{padding:5px 0;}
+.pd-20{padding:20px;}
+.pd-15{padding:15px;}
+.pd-10{padding:10px;}
+.pd-5{padding:5px;}
+
+/* 网站色调 */
+.c1{background-color:#ff8000;}/*主色*/
+.c2{background-color:#ffa500;}/*背景色*/
+.c3{background-color:#9acd32;}/*辅助色1*/
+.c4{background-color:#ff4500;}/*辅助色1*/
+.c5{background-color:#9f5f9f;}/*点睛色*/
+
+.clear { clear:both;}
+.inline-block { display:inline-block;}
+.aglin-center {text-align:center; }
+.bg-main { background-color: #3AA5FF;color:#ffffff; }
+.bg-bg { background-color: #EBF2FF; }
+.bg-f1 { background-color:#9acd32;color:#ff8000; }
+.bg-f2 { background-color: #7EB9EA; color: #607AFD; }
+
+.nav-col {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    display: none;
+    top: 10px;
+}
+
+i.nav-col {}
+
+.nav span.split {
+    font-size: 26px;    line-height: 1.2;
+}
+.bg-f3 { background-color: #008BFF; color: #4CE2E2; }
+.bg-f4 { background-color: #EBF2FF; color: #FF3C3C; }
+.bg-h1 { background-color:transparent; color: #FF0000; }
+.bg-h2 { background-color: #3E66B0; color: #F5F5F5; }
+
+.link-main a,a.link-main { color: #FF009B;text-decoration:none; }
+
+.nav a {
+    font-size: 26px;
+    line-height: 1.2;
+}
+
+.nav .subs a {
+    font-size: 16px;
+    padding: 0 5px;
+}
+.link-h1 a,a.link-h1 { color: #4A00FF;text-decoration:none; }
+.link-f1 a,a.link-f1 { color:#ff4500;text-decoration:none; }
+.link-f2 a,a.link-f2 { color:#9acd32;text-decoration:none; }
+
+.nav{padding:4px 10px; }
+.nav-top{position:absolute;top:3px;right:5px; }
+.nav-top a{padding:0px 3px;font-size:14px; }
+
+.module p { max-width:350px; }
+.module { vertical-align:top;text-align:left;}
+.g-header{position:relative;}
+.header { background:transparent url(small2.png) no-repeat right top;margin-top:0px;margin-right:0px;}
+.m-copyright{text-align:center;padding:20px 0;margin:0 70px;}
+.m-form,.m-form input,.m-form textarea{font-size:16px;line-height:20px;}
+.m-form input[type=text]{width:300px;}
+.m-form input[type=submit]{width:120px;}
+.m-form textarea{width:300px;height:80px;}
+
+@media screen and (min-width:1280px) {
+  .nav { position: fixed; width: 190px; top: 0px; left: 0px; bottom: 0px; padding-top: 30px;}
+
+.media-col .nav {
+    width: 30px;
+}
+
+.media-col .nav a,.media-col .nav p {
+    display: none;
+}
+  .nav a { display:block;width:100%;border-bottom:1px solid #fff; font-size: 20px; line-height: 2; font-weight: bold;}
+
+.nav .subs a {
+    font-size: 20px;    line-height: 2;
+}
+  .nav span { display:none; }
+  body { padding-left: 210px; }
+
+.media-col {
+    padding-left: 50px;
+}
+  .nav p.subs{
+    font-size: 20px;    
+    line-height: 2;
+    display: block;
+}
+.nav .nav-col{
+    display: block;
+}
+}

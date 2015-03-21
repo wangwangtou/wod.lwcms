@@ -32,7 +32,7 @@ namespace wod.lwcms.web
 
         public string ThemeResourceUrl(string path)
         {
-            return ResourceUrl(string.Format("theme/{0}/{1}",tempName,path));
+            return ResourceUrl(string.Format("theme/{0}/{1}",cssTempName,path));
         }
 
         public string RenderPartView(partView view)
@@ -43,6 +43,11 @@ namespace wod.lwcms.web
         public string tempName
         {
             get { return (Page as tempPage).tempName; }
+        }
+
+        public string cssTempName
+        {
+            get { return (Page as tempPage).cssTempName; }
         }
 
         public pageData PD

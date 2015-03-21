@@ -1,4 +1,110 @@
-﻿(function (wod) {
+﻿/*此段必须引用在jquery之后*/
+(function (wod, $) {
+    var formNS = wod.CLS.getNS("wod.forms");
+    /* 开始，dom封装 */
+    wod.CLS.getClass({
+        dom: null,
+        _init: function (dom) {
+            this.parent();
+            if (arguments.length) {
+                this.init(dom);
+            }
+        },
+        init: function (dom) {
+            this.dom = dom;
+        },
+        getValue: function () {
+            var val;
+            switch (this.dom.tagName.toUpperCase()) {
+                case "select":
+                    val = $(this.dom).find(":selected").val();
+                    break;
+                default:
+                    val = this.dom.value;
+                    break;
+            }
+            return val;
+        },
+        setValue: function (val) {
+            switch (this.dom.tagName.toUpperCase()) {
+                case "select":
+                    val = $(this.dom).find("[value=\"" + val + "\"]").attr("selected", true);
+                    break;
+                default:
+                    this.dom.value = val;
+                    break;
+            }
+        },
+        on: function (event, callback) {
+            $(this.dom).on(event, callback);
+        },
+        off: function (event) {
+            $(this.dom).off(event);
+        },
+        css: function (data) {
+            $(this.dom).css(data);
+        },
+        attr: function (data) {
+            $(this.dom).attr(data);
+        },
+        swap: function (body) {
+            var $sdom = $(body);
+            $(this.dom).hide().after($sdom);
+            this.dom = $sdom[0];
+        },
+        innerHTML: function (html) {
+            $(this.dom).html(html);
+        }
+    }, "wod.dom.fields");
+
+    wod.CLS.getClass({
+        $: null,
+        _init: function (body) {
+            this.parent();
+            this.$ = wod.dom.jQueryDomManager.$;
+            if (arguments.length) {
+                this.init(body);
+            }
+        },
+        init: function (body) {
+            this.body = body;
+        },
+        getByName: function (name) {
+            return this.$(this.body).find("[name=\"" + encodeHTML(name) + "\"]")[0];
+        },
+        getField: function (name) {
+            return new wod.dom.fields(this.getByName(name));
+        }
+    }, "wod.dom.jQueryDomManager").$ = jQuery;
+
+    wod.CLS.getClass({
+        $: null,
+        errorClass: "field_error",
+        _init: function () {
+            this.parent();
+            this.$ = wod.dom.jQueryDomManager.$;
+        },
+        notifyError: function (field, msg) {
+            this.$(field._field.dom).addClass(this.errorClass)
+                .attr("title", msg);
+        },
+        clearError: function (field) {
+            this.$(field._field.dom).removeClass(this.errorClass)
+                .attr("title", "");
+        }
+    }, "wod.dom.components.CommonNotifyErrorComponent", "wod.forms.FieldComponentBase")
+        .notifyTypes = ["notifyError", "clearError"];
+    /* 结束，dom封装 */
+
+    wod.CLS.getClass({
+        _getDomManager: function (body) {
+            return new wod.dom.jQueryDomManager(body);
+        }
+    }, "wod.forms.Form", "wod.forms.FormBase");
+    formNS.FieldBase.components.registComponent(wod.dom.components.CommonNotifyErrorComponent.notifyTypes,
+        new wod.dom.components.CommonNotifyErrorComponent());
+})(wod, jQuery);
+(function (wod) {
     var formNS = wod.CLS.getNS("wod.forms");
 
     var formaterFactory = {
@@ -445,7 +551,7 @@
             allownull: true,
             options: [],
             optionscmd: "op_category",
-            optionscmddata: {}
+            optionscmddata: null
         },
         getSource: function (callback) {
             if (this.setting.options.length) {

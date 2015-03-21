@@ -101,7 +101,7 @@ namespace wod.lwcms.web
             doc.Load(appConfigXml);
             config.applicationParse.ParseIocsNode(_ioc, doc.SelectSingleNode("/app/defaults/icos"), (ins) => _ioc.RegistInstance(ins.name, ins.value), (abstractType) => _ioc.Regist(abstractType.abstractType, abstractType.realizeType));
 
-            config.applicationParse.ParseIocsNode(_ioc, doc.SelectSingleNode("/app/sites[@key=\""+siteKey+"\"]/icos"), (ins) => _ioc.RegistInstance(ins.name, ins.value), (abstractType) => _ioc.Regist(abstractType.abstractType, abstractType.realizeType));
+            config.applicationParse.ParseIocsNode(_ioc, doc.SelectSingleNode("/app/site[@key=\"" + siteKey + "\"]/icos"), (ins) => _ioc.RegistInstance(ins.name, ins.value), (abstractType) => _ioc.Regist(abstractType.abstractType, abstractType.realizeType));
         }
 
         private static List<addin.IAddin> loadExtensions(ioc _ioc, List<string> extensions)

@@ -92,6 +92,14 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\lwcms.mdb" />
+    <Content Include="App_Data\lysz\alias\index_aliasResource.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\lysz\category.xml" />
+    <Content Include="App_Data\lysz\commands\index.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\lysz\lwcms.mdb" />
     <Content Include="index.aspx" />
     <Content Include="management\artforms\cookbook.html" />
     <Content Include="management\artforms\dataform-sample.html" />
@@ -333,6 +341,16 @@
     <Content Include="svrtheme\default\article.aspx" />
     <Content Include="svrtheme\default\getpuzzle.aspx" />
     <Content Include="svrtheme\default\commentadd.ascx" />
+    <Content Include="svrtheme\lysz\article.aspx" />
+    <Content Include="svrtheme\lysz\authentication\auth_status.ascx" />
+    <Content Include="svrtheme\lysz\authentication\commentadd.ascx" />
+    <Content Include="svrtheme\lysz\authentication\login.aspx" />
+    <Content Include="svrtheme\lysz\authentication\regist.aspx" />
+    <Content Include="svrtheme\lysz\authentication\userinfo.aspx" />
+    <Content Include="svrtheme\lysz\category.aspx" />
+    <Content Include="svrtheme\lysz\getcomment.aspx" />
+    <Content Include="svrtheme\lysz\index.aspx" />
+    <Content Include="svrtheme\lysz\messageboard.aspx" />
     <Content Include="svrtheme\shared\pager.ascx" />
     <Content Include="svrtheme\cms\article.aspx" />
     <Content Include="svrtheme\cms\authentication\auth_status.ascx" />
@@ -360,6 +378,7 @@
     <Content Include="theme\cms\menu_select.png" />
     <Content Include="theme\cms\search.png" />
     <Content Include="theme\default\style.css" />
+    <Content Include="theme\default_blue\style.css" />
     <Content Include="theme\images\small.png" />
     <Content Include="theme\cms\style.css" />
     <Content Include="theme\cms_myself\style.css" />
@@ -380,9 +399,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="management\managepage.master" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="management\scripts\management.form.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\wod.lwcms.addins\wod.lwcms.addins.csproj">
@@ -427,6 +443,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="svrtheme\default\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="svrtheme\lysz\site.master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="svrtheme\lysz\editorSite.master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

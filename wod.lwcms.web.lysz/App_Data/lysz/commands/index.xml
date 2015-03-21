@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<commands>
+  <multiCommand id="messageboard">
+    <commands>
+      <addinBeforeCommand id="beforeCmd"></addinBeforeCommand>
+      <getSite type="alias" id="ws"></getSite>
+      <getAllCats type="alias" id="allCats"></getAllCats>
+      <getCommonTransfer type="alias" id="pageTransferName"></getCommonTransfer>
+      <addinAfterCommand id="afterCmd"></addinAfterCommand>
+    </commands>
+  </multiCommand>
+</commands>
